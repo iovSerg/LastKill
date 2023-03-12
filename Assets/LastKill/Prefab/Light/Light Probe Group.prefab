@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8986778654813832979}
   - component: {fileID: 8986778654813832978}
   m_Layer: 0
-  m_Name: Light Probe Group (1)
+  m_Name: Light Probe Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
