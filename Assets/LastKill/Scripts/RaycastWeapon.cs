@@ -7,7 +7,7 @@ public class RaycastWeapon : MonoBehaviour
 {
     private void Update()
     {
-       // Debug.DrawRay(transform.position,transform.forward, Color.green, 200f);
+      
     }
     private void OnDrawGizmos()
     {
