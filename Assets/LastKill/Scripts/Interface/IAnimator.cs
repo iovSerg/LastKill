@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class IAnimator : MonoBehaviour
+namespace LastKill
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IAnimator 
     {
-        
-    }
+        public Animator Animator { get; }
+        public bool isAiming { get; }
+        public bool isDrawWeapon { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void ResetMovementParametrs();
+
+        public void SetAnimationState(int hashName, int layerIndex, float transitionDuration = 0.1f);
+        public void SetAnimationState(string stateName, int layerIndex, float transitionDuration = 0.1f);
+
+        public bool HasFinishedAnimation(string stateName, int layerIndex);
+        public bool HasFinishedAnimation(int layerIndex);
+        public void StrafeUpdate();
+        public void LocomotionUpdate();
     }
 }

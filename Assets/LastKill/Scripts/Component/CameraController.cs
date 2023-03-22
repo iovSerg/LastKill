@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace LastKill
 	{
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-		public Transform followCamera;
+		public Transform currentCamera;
 		[Tooltip("How far in degrees can you move the camera up")]
 		public float TopClamp = 70.0f;
 		[Tooltip("How far in degrees can you move the camera down")]
@@ -20,34 +21,60 @@ namespace LastKill
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
 
+		[SerializeField] Transform locomotionCamera;
+		[SerializeField] Transform crouchCamera;
 
-	[SerializeField]	private float cameraInputX;
-	[SerializeField]	private float cameraInputY;
+		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
+
+		[SerializeField]	private float cameraInputX;
+		[SerializeField]	private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
 
 		private Camera _camera;
 		private IInput _input;
 
 		public float Sensivity { get => sensivity; set => sensivity = value; }
+		public Transform GetTransform => _camera.transform;
 
 		private void Awake()
 		{
 			_camera = Camera.main;
 			_input = GetComponent<IInput>();
+
+			if(locomotionCamera == null)
+			    locomotionCamera = GameObject.FindGameObjectWithTag("Camera/Locomotion").transform;
+
+			if(crouchCamera == null)
+			    crouchCamera = GameObject.FindGameObjectWithTag("Camera/Crouch").transform;
+
+			if (currentCamera == null)
+				currentCamera = locomotionCamera;
 		}
 		private void LateUpdate()
 		{
 			CameraRotation();
+
+
+			if(_input.Crouch)
+			{
+				currentCamera = crouchCamera;
+				_virtualCamera.Follow = crouchCamera;
+			}
+			else
+			{
+				currentCamera = locomotionCamera;
+				_virtualCamera.Follow = locomotionCamera;
+			}
 		}
 		private void CameraRotation()
 		{
-			cameraInputX += _input.Look.x * CameraTurnSpeed.x * sensivity * Time.deltaTime;
-			cameraInputY += _input.Look.y * CameraTurnSpeed.y * sensivity * Time.deltaTime;
+			cameraInputY += _input.Look.y  * sensivity;
+			cameraInputX += _input.Look.x *  sensivity;
 
 			cameraInputX = ClampAngle(cameraInputX, float.MinValue, float.MaxValue);
 			cameraInputY = ClampAngle(cameraInputY, BottomClamp, TopClamp);
 
-			followCamera.transform.rotation = Quaternion.Euler(cameraInputY,cameraInputX , 0f);
+			currentCamera.transform.rotation = Quaternion.Euler(cameraInputY,cameraInputX , 0f);
 		}
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
@@ -57,8 +84,10 @@ namespace LastKill
 		}
 		public Vector3 GetCameraDirection(Vector2 moveInput)
 		{
-			Vector3 moveDirection = _camera.transform.forward * moveInput.y;
+			Vector3 moveDirection = Vector3.zero;
+			moveDirection = _camera.transform.forward * moveInput.y;
 			moveDirection += _camera.transform.right * moveInput.x;
+
 			moveDirection.Normalize();
 		    moveDirection.y = 0f;
 
