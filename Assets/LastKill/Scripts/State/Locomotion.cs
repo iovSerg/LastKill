@@ -19,8 +19,6 @@ namespace LastKill
 
         public override void OnStartState()
         {
-            if(_debug.ShowDebugLog)
-                Debug.Log("Locomotion state");
 
             _animator.SetAnimationState(hashAnimState,0, 0.25f);
 

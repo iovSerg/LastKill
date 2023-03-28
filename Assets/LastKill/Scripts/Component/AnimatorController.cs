@@ -84,9 +84,9 @@ namespace LastKill
 			return false;
 		}
 
-		public bool HasFinishedAnimation(int layerIndex)
+		public bool HasFinishedAnimation(int layerIndex, float time)
 		{
-			return _animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime >= 0.95f && !_animator.IsInTransition(layerIndex);
+			return _animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime >= time && !_animator.IsInTransition(layerIndex);
 		}
 
 		public void StrafeUpdate()

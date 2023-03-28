@@ -7,7 +7,7 @@ namespace LastKill
 {
     public class AbilityState : MonoBehaviour
     {
-        private AbstractAbilityState[] PlayerAbilities = null;
+        private AbstractAbilityState[] playerAbilities = null;
         private Animator _animator;
         private PlayerInput _input;
         private bool _died = false;
@@ -21,14 +21,11 @@ namespace LastKill
 
         private void Awake()
         {
-            
-            PlayerAbilities = GetComponents<AbstractAbilityState>();
-            foreach (AbstractAbilityState state in PlayerAbilities) { }
+            playerAbilities = GetComponents<AbstractAbilityState>();
+            foreach (AbstractAbilityState state in playerAbilities) { }
             _animator = GetComponent<Animator>();
             _input = GetComponent<PlayerInput>();
             _input.OnDied += OnDied;
-
-
         }
 
         private void OnDied()
@@ -57,7 +54,7 @@ namespace LastKill
         {
             AbstractAbilityState nextState = CurrentState;
 
-           foreach(AbstractAbilityState state in PlayerAbilities)
+           foreach(AbstractAbilityState state in playerAbilities)
             {
                 if (state == CurrentState) continue;
 

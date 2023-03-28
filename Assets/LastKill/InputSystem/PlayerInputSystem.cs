@@ -125,6 +125,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""6012ea37-99ad-4cdb-b035-321c0a402807"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -395,7 +404,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dd400192-c61b-4034-b420-177a4022f6c6"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -422,6 +431,28 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00527016-2b8d-405d-84be-4ece0d9bd23f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bf42795-c579-40b4-97e5-fe80f00182e4"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -496,6 +527,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Player_Weapon = m_Player.FindAction("Weapon", throwIfNotFound: true);
         m_Player_Crawl = m_Player.FindAction("Crawl", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -568,6 +600,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Weapon;
     private readonly InputAction m_Player_Crawl;
     private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_Exit;
     public struct PlayerActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -583,6 +616,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @Weapon => m_Wrapper.m_Player_Weapon;
         public InputAction @Crawl => m_Wrapper.m_Player_Crawl;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @Exit => m_Wrapper.m_Player_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -625,6 +659,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -662,6 +699,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -737,5 +777,6 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnWeapon(InputAction.CallbackContext context);
         void OnCrawl(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

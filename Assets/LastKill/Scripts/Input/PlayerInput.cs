@@ -43,7 +43,7 @@ namespace LastKill
 		public float Magnituda => _magnituda;
 		public int CurrentWeapon => _currentWeapon;
 
-		Action IInput.OnDied { get => OnDied; set => OnDied = value; }
+		
 
 		private void Awake()
 		{
@@ -59,12 +59,15 @@ namespace LastKill
 			inputActions.Player.Jump.performed += ctx => _jump = ctx.ReadValueAsButton();
 			inputActions.Player.Jump.canceled += ctx => _jump = ctx.ReadValueAsButton();
 
+			inputActions.Player.Fire.started += ctx => _fire = ctx.ReadValueAsButton();
 			inputActions.Player.Fire.performed += ctx => _fire = ctx.ReadValueAsButton();
 			inputActions.Player.Fire.canceled += ctx => _fire = ctx.ReadValueAsButton();
 
 
 			inputActions.Player.Roll.performed += ctx => _roll = ctx.ReadValueAsButton();
 			inputActions.Player.Roll.canceled += ctx => _roll = ctx.ReadValueAsButton();
+
+			inputActions.Player.Exit.canceled += ctx => { Debug.Log("Quit"); Application.Quit(); };
 
 			inputActions.Player.Reload.performed += ctx => {
 				OnReload?.Invoke();
@@ -109,7 +112,15 @@ namespace LastKill
 
 		}
 
-        private void OnSprint(InputAction.CallbackContext obj)
+		private void Update()
+		{
+			if(_crouch && timeIsPressed + 0.5f < Time.time && timeIsPressed != 0)
+			{
+				_crawl = true;
+				_crouch = false;
+			}
+		}
+		private void OnSprint(InputAction.CallbackContext obj)
         {
 			if (HoldButton)
 			{
@@ -120,20 +131,25 @@ namespace LastKill
 				_sprint = !_sprint;
 			}
 		}
-
+		double timeIsPressed;
         private void OnCrouch(InputAction.CallbackContext obj)
         {
-            if(HoldButton)
-            {
-				_crouch = obj.ReadValueAsButton();
-            }
-			else
-            {	if(obj.canceled)
+			IInput.OnCrouch?.Invoke();
+			if (_crawl && !obj.canceled)
+			{
+				_crawl = false;
+				return;
+			}
+			if (obj.performed)
+			{
 				_crouch = !_crouch;
-            }
-        }
+				timeIsPressed = Time.time;
+			}
+			if(obj.canceled) timeIsPressed = 0f;
 
-        private void OnCrawl(InputAction.CallbackContext obj)
+		}
+
+		private void OnCrawl(InputAction.CallbackContext obj)
         {
 			if (HoldButton)
 			{

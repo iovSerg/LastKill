@@ -21,8 +21,12 @@ namespace LastKill
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
 
+		[SerializeField] public float speedChangeCamera = 2f;
+
 		[SerializeField] Transform locomotionCamera;
 		[SerializeField] Transform crouchCamera;
+		[SerializeField] Transform aimCamera;
+		[SerializeField] Cinemachine3rdPersonFollow bodyFolow;
 
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
@@ -49,22 +53,47 @@ namespace LastKill
 
 			if (currentCamera == null)
 				currentCamera = locomotionCamera;
+
+			bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 		}
+		[SerializeField] float bodyCanAim;
+		[SerializeField] float bodyAim;
 		private void LateUpdate()
 		{
 			CameraRotation();
 
 
-			if(_input.Crouch)
+			if(_input.Crouch || _input.Crawl)
 			{
 				currentCamera = crouchCamera;
-				_virtualCamera.Follow = crouchCamera;
+				_virtualCamera.Follow = crouchCamera; 
+				bodyFolow.CameraDistance = 4;
+			}
+			else if(_input.Aim)
+			{
+				if(bodyFolow.CameraDistance > 1f)
+					bodyFolow.CameraDistance = bodyFolow.CameraDistance - Time.deltaTime * speedChangeCamera;
+
+				bodyFolow.ShoulderOffset.y = 0.2f;
 			}
 			else
 			{
+
+				if (bodyFolow.CameraDistance < 4f)
+					bodyFolow.CameraDistance = bodyFolow.CameraDistance + Time.deltaTime * speedChangeCamera;
+
+				bodyFolow.ShoulderOffset.y = 0f;
 				currentCamera = locomotionCamera;
 				_virtualCamera.Follow = locomotionCamera;
 			}
+		}
+
+
+	
+		private float BodyDistance(float a, float b, bool invert)
+		{
+			
+			return Mathf.Lerp(a, b, invert ? -Time.deltaTime: Time.deltaTime);
 		}
 		private void CameraRotation()
 		{

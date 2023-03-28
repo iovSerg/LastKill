@@ -26,8 +26,6 @@ namespace LastKill
         }
         public override void OnStartState()
         {
-            if (_debug.ShowDebugLog)
-                Debug.Log("Crouch state");
 
             defaultCapsuleRadius = _capsule.GetCapsuleRadius();
             defaultCapsuleHeight = _capsule.GetCapsuleHeight();
@@ -50,24 +48,15 @@ namespace LastKill
 
         public override void UpdateState()
         {
-            if(_debug.ShowDebugCrouch)
-                _debug.DebugCrouch(defaultCapsuleHeight,offsetHitCrouch);
 
             _move.Move(_input.Move, crouchSpeed);
 
             //if (!_input.Crouch && !ForceCrouchByHeight() && !_animator.Animator.GetBool("isStrafe"))
-            if (!_input.Crouch && !ForceCrouchByHeight())
+            if (!_input.Crouch && !_detection.CanGetUp())
                     StopState();
 
         }
-		//private void OnDrawGizmos()
-		//{
 
-  //              Gizmos.color = Color.yellow;
-  //              Gizmos.DrawRay(transform.position + Vector3.up * defaultCapsuleHeight, transform.forward * offsetHitCrouch);
-  //              Gizmos.DrawRay(transform.position, Vector3.up * offsetHitCrouch);
-
-  //      }
 		private bool ForceCrouchByHeight()
         {
             RaycastHit hit;

@@ -61,14 +61,14 @@ namespace LastKill
             // smooth rotate character
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, targetRotation, 0), 0.1f);
 
-            if (_animator.HasFinishedAnimation(layerIndex))
+            if (_animator.HasFinishedAnimation(layerIndex, 0.8f))
                 StopState();
         }
         public override void OnStopState()
         {
             base.OnStopState();
-            _capsule.ResetCapsuleSize();
             _move.StopMovement();
+            _capsule.ResetCapsuleSize();
         }
     }
 }

@@ -124,7 +124,7 @@ namespace LastKill
 				if (highestPosition - transform.position.y >= heightForKillOnLand)
 				{
 					Landing(true, s_animDeathState, deathClip);
-					_input.OnDied?.Invoke();
+					//_input.OnDied?.Invoke();
 					return;
 				}
 				else if (highestPosition - transform.position.y >= heightForHardLand)

@@ -26,6 +26,7 @@ namespace LastKill
         protected ICamera _camera;
         protected IDebug _debug;
         protected IInput _input;
+        protected IDetection _detection;
         protected virtual void Start()
         {
             _move = GetComponent<IMove>();
@@ -36,6 +37,7 @@ namespace LastKill
             _camera = GetComponent<ICamera>();
             _audio = GetComponent<IAudio>();
             _debug = GetComponent<IDebug>();
+            _detection = GetComponent<IDetection>();
         }
 
         public void StartState()
