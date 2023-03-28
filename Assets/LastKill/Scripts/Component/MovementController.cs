@@ -41,6 +41,11 @@ namespace LastKill
 		[SerializeField] private float initialCapsuleCenter = 0.93f;
 
 
+		// variables for root motion
+		private bool useRootMotion = false;
+		private Vector3 rootMotionMultiplier = Vector3.one;
+		private bool useRotationRootMotion = true;
+
 		[SerializeField] private float rotationSpeed = 15f;
 		[SerializeField] private Vector3 velocity;
 		[SerializeField] private float speed;
@@ -52,10 +57,11 @@ namespace LastKill
 
 
 		private ICamera _camera;
-
+		private IAnimator _animator;
 		private void Awake()
 		{
 			_camera = GetComponent<ICamera>();
+			_animator = GetComponent<IAnimator>();
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<PlayerInput>();
 
@@ -85,10 +91,21 @@ namespace LastKill
 			// set sphere position, with offset
 			//Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			//Grounded = Physics.CheckSphere(spherePosition, _controller.radius, GroundLayers, QueryTriggerInteraction.Ignore);
-			//RaycastHit hit;
-			//Grounded = Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), Vector3.down, out hit, 0.5f);
-			Grounded = Physics.CheckSphere(transform.position, GroundedRadius, GroundLayers);
+
+			//Grounded = Physics.CheckSphere(transform.position, GroundedRadius, GroundLayers);
+
+			RaycastHit hit;
+			Grounded = Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), Vector3.down, out hit, 0.5f);
+
+
+
 			if (!Grounded && !_controller.isGrounded) return;
+		}
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.green;
+			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+			Gizmos.DrawSphere(spherePosition, GroundedOffset);
 		}
 		private void Move(float targetSpeed, bool rotateCharacter = true)
 		{
@@ -100,11 +117,24 @@ namespace LastKill
 			GroundedCheck();
 			GravityControl();
 
-			if (_input.Move == Vector2.zero) return;
+			if (useRootMotion) return;
+			if (!_controller.enabled) return;
 
 			_controller.Move(velocity * Time.deltaTime);
 		}
+		Vector3 deltaPosition = Vector3.zero;
+		private void OnAnimatorMove()
+		{
+			if (!useRootMotion) return;
 
+			if (_controller.enabled)
+				_controller.Move(_animator.Animator.deltaPosition);
+			else
+				_animator.Animator.ApplyBuiltinRootMotion();
+
+			deltaPosition = _animator.Animator.deltaPosition;
+			transform.rotation *= _animator.Animator.deltaRotation;
+		}
 		public void Move(Vector2 moveInput, float targetSpeed, bool rotateCharacter = true)
 		{
 			speed = Mathf.Lerp(speed, targetSpeed * _input.Magnituda, Time.deltaTime * SpeedChangeRate);
@@ -118,11 +148,9 @@ namespace LastKill
 
 				if (rotateCharacter)
 					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-
-				Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-				velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
-
 			}
+			Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+			velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
 		}
 
 		public void Move(Vector2 moveInput, float targetSpeed, Quaternion cameraRotation, bool rotateCharacter = true)
@@ -141,32 +169,33 @@ namespace LastKill
 
 		public void StopMovement()
 		{
-			throw new NotImplementedException();
+			velocity = Vector3.zero;
+			speed = 0;
 		}
 
 		public void SetVelocity(Vector3 velocity)
 		{
-			throw new NotImplementedException();
+			this.velocity = velocity;
 		}
 
 		public Vector3 GetVelocity()
 		{
-			throw new NotImplementedException();
+			return velocity;
 		}
 
 		public float GetGravity()
 		{
-			throw new NotImplementedException();
+			return Gravity;
 		}
 
 		public void EnableGravity()
 		{
-			throw new NotImplementedException();
+			UseGravity = true;
 		}
 
 		public void DisableGravity()
 		{
-			throw new NotImplementedException();
+			UseGravity = false;
 		}
 
 		public void SetPosition(Vector3 newPosition)
@@ -191,12 +220,15 @@ namespace LastKill
 
 		public void ApplyRootMotion(Vector3 multiplier, bool applyRotation = false)
 		{
-			throw new NotImplementedException();
+			useRootMotion = true;
+			rootMotionMultiplier = multiplier;
+			useRotationRootMotion = applyRotation;
 		}
 
 		public void StopRootMotion()
 		{
-			throw new NotImplementedException();
+			useRootMotion = false;
+			useRotationRootMotion = false;
 		}
 
 		public Vector3 GetRelativeInput(Vector2 input)
@@ -233,12 +265,12 @@ namespace LastKill
 
 		public void EnableCollision()
 		{
-			throw new NotImplementedException();
+			_controller.enabled = true;
 		}
 
 		public void DisableCollision()
 		{
-			throw new NotImplementedException();
+			_controller.enabled = false;
 		}
 
 		

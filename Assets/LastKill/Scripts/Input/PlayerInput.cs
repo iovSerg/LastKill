@@ -43,6 +43,8 @@ namespace LastKill
 		public float Magnituda => _magnituda;
 		public int CurrentWeapon => _currentWeapon;
 
+		Action IInput.OnDied { get => OnDied; set => OnDied = value; }
+
 		private void Awake()
 		{
 			if (inputActions == null)

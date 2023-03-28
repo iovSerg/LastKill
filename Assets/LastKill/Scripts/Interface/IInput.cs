@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public interface IInput
 {
 	public Vector2 Move { get; }
 
+	public Action OnDied { get; set; }
 	public Vector2 Look { get; }
 	public bool Sprint { get; }
 	public bool Jump { get; }

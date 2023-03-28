@@ -8,7 +8,7 @@ namespace LastKill
 	public class AnimatorController : MonoBehaviour,IAnimator
 	{
 		private	Animator _animator;
-		private PlayerInput _input;
+		private IInput _input;
 
 		[SerializeField] private string s_magnitudaID = "Magnituda";
 		
@@ -29,7 +29,7 @@ namespace LastKill
 		private void Awake()
 		{
 			_animator = GetComponent<Animator>();
-			_input = GetComponent<PlayerInput>();
+			_input = GetComponent<IInput>();
 		}
 		private void Start()
 		{
@@ -65,17 +65,28 @@ namespace LastKill
 
 		public void SetAnimationState(string stateName, int layerIndex, float transitionDuration = 0.1F)
 		{
-			throw new NotImplementedException();
+			if (_animator.HasState(layerIndex, Animator.StringToHash(stateName)))
+				_animator.CrossFadeInFixedTime(stateName, transitionDuration, layerIndex);
 		}
 
 		public bool HasFinishedAnimation(string stateName, int layerIndex)
 		{
-			throw new NotImplementedException();
+			var stateInfo = _animator.GetCurrentAnimatorStateInfo(layerIndex);
+
+			if (_animator.IsInTransition(layerIndex)) return false;
+
+			if (stateInfo.IsName(stateName))
+			{
+				float normalizeTime = Mathf.Repeat(stateInfo.normalizedTime, 1);
+				if (normalizeTime >= 0.95f) return true;
+			}
+
+			return false;
 		}
 
 		public bool HasFinishedAnimation(int layerIndex)
 		{
-			throw new NotImplementedException();
+			return _animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime >= 0.95f && !_animator.IsInTransition(layerIndex);
 		}
 
 		public void StrafeUpdate()

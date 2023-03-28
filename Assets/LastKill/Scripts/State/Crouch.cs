@@ -19,6 +19,7 @@ namespace LastKill
 
         private bool gizmoCrouch;
         private int hashAnimState;
+
         private void Awake()
         {
             hashAnimState = Animator.StringToHash(crouchBlendState);
@@ -49,18 +50,24 @@ namespace LastKill
 
         public override void UpdateState()
         {
+            if(_debug.ShowDebugCrouch)
+                _debug.DebugCrouch(defaultCapsuleHeight,offsetHitCrouch);
+
             _move.Move(_input.Move, crouchSpeed);
 
             //if (!_input.Crouch && !ForceCrouchByHeight() && !_animator.Animator.GetBool("isStrafe"))
             if (!_input.Crouch && !ForceCrouchByHeight())
                     StopState();
+
         }
-		private void OnDrawGizmos()
-		{
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(transform.position + Vector3.up * defaultCapsuleHeight, transform.forward * offsetHitCrouch);
-            Gizmos.DrawRay(transform.position, Vector3.up * offsetHitCrouch);
-        }
+		//private void OnDrawGizmos()
+		//{
+
+  //              Gizmos.color = Color.yellow;
+  //              Gizmos.DrawRay(transform.position + Vector3.up * defaultCapsuleHeight, transform.forward * offsetHitCrouch);
+  //              Gizmos.DrawRay(transform.position, Vector3.up * offsetHitCrouch);
+
+  //      }
 		private bool ForceCrouchByHeight()
         {
             RaycastHit hit;

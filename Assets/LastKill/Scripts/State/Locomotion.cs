@@ -22,8 +22,6 @@ namespace LastKill
             if(_debug.ShowDebugLog)
                 Debug.Log("Locomotion state");
 
-
-
             _animator.SetAnimationState(hashAnimState,0, 0.25f);
 
             if(_input.Move.magnitude < 0.1f)
