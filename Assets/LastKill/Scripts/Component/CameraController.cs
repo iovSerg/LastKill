@@ -16,12 +16,11 @@ namespace LastKill
 		public float BottomClamp = -30.0f;
 		[Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
 		public float CameraAngleOverride = 0.0f;
-		[Tooltip("Speed of camera turn")]
-		public Vector2 CameraTurnSpeed = new Vector2(300.0f, 200.0f);
+
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
 
-		[SerializeField] public float speedChangeCamera = 2f;
+		[SerializeField] public float cameraPositionChangeRate = 2f;
 
 		[SerializeField] Transform locomotionCamera;
 		[SerializeField] Transform crouchCamera;
@@ -30,8 +29,8 @@ namespace LastKill
 
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
-		[SerializeField]	private float cameraInputX;
-		[SerializeField]	private float cameraInputY;
+		[SerializeField] private float cameraInputX;
+		[SerializeField] private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
 
 		private Camera _camera;
@@ -72,7 +71,7 @@ namespace LastKill
 			else if(_input.Aim)
 			{
 				if(bodyFolow.CameraDistance > 1f)
-					bodyFolow.CameraDistance = bodyFolow.CameraDistance - Time.deltaTime * speedChangeCamera;
+					bodyFolow.CameraDistance = bodyFolow.CameraDistance - Time.deltaTime * cameraPositionChangeRate;
 
 				bodyFolow.ShoulderOffset.y = 0.2f;
 			}
@@ -80,7 +79,7 @@ namespace LastKill
 			{
 
 				if (bodyFolow.CameraDistance < 4f)
-					bodyFolow.CameraDistance = bodyFolow.CameraDistance + Time.deltaTime * speedChangeCamera;
+					bodyFolow.CameraDistance = bodyFolow.CameraDistance + Time.deltaTime * cameraPositionChangeRate;
 
 				bodyFolow.ShoulderOffset.y = 0f;
 				currentCamera = locomotionCamera;

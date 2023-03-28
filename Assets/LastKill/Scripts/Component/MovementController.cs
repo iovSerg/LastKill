@@ -46,7 +46,7 @@ namespace LastKill
 		private Vector3 rootMotionMultiplier = Vector3.one;
 		private bool useRotationRootMotion = true;
 
-		[SerializeField] private float rotationSpeed = 15f;
+		//[SerializeField] private float rotationSpeed = 15f;
 		[SerializeField] private Vector3 velocity;
 		[SerializeField] private float speed;
 
@@ -74,7 +74,7 @@ namespace LastKill
 			if (_controller.isGrounded)
 			{
 				// stop our velocity dropping infinitely when grounded
-				if (velocity.y < 2.0f)
+				if (velocity.y < 2f)
 				{
 					velocity.y = -2f;
 				}
@@ -89,13 +89,13 @@ namespace LastKill
 		private void GroundedCheck()
 		{
 			// set sphere position, with offset
-			//Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-			//Grounded = Physics.CheckSphere(spherePosition, _controller.radius, GroundLayers, QueryTriggerInteraction.Ignore);
+			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 
 			//Grounded = Physics.CheckSphere(transform.position, GroundedRadius, GroundLayers);
 
-			RaycastHit hit;
-			Grounded = Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), Vector3.down, out hit, 0.5f);
+			//RaycastHit hit;
+			//Grounded = Physics.Raycast(transform.position, Vector3.down, out hit,0.2f);
 
 
 
@@ -105,7 +105,7 @@ namespace LastKill
 		{
 			Gizmos.color = Color.green;
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-			Gizmos.DrawSphere(spherePosition, GroundedOffset);
+			Gizmos.DrawSphere(spherePosition, GroundedRadius);
 		}
 		private void Move(float targetSpeed, bool rotateCharacter = true)
 		{

@@ -75,7 +75,7 @@ namespace LastKill
             _move.Move(_input.Move, crawlSpeed);
 
             // if crawl was true again, it means should stop ability
-            if (!_input.Crawl && !_detection.CanGetUp())
+            if (!_input.Crawl && !_detection.CanGetUp(2f))
             {
                 _animator.SetAnimationState(stopCrawlAnimationState,0);
                 stopCrawl = true;

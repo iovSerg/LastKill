@@ -1,6 +1,13 @@
 using UnityEngine;
 
-public interface IDetection 
+namespace LastKill
 {
-    public bool CanGetUp();
+    public interface IDetection
+    {
+        public bool CanGetUp(float offset);
+        public DescriptionClimb ClimbTargets();
+        public Vector3 ClimbTarget();
+        public float ForwardHeight { get; }
+
+    }
 }

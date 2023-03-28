@@ -11,8 +11,8 @@ namespace LastKill
 
         public void ResetMovementParametrs();
 
-        public void SetAnimationState(int hashName, int layerIndex = -1, float transitionDuration = 0.1f);
-        public void SetAnimationState(string stateName, int layerIndex = -1, float transitionDuration = 0.1f);
+        public void SetAnimationState(int hashName, int layerIndex = 0, float transitionDuration = 0.1f);
+        public void SetAnimationState(string stateName, int layerIndex = 0, float transitionDuration = 0.1f);
 
         public bool HasFinishedAnimation(string stateName, int layerIndex);
         public bool HasFinishedAnimation(int layerIndex,float time = 0.95f);

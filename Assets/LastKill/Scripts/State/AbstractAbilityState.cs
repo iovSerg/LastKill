@@ -11,6 +11,7 @@ namespace LastKill
         public bool IsStateRunning { get; private set; }
 
         public event Action<AbstractAbilityState> abilityStopped = null;
+
         public event Action<AbstractAbilityState> abilityStarted = null;
         public int StatePriority { get { return statePriority; } }
 

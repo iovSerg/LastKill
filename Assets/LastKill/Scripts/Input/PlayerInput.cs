@@ -6,22 +6,22 @@ namespace LastKill
 {
 	public class PlayerInput : MonoBehaviour,IInput
 	{
-		private PlayerInputSystem inputActions = null;
+		private PlayerInputSystem _input = null;
 
-		[SerializeField] private Vector2 _move;
-		[SerializeField] private Vector2 _look;
-		[SerializeField] private bool _sprint;
-		[SerializeField] private bool _jump;
-		[SerializeField] private bool _crouch;
-		[SerializeField] private bool _roll;
-		[SerializeField] private bool _fire;
-		[SerializeField] private bool _aim;
-		[SerializeField] private bool _strafe;
-		[SerializeField] private bool _crawl;
-		[SerializeField] private bool _reload;
-		[SerializeField] private float _magnituda;
-		[SerializeField] private int _currentWeapon;
-		[SerializeField] private int _lastWeapon;
+		[SerializeField] private Vector2 move;
+		[SerializeField] private Vector2 look;
+		[SerializeField] private bool sprint;
+		[SerializeField] private bool jump;
+		[SerializeField] private bool crouch;
+		[SerializeField] private bool roll;
+		[SerializeField] private bool fire;
+		[SerializeField] private bool aim;
+		[SerializeField] private bool strafe;
+		[SerializeField] private bool crawl;
+		[SerializeField] private bool reload;
+		[SerializeField] private float magnituda;
+		[SerializeField] private int currentWeapon;
+		[SerializeField] private int lastWeapon;
 
 		public Action OnDied;
 		public Action OnSelectWeapon;
@@ -30,177 +30,117 @@ namespace LastKill
 		//hold button or single click
 		[SerializeField] public bool HoldButton;
 
-		public Vector2 Move => _move;
-		public Vector2 Look => _look;
-		public bool Sprint => _sprint;
-		public bool Jump => _jump;
-		public bool Crouch => _crouch;
-		public bool Roll => _roll;
-		public bool Fire => _fire;
-		public bool Crawl => _crawl;
-		public bool Aim => _aim;
-		public bool Reload => _reload;
-		public float Magnituda => _magnituda;
-		public int CurrentWeapon => _currentWeapon;
+		public Vector2 Move => move;
+		public Vector2 Look => look;
+		public bool Sprint => sprint;
+		public bool Jump => jump;
+		public bool Crouch => crouch;
+		public bool Roll => roll;
+		public bool Fire => fire;
+		public bool Crawl => crawl;
+		public bool Aim => aim;
+		public bool Reload => reload;
+		public float Magnituda => magnituda;
+		public int CurrentWeapon => currentWeapon;
 
-		
+		AbilityState _abilityState;
 
 		private void Awake()
 		{
-			if (inputActions == null)
-				inputActions = new PlayerInputSystem();
 
-			inputActions.Player.Move.performed += OnMove;
-			inputActions.Player.Move.canceled += OnMove;
+			_abilityState = GetComponent<AbilityState>();
+			_abilityState.OnStateStop += AbilityState_OnStateStop;
 
-			inputActions.Player.Look.performed += ctx => _look = ctx.ReadValue<Vector2>();
-			inputActions.Player.Look.canceled += ctx => _look = ctx.ReadValue<Vector2>();
+			if (_input == null)
+				_input = new PlayerInputSystem();
 
-			inputActions.Player.Jump.performed += ctx => _jump = ctx.ReadValueAsButton();
-			inputActions.Player.Jump.canceled += ctx => _jump = ctx.ReadValueAsButton();
+			_input.Player.Move.performed += OnMove;
+			_input.Player.Move.canceled += OnMove;
 
-			inputActions.Player.Fire.started += ctx => _fire = ctx.ReadValueAsButton();
-			inputActions.Player.Fire.performed += ctx => _fire = ctx.ReadValueAsButton();
-			inputActions.Player.Fire.canceled += ctx => _fire = ctx.ReadValueAsButton();
+			_input.Player.Look.performed += ctx => look = ctx.ReadValue<Vector2>();
+			_input.Player.Look.canceled += ctx => look = ctx.ReadValue<Vector2>();
 
+			_input.Player.Jump.performed += ctx => jump = ctx.ReadValueAsButton();
+			_input.Player.Jump.canceled += ctx => jump = ctx.ReadValueAsButton();
 
-			inputActions.Player.Roll.performed += ctx => _roll = ctx.ReadValueAsButton();
-			inputActions.Player.Roll.canceled += ctx => _roll = ctx.ReadValueAsButton();
+			_input.Player.Fire.started += ctx => fire = ctx.ReadValueAsButton();
+			_input.Player.Fire.performed += ctx => fire = ctx.ReadValueAsButton();
+			_input.Player.Fire.canceled += ctx => fire = ctx.ReadValueAsButton();
 
-			inputActions.Player.Exit.canceled += ctx => { Debug.Log("Quit"); Application.Quit(); };
+			_input.Player.Roll.performed += ctx => roll = ctx.ReadValueAsButton();
+			_input.Player.Roll.canceled += ctx => roll = ctx.ReadValueAsButton();
 
-			inputActions.Player.Reload.performed += ctx => {
-				OnReload?.Invoke();
-			};
+			_input.Player.Crawl.performed += ctx => crawl = ctx.ReadValueAsButton();
+			_input.Player.Crawl.canceled += ctx => crawl = ctx.ReadValueAsButton();
 
-            //inputActions.Player.Reload.performed += ctx => reload = ctx.ReadValueAsButton();
-            //inputActions.Player.Reload.canceled += ctx => reload = ctx.ReadValueAsButton();
+			_input.Player.Exit.canceled += ctx => { Debug.Log("Quit"); Application.Quit(); };
 
-            inputActions.Player.Aim.performed += ctx =>
-            {
-               // _aim = ctx.ReadValueAsButton();
-                _aim = !_aim;
-            };
-            //inputActions.Player.Aim.performed += OnAim;
-            //inputActions.Player.Aim.canceled += OnAim;
+			_input.Player.Reload.performed += ctx => { OnReload?.Invoke(); };
 
-            inputActions.Player.Crawl.performed += OnCrawl;
-			inputActions.Player.Crawl.canceled += OnCrawl;
+            _input.Player.Aim.performed += ctx =>{  aim = !aim; };
 
-			inputActions.Player.Crouch.performed += OnCrouch;
-			inputActions.Player.Crouch.canceled += OnCrouch;
+			_input.Player.Crouch.performed += OnCrouch;
+			_input.Player.Crouch.canceled += OnCrouch;
 
-			inputActions.Player.Sprint.performed += OnSprint;
-			inputActions.Player.Sprint.canceled += OnSprint;
+			_input.Player.Sprint.performed += ctx => { sprint = !sprint; };
 
-			//inputActions.Player.Sprint.performed += ctx => {
-
-			//	_sprint = ctx.ReadValueAsButton();
-			//	//_sprint = !_sprint;
-			//};
-
-			//inputActions.Player.Crouch.performed += ctx => {
-			//	_crouch = ctx.ReadValueAsButton();
-			//	//_crouch = !_crouch;
-			//};
-			//inputActions.Player.Crawl.performed += ctx => {
-			//	_crawl = ctx.ReadValueAsButton();
-			//	//_crawl = !_crawl;
-			//};
-
-			inputActions.Player.Weapon.performed += SetWeapon;
+			_input.Player.Weapon.performed += SetWeapon;
 
 		}
+
+		private void AbilityState_OnStateStop(AbstractAbilityState obj)
+		{
+			if (obj as Crouch)
+				Debug.Log("Crouch");
+		}
+
 
 		private void Update()
 		{
-			if(_crouch && timeIsPressed + 0.5f < Time.time && timeIsPressed != 0)
+			//when pressing a key
+			if (crouch && timeIsPressed + 0.5f < Time.time && timeIsPressed != 0)
 			{
-				_crawl = true;
-				_crouch = false;
-			}
-		}
-		private void OnSprint(InputAction.CallbackContext obj)
-        {
-			if (HoldButton)
-			{
-				_sprint = obj.ReadValueAsButton();
-			}
-			else
-			{
-				_sprint = !_sprint;
+				crawl = true;
+				crouch = false;
 			}
 		}
 		double timeIsPressed;
         private void OnCrouch(InputAction.CallbackContext obj)
         {
-			IInput.OnCrouch?.Invoke();
-			if (_crawl && !obj.canceled)
+			//When pressing a key
+			if (crawl && !obj.canceled)
 			{
-				_crawl = false;
+				crawl = false;
 				return;
 			}
 			if (obj.performed)
 			{
-				_crouch = !_crouch;
+				crouch = !crouch;
 				timeIsPressed = Time.time;
 			}
-			if(obj.canceled) timeIsPressed = 0f;
+			if (obj.canceled) timeIsPressed = 0f;
 
 		}
-
-		private void OnCrawl(InputAction.CallbackContext obj)
-        {
-			if (HoldButton)
-			{
-				_crawl = obj.ReadValueAsButton();
-			}
-			else
-			{
-				_crawl = !_crawl;
-				_crouch = false;
-			}
-		}
-
-  //      private void OnAim(InputAction.CallbackContext obj)
-  //      {
-		//	if (HoldButton)
-		//	{
-		//		_aim = obj.ReadValueAsButton();
-		//	}
-		//	else
-		//	{
-		//		_aim = !_aim;
-				
-		//	}
-		//}
 
         private void SetWeapon(InputAction.CallbackContext obj)
         {
-			//_lastWeapon = _currentWeapon;
-			int.TryParse(obj.control.displayName,out _currentWeapon);
-            //if (_lastWeapon == _currentWeapon)
-            //{
-            //    _currentWeapon = 0;
-            //}
+			int.TryParse(obj.control.displayName,out currentWeapon);
 			OnSelectWeapon?.Invoke();
         }
-		
 
         private void OnMove(InputAction.CallbackContext obj)
 		{
-			_move = obj.ReadValue<Vector2>();
-			_magnituda = Mathf.Clamp01(Mathf.Abs(_move.x) + Mathf.Abs(_move.y));
-			
+			move = obj.ReadValue<Vector2>();
+			magnituda = Mathf.Clamp01(Mathf.Abs(move.x) + Mathf.Abs(move.y));
 		}
 
 		private void OnEnable()
 		{
-			inputActions.Enable();
+			_input.Enable();
 		}
 		private void OnDisable()
 		{
-			inputActions.Disable();
+			_input.Disable();
 		}
 
 	}

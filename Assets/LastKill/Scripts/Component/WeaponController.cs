@@ -7,7 +7,7 @@ namespace LastKill
 {
     public class WeaponController : MonoBehaviour
     {
-        [SerializeField] private string animBlandState = "Draw Weapon HighLeft";
+        //[SerializeField] private string animBlandState = "Draw Weapon HighLeft";
 
 		private IAnimator animator;
 		private PlayerInput input;

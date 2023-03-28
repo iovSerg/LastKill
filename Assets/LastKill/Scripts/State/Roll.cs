@@ -7,7 +7,7 @@ namespace LastKill
 	public class Roll : AbstractAbilityState
 	{
         [SerializeField] private string freeRollAnimation = "Roll";
-        [SerializeField] private string aimedRollAnimation = "Roll.RollAimForward";
+        //[SerializeField] private string aimedRollAnimation = "Roll.RollAimForward";
 
         private int hashAimRoll;
         private int hashFreeRoll;

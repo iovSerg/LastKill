@@ -2,40 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LastKill
 {
     public class ButtonShowUI : MonoBehaviour
     {
-        [SerializeField] GameObject objectCrouch;
-        [SerializeField] GameObject objectCrawl;
-		private bool crouch = false;
+		[SerializeField] private Image buttonImage;
+		[SerializeField] private Sprite crouch;
+		[SerializeField] private Sprite crawl;
+
+		private bool clickBtn = true;
 		private void Awake()
 		{
-			IInput.OnCrouch += OnCrouch;
+			buttonImage = gameObject.GetComponent<Image>();
 		}
 
-		private void OnCrouch()
+		public void ChangeIcon()
 		{
-			objectCrouch.SetActive(false);
-			objectCrawl.SetActive(true);
+			buttonImage.sprite = clickBtn ? crawl : crouch;
+			clickBtn = !clickBtn;
 		}
-
-		public void EnableCrouch()
-		{
-			if(crouch)
-			{
-				objectCrawl.SetActive(false);
-				objectCrouch.SetActive(true);
-				crouch = false;
-			}
-			crouch = true;
-		}
-		public void DisableCrouch()
-		{
-			objectCrouch.SetActive(false);
-			objectCrawl.SetActive(true);
-		}
-
 	}
 }

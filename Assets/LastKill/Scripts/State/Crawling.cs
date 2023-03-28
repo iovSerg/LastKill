@@ -26,11 +26,14 @@ namespace LastKill
 		{
 			hashStartCrawl = Animator.StringToHash(startCrawlAnimationState);
 			hashStopCrawl = Animator.StringToHash(stopCrawlAnimationState);
+
 		}
 		public override void OnStartState()
 		{
+			defaultCapsuleRadius = _capsule.GetCapsuleRadius();
 			startingCrawl = true;
-			_animator.SetAnimationState(hashStartCrawl);
+			_animator.SetAnimationState(hashStartCrawl,0);
+			_capsule.SetCapsuleSize(capsuleHeightOnCrawl, defaultCapsuleRadius);
 		}
 
 		public override bool ReadyToStart()
@@ -42,18 +45,18 @@ namespace LastKill
 		{
 			if (startingCrawl)
 			{
-				if (!_animator.HasFinishedAnimation(hashStartCrawl))
+				if (!_animator.HasFinishedAnimation(startCrawlAnimationState,0))
 					startingCrawl = false;
 			}
 			if (stoppingCrawl)
 			{
-				if (_animator.HasFinishedAnimation(0))
+				if (_animator.HasFinishedAnimation(0,0.8f))
 					StopState();
 				return;
 			}
 			_move.Move(_input.Move, crawlSpeed);
 
-			if (!_input.Crawl && !_detection.CanGetUp())
+			if (!_input.Crawl && !_detection.CanGetUp(2f))
 			{
 				_animator.SetAnimationState(hashStopCrawl);
 				stoppingCrawl = true;

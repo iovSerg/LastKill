@@ -13,7 +13,7 @@ namespace LastKill
 		[SerializeField] private float capsuleCastRadius = 0.2f;
 		[SerializeField] private float capsuleCastHeight = 1f;
 		[SerializeField] private float minClimbHeight = 0.5f;
-		[SerializeField] private float maxClimbHeight = 1.5f;
+		//[SerializeField] private float maxClimbHeight = 1.5f;
 
 		public bool ShowDebugLog { get => debugLog; set => debugLog = value	; }
 		public bool ShowDebugCrouch { get => debugCrouch; set => debugCrouch = value; }

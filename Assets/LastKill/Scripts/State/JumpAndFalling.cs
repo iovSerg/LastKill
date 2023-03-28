@@ -57,8 +57,7 @@ namespace LastKill
 		}
 		public override void OnStartState()
 		{
-			if (_debug.ShowDebugLog)
-				Debug.Log("State Jump");
+
 
 			startInput = _input.Move;
 			targetRotation = _camera.GetTransform.eulerAngles.y;
@@ -144,7 +143,9 @@ namespace LastKill
 			if (transform.position.y > highestPosition)
 				highestPosition = transform.position.y;
 
-			
+			startInput = Vector2.SmoothDamp(startInput, _input.Move, ref inputVel, airControl);
+			_move.Move(startInput, startSpeed, false);
+
 
 		}
 	    public override void OnStopState()

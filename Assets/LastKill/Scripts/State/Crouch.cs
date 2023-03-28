@@ -18,11 +18,11 @@ namespace LastKill
         private float defaultCapsuleRadius = 0f;
 
         private bool gizmoCrouch;
-        private int hashAnimState;
+        private int hashBlendState;
 
         private void Awake()
         {
-            hashAnimState = Animator.StringToHash(crouchBlendState);
+            hashBlendState = Animator.StringToHash(crouchBlendState);
         }
         public override void OnStartState()
         {
@@ -32,11 +32,12 @@ namespace LastKill
 
             _capsule.SetCapsuleSize(capsuleHeightOnCrouch, _capsule.GetCapsuleRadius());
             _move.Move(new Vector3(0, 0.5f, 0));
-            _animator.SetAnimationState(hashAnimState,0, 0.25f);
+            _animator.SetAnimationState(hashBlendState,0, 0.25f);
         }
 
         public override void OnStopState()
         {
+           
             _capsule.ResetCapsuleSize();
         }
 
@@ -52,19 +53,10 @@ namespace LastKill
             _move.Move(_input.Move, crouchSpeed);
 
             //if (!_input.Crouch && !ForceCrouchByHeight() && !_animator.Animator.GetBool("isStrafe"))
-            if (!_input.Crouch && !_detection.CanGetUp())
+            if (!_input.Crouch && !_detection.CanGetUp(offsetHitCrouch))
                     StopState();
 
         }
 
-		private bool ForceCrouchByHeight()
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, offsetHitCrouch))
-            {
-                return true;
-            }       
-            return false;
-        }
     }
 }
