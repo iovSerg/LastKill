@@ -6,7 +6,7 @@ namespace LastKill
     {
         public bool CanGetUp(float offset);
         public DescriptionClimb ClimbTargets();
-        public Vector3 ClimbTarget();
+        public RaycastHit ClimbTarget();
         public float ForwardHeight { get; }
 
     }

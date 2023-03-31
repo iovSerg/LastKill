@@ -91,7 +91,6 @@ namespace LastKill
 	
 		private float BodyDistance(float a, float b, bool invert)
 		{
-			
 			return Mathf.Lerp(a, b, invert ? -Time.deltaTime: Time.deltaTime);
 		}
 		private void CameraRotation()

@@ -14,10 +14,24 @@ namespace LastKill
 	}
 	public class DetectionController : MonoBehaviour, IDetection
 	{
+
+		private IKController _IK;
+
+		[Header("Param Raycast beetwen")]
 		[SerializeField] private LayerMask climbLayre;
+		//[SerializeField] private float offsetLHand = 0;
+		//[SerializeField] private float offsetRHand = 0;
+		//[SerializeField] private float beetwenBeams = 0.2f;
+		[SerializeField] private float lenghBeams = 0.4f;
+		[SerializeField] private int countRaycastHeight = 13;
+		[SerializeField] private int minRaycastHeight = 4;
+
+		
+
+		[SerializeField] private bool showDebug = true;
 		private void Awake()
 		{
-
+			_IK = GetComponent<IKController>();
 		}
 		public bool CanGetUp(float offset)
 		{
@@ -34,90 +48,112 @@ namespace LastKill
 		private float fHeight;
 		private void OnDrawGizmos()
 		{
-			//Gizmos.color = Color.green;
-			//Gizmos.DrawRay(transform.position + Vector3.up * 1.2f, transform.forward * 0.5f);
-
-			//if(Physics.Raycast(transform.position + Vector3.up * 1.2f,transform.forward,out hit,0.5f,climbLayre))
-			//{
-			//	Gizmos.color = Color.red;
-			//	Gizmos.DrawSphere(hit.point, 0.05f);
-			//}
-		}
-		private void OnDrawGizmosSelected()
-		{
-			for (int i = 4; i <= 14; i++)
+			//Variant one
+			if (showDebug)
 			{
-
-				if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i), transform.forward, out hit, 0.5f, climbLayre))
+				for (int i = minRaycastHeight; i <= countRaycastHeight; i++)
 				{
-					Debug.DrawRay(transform.position + Vector3.up * (0.2f * i), transform.forward * 0.5f, Color.green);
-					Gizmos.color = Color.green;
-					Gizmos.DrawSphere(hit.point, 0.05f);
-				}
-				else
-				{
-					Debug.DrawRay(transform.position + Vector3.up * (0.2f * i), transform.forward * 0.5f, Color.red);
-					Gizmos.color = Color.red;
-					Gizmos.DrawSphere(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, 0.02f);
-					if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, Vector3.down * 0.2f, out hit, 0.5f, climbLayre))
+					if (!Physics.Raycast(transform.position + Vector3.up * (0.2f * i), transform.forward, out hit, lenghBeams, climbLayre))
 					{
-						Gizmos.color = Color.blue;
-						Gizmos.DrawSphere(hit.point, 0.02f);
+						Gizmos.color = Color.green;
+						Gizmos.DrawRay(transform.position + Vector3.up * (0.2f * i), transform.forward * 0.5f);
+						if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, Vector3.down * 0.2f, out hit, 0.5f, climbLayre))
+						{
+							Gizmos.color = Color.cyan;
+							Gizmos.DrawSphere(hit.point, 0.05f);
+							Gizmos.color = Color.green;
+							Gizmos.DrawSphere(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f + Vector3.down * 0.2f, 0.05f);
+							Gizmos.DrawSphere(hit.point + transform.right * 0.4f, 0.05f);
+							Gizmos.DrawSphere(hit.point - transform.right * 0.4f, 0.05f);
+							Gizmos.color = Color.black;
+						}
+					}
+					else
+					{
+						Gizmos.color = Color.red;
+						Gizmos.DrawRay(transform.position + Vector3.up * (0.2f * i), transform.forward * 0.5f);
 					}
 				}
-
 			}
-			//Gizmos.color = Color.yellow;
-			//Gizmos.DrawRay(transform.position + Vector3.up + transform.forward, Vector3.down);
-			//Gizmos.color = Color.yellow;
-			//Gizmos.DrawRay(transform.position + Vector3.up + transform.forward, Vector3.down);
-			//Gizmos.color = Color.blue;
-			//Gizmos.DrawRay(transform.position + Vector3.up * 1.4f,transform.forward * 0.5f);
-			//Gizmos.DrawRay(transform.position + Vector3.up * 1.4f + transform.forward * 0.5f, Vector3.down * 0.2f);
 
+			//Gizmos.color = Color.green;
+
+			//Vector3 rightArm = transform.position + Vector3.up * 3f  + transform.right * 0.3f;
+			//Vector3 leftArm = transform.position + Vector3.up * 3f - transform.right * 0.3f;
+			//Vector3 root = transform.position + Vector3.up * 3f;
+
+			//Gizmos.DrawRay(rightArm, transform.forward);
+			//Gizmos.DrawRay(leftArm, transform.forward);
+			//Gizmos.DrawRay(root, transform.forward);
+
+			//if(Physics.Raycast(rightArm + transform.forward * 0.4f,Vector3.down,out RaycastHit rightHit,2f,climbLayre,QueryTriggerInteraction.Ignore))
+			//{
+			//	Gizmos.DrawSphere(rightHit.point, 0.02f);
+			//}
+			//if (Physics.Raycast(leftArm + transform.forward * 0.4f, Vector3.down, out RaycastHit leftHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
+			//{
+			//	Gizmos.DrawSphere(leftHit.point, 0.02f);
+			//}
+			//if (Physics.Raycast(root + transform.forward * 0.5f, Vector3.down, out RaycastHit rootHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
+			//{
+			//	Gizmos.DrawSphere(rootHit.point, 0.02f);
+			//}
+			//Gizmos.DrawRay(rightArm + transform.forward, Vector3.down * 2f);
+			//Gizmos.DrawRay(leftArm + transform.forward, Vector3.down * 2f);
+			//Gizmos.DrawSphere(rightHit.point - leftHit.point, 0.5f);
 		}
-		public Vector3 ClimbTarget()
-		{
-			for (int i = 4; i <= 14; i++)
-			{
 
+		public RaycastHit ClimbTarget()
+		{
+			for (int i = minRaycastHeight; i <= countRaycastHeight; i++)
+			{
 				if (!Physics.Raycast(transform.position + Vector3.up * (0.2f * i), transform.forward, out hit, 0.5f, climbLayre))
 				{
-					if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, Vector3.down, out hit, 0.5f, climbLayre))
+					if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, Vector3.down * 0.2f, out hit, 0.5f, climbLayre))
 					{
+						_IK.TLeftHand.position = hit.point - transform.right * 0.4f;
+						_IK.TRightHand.position = hit.point + transform.right * 0.4f;
+						
 						fHeight = i;
-						return transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f;
+						return hit;
 					}
 				}
 
 			}
-			return Vector3.zero;
+			return hit;
 		}
 		public DescriptionClimb ClimbTargets()
 		{
-
-			if (Physics.Raycast(transform.position + Vector3.up + transform.forward, Vector3.down, out hit, 0.5f, climbLayre))
+			Vector3 rightArm = transform.position + Vector3.up * 3f + transform.right * 0.3f;
+			Vector3 leftArm = transform.position + Vector3.up * 3f - transform.right * 0.3f;
+			Vector3 root = transform.position + Vector3.up * 3f;
+			if (Physics.Raycast(rightArm + transform.forward * 0.4f, Vector3.down, out RaycastHit rightHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
 			{
-				Debug.Log("Small");
-				return new DescriptionClimb() { targetPosition = Vector3.zero, raycastHit = hit, hasClimb = HasClimb.Small };
+				_IK.TRightHand.position = rightHit.point;
 			}
-			if(Physics.Raycast(transform.position + Vector3.up * 1.4f + transform.forward * 0.5f,transform.forward * 0.5f))
+			
+			if (Physics.Raycast(leftArm + transform.forward * 0.4f, Vector3.down, out RaycastHit leftHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
 			{
-				if(Physics.Raycast(transform.position + Vector3.up * 1.4f + transform.forward * 0.5f,Vector3.down * 0.2f, out hit))
+				_IK.TLeftHand.position = leftHit.point;
+			}
+			if (Physics.Raycast(root + transform.forward * 0.4f, Vector3.down, out RaycastHit rootHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
+			{
+				float distance = rootHit.distance;
+				HasClimb climb;
+				if(distance < 0.5f)
 				{
-					Debug.Log("Short");
-					return new DescriptionClimb() { targetPosition = Vector3.zero, raycastHit = hit, hasClimb = HasClimb.Short };
+					climb = HasClimb.High;
 				}
-			}
-			if (Physics.Raycast(transform.position + Vector3.up * 2f + transform.forward * 0.5f, transform.forward * 0.5f))
-			{
-				if (Physics.Raycast(transform.position + Vector3.up * 1.4f + transform.forward * 0.5f, Vector3.down * 0.2f, out hit))
+				else if(distance < 1.6f)
 				{
-					Debug.Log("High");
-					return new DescriptionClimb() { targetPosition = Vector3.zero, raycastHit = hit, hasClimb = HasClimb.Short };
+					climb = HasClimb.Short;
 				}
+				else
+				{
+					climb = HasClimb.Small;
+				}
+				return new DescriptionClimb() { raycastHit = rootHit, targetPosition = rootHit.point, hasClimb = climb };
 			}
-
 
 			return new DescriptionClimb() { targetPosition = Vector3.zero, hasClimb = HasClimb.Null };
 		}
