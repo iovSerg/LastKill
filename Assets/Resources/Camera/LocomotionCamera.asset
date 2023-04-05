@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47e65272d6949f4b8e211157ad32367, type: 3}
   m_Name: LocomotionCamera
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 1.64, z: 0}
-  ShoulderOffset: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: 1.5, z: 0}
+  ShoulderOffset: {x: 1.54, y: 0, z: 0}
   stateCamera: 0
-  CameraSide: 0
-  CameraDistance: 0
+  CameraSide: 0.186
+  CameraDistance: 3.9
   cameraName: Locomotion
   tagName: Camera/Locomotion
   priority: 10

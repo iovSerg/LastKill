@@ -23,19 +23,12 @@ namespace LastKill
 
 		[SerializeField] public float speedChangeRate = 2f;
 
-		[SerializeField] private  Transform _crouchCamera;
-		[SerializeField] private  Transform _locomotionCamera;
-		[SerializeField] private  Transform _aimCamera;
-
 		[SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
 		[SerializeField] private float cameraInputX;
 		[SerializeField] private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
-
-		[SerializeField] float bodyCanAim;
-		[SerializeField] float bodyAim;
 
 		private Camera _camera;
 		private IInput _input;
@@ -44,9 +37,8 @@ namespace LastKill
 		public float Sensivity { get => sensivity; set => sensivity = value; }
 		public Transform GetTransform => _camera.transform;
 
-		[SerializeField] private Transform newPositionCamera;
-		 private CameraData[] cameraData;
-		 private CameraData currentCameraData;
+		[SerializeField] private CameraData[] cameraData;
+		[SerializeField] private CameraData currentCameraData;
 		private void Awake()
 		{
 			//Download camera settings
@@ -82,12 +74,21 @@ namespace LastKill
 				}
 		}
 		[SerializeField] private Vector3 follow;
+		[SerializeField] private Vector3 body;
+		[SerializeField] private float distance;
 		private void LateUpdate()
 		{
 			CameraRotation();
 			if(follow.y != currentCameraData.position.y)
 			{
 				follow = Vector3.Lerp(currentCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
+				body = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
+				distance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
+				//??? Not working
+				//_bodyFolow.CameraSide = currentCameraData.CameraSide;
+
+				_bodyFolow.CameraDistance = distance;
+				_bodyFolow.ShoulderOffset = body;
 				currentCamera.localPosition = follow;
 			}
 		}
@@ -99,17 +100,10 @@ namespace LastKill
 			
 				cameraFollow.transform.SetParent(transform,true);
 				cameraFollow.transform.localPosition = Vector3.zero;
-
-				foreach (CameraData camera in cameraData)
-					CameraSetup(cameraFollow.transform, camera);
-
-				GameObject cameraFree = new GameObject("FreeCamera");
-				cameraFree.transform.SetParent(cameraFollow.transform,true);
-				cameraFree.transform.localPosition = Vector3.zero;
-				cameraFree.transform.position = _locomotionCamera.position;
-				currentCamera = cameraFree.transform;
+				currentCamera = cameraFollow.transform;
 			}
-			//Read documentation body(Do nothing) change 3rd follow
+			//Learn how to change body(Do nothing) change 3rd follow
+			//Узнать как изменить Body(Do nothing) на 3rd Follow
 			if (GameObject.FindAnyObjectByType<CinemachineVirtualCamera>() == null)
 			{
 				GameObject followCamera = new GameObject("PlayerFollowCamera");
@@ -125,28 +119,9 @@ namespace LastKill
 				_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
 				_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 				_virtualCamera.Follow = currentCamera;
-				newPositionCamera = currentCamera;
 			}
 		}
-		private void CameraSetup(Transform parent, CameraData camera)
-		{
-			GameObject temp = new GameObject(camera.name);
-			temp.transform.SetParent(parent,true);
-			temp.transform.localPosition = camera.position;
 
-			switch (camera.stateCamera)
-			{
-				case CameraState.Locomotion:
-					_locomotionCamera = temp.transform;
-					break;
-				case CameraState.Crouch:
-					_crouchCamera = temp.transform;
-					break;
-				case CameraState.Aim:
-					_aimCamera = temp.transform;
-					break;
-			}
-		}
 		private float BodyDistance(float a, float b, bool invert)
 		{
 			return Mathf.Lerp(a, b, invert ? -Time.deltaTime: Time.deltaTime);

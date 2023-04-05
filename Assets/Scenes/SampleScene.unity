@@ -41600,6 +41600,10 @@ MonoBehaviour:
   bodyCanAim: 0
   bodyAim: 0
   newPositionCamera: {fileID: 0}
+  currentCameraData: {fileID: 0}
+  follow: {x: 0, y: 0, z: 0}
+  body: {x: 0, y: 0, z: 0}
+  distance: 0
 --- !u!114 &1777266946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50164,12 +50168,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 0
+  cameraState: 3
   crawlSpeed: 2
   capsuleHeightOnCrawl: 0.5
   obstaclesMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   startCrawlAnimationState: Crawling.StandToCrawl
   stopCrawlAnimationState: Crawling.CrawlToStand
 --- !u!1001 &2690311732998958237
@@ -53767,7 +53771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 0
+  cameraState: 2
   freeRollAnimation: Roll
   rollSpeed: 7
   capsuleHeightOnRoll: 1
@@ -53806,7 +53810,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  speedChangeRate: 2
+  speedChangeRate: 10
   _crouchCamera: {fileID: 0}
   _locomotionCamera: {fileID: 0}
   _aimCamera: {fileID: 0}
@@ -53818,6 +53822,10 @@ MonoBehaviour:
   bodyCanAim: 4
   bodyAim: 1
   newPositionCamera: {fileID: 0}
+  currentCameraData: {fileID: 0}
+  follow: {x: 0, y: 0, z: 0}
+  body: {x: 0, y: 0, z: 0}
+  distance: 0
 --- !u!114 &8346253359335037497
 MonoBehaviour:
   m_ObjectHideFlags: 0

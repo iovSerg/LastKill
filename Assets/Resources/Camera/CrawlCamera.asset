@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e47e65272d6949f4b8e211157ad32367, type: 3}
-  m_Name: CrouchCamera
+  m_Name: CrawlCamera
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0.7, z: 0}
-  ShoulderOffset: {x: 1.14, y: 0.5, z: 0.52}
-  stateCamera: 1
+  position: {x: 0, y: 0, z: 0}
+  ShoulderOffset: {x: 4.67, y: 1.92, z: 2.92}
+  stateCamera: 3
   CameraSide: 1
-  CameraDistance: 2.18
-  cameraName: Crouch
-  tagName: Camera/Crouch
+  CameraDistance: 4.46
+  cameraName: Crawl
+  tagName: 
   priority: 10
