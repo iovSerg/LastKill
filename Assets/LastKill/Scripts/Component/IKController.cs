@@ -8,6 +8,7 @@ namespace LastKill
 	{
 		[SerializeField] private Transform targetLeftHand;
 		[SerializeField] private Transform targetRightHand;
+
 		[SerializeField] private Transform targetRightFoot;
 		[SerializeField] private Transform targetLeftFoot;
 
@@ -27,11 +28,26 @@ namespace LastKill
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.black;
-			Gizmos.DrawSphere(targetLeftHand.position, 0.05f);
-			Gizmos.DrawSphere(targetRightHand.position, 0.05f);
+			if(targetLeftHand != null && targetRightHand != null)
+			{
+				Gizmos.DrawSphere(targetLeftHand.position, 0.05f);
+				Gizmos.DrawSphere(targetRightHand.position, 0.05f);
+			}
 		}
+		[SerializeField] private GameObject leftFoot;
 		private void Awake()
 		{
+			GameObject target = new GameObject("TargetIK");
+
+			targetLeftHand = new GameObject("LeftHandIK").transform;
+			targetRightHand = new GameObject("RightHandIK").transform;
+
+			targetRightHand.parent = target.transform;
+			targetLeftHand.parent = target.transform; 
+
+			targetLeftFoot = new GameObject("LeftFootIK").transform.parent = target.transform;
+			targetRightFoot = new GameObject("RightFootIK").transform.parent = target.transform;
+
 			_animator = GetComponent<Animator>();
 		}
 		private void Update()
@@ -43,18 +59,36 @@ namespace LastKill
 		private void OnAnimatorIK(int layerIndex)
 		{
 			//LeftHand
-			_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, weightLeftHand);
-			_animator.SetIKPosition(AvatarIKGoal.LeftHand, targetLeftHand.position);
+			if(targetLeftHand != null)
+			{
+				_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, weightLeftHand);
+				_animator.SetIKPosition(AvatarIKGoal.LeftHand, targetLeftHand.position);
 
-			_animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, weightLeftHand);
-			_animator.SetIKRotation(AvatarIKGoal.LeftHand, targetLeftHand.rotation);
+				_animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, weightLeftHand);
+				_animator.SetIKRotation(AvatarIKGoal.LeftHand, targetLeftHand.rotation);
+			}
 
 			//RightHand
-			_animator.SetIKPositionWeight(AvatarIKGoal.RightHand, weightRightHand);
-			_animator.SetIKPosition(AvatarIKGoal.RightHand, targetRightHand.position);
+			if(targetRightHand != null)
+			{
+				_animator.SetIKPositionWeight(AvatarIKGoal.RightHand, weightRightHand);
+				_animator.SetIKPosition(AvatarIKGoal.RightHand, targetRightHand.position);
 
-			_animator.SetIKRotationWeight(AvatarIKGoal.RightHand, weightRightHand);
-			_animator.SetIKRotation(AvatarIKGoal.RightHand, targetRightHand.rotation);
+				_animator.SetIKRotationWeight(AvatarIKGoal.RightHand, weightRightHand);
+				_animator.SetIKRotation(AvatarIKGoal.RightHand, targetRightHand.rotation);
+			}
+
+			//RightFoot
+			if(targetRightFoot != null)
+			{
+
+			}
+
+			//LeftFoot
+			if(targetLeftFoot != null)
+			{
+
+			}
 		}
 
 		

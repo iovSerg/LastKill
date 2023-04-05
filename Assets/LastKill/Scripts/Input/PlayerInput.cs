@@ -4,7 +4,17 @@ using UnityEngine.InputSystem;
 
 namespace LastKill
 {
-	public class PlayerInput : MonoBehaviour,IInput
+	[RequireComponent(typeof(CharacterController))]
+	[RequireComponent(typeof(MovementController))]
+	[RequireComponent(typeof(AbilityState))]
+	[RequireComponent(typeof(AnimatorController))]
+	[RequireComponent(typeof(CameraController))]
+	[RequireComponent(typeof(MovementController))]
+	[RequireComponent(typeof(DetectionController))]
+	[RequireComponent(typeof(IKController))]
+	[RequireComponent(typeof(WeaponController))]
+
+	public class PlayerInput : MonoBehaviour, IInput
 	{
 		private PlayerInputSystem _input = null;
 
@@ -23,10 +33,6 @@ namespace LastKill
 		[SerializeField] private int currentWeapon;
 		[SerializeField] private int lastWeapon;
 
-		public Action OnDied;
-		public Action OnSelectWeapon;
-		public Action OnReload;
-
 		//hold button or single click
 		[SerializeField] public bool HoldButton;
 
@@ -43,7 +49,16 @@ namespace LastKill
 		public float Magnituda => magnituda;
 		public int CurrentWeapon => currentWeapon;
 
+		private event Action died;
+
+		public event Action OnSelectWeapon;
+
+		public Action OnDied { get => died; set => died = value; }
+		public Action OnReload { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 		AbilityState _abilityState;
+
+		private double timeIsPressed;
 
 		private void Awake()
 		{
@@ -104,8 +119,9 @@ namespace LastKill
 				crouch = false;
 			}
 		}
-		double timeIsPressed;
-        private void OnCrouch(InputAction.CallbackContext obj)
+
+
+		private void OnCrouch(InputAction.CallbackContext obj)
         {
 			//When pressing a key
 			if (crawl && !obj.canceled)

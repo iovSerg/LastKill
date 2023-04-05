@@ -17,7 +17,7 @@ namespace LastKill
 		[SerializeField] private float climbUpHeight = 1.5f;
 		[SerializeField] private float speedVectorUp = 2f;
 		[Header("Animation")]
-		[SerializeField] private string smallAnimState = "Climb.StepUp";
+		//[SerializeField] private string smallAnimState = "Climb.StepUp";
 		[SerializeField] private string shortAnimState = "Climb.ClimbUp";
 		[SerializeField] private string highAnimState = "Climb.Jump";
 		[SerializeField] private string playAnimState;

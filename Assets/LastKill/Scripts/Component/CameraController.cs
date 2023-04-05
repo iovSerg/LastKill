@@ -22,16 +22,19 @@ namespace LastKill
 
 		[SerializeField] public float cameraPositionChangeRate = 2f;
 
-		[SerializeField] Transform locomotionCamera;
-		[SerializeField] Transform crouchCamera;
-		[SerializeField] Transform aimCamera;
-		[SerializeField] Cinemachine3rdPersonFollow bodyFolow;
+		[SerializeField]private  Transform crouchCamera;
+		[SerializeField]private  Transform locomotionCamera;
+		[SerializeField]private  Transform aimCamera;
 
+		[SerializeField] private Cinemachine3rdPersonFollow bodyFolow;
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
 		[SerializeField] private float cameraInputX;
 		[SerializeField] private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
+
+		[SerializeField] float bodyCanAim;
+		[SerializeField] float bodyAim;
 
 		private Camera _camera;
 		private IInput _input;
@@ -39,28 +42,46 @@ namespace LastKill
 		public float Sensivity { get => sensivity; set => sensivity = value; }
 		public Transform GetTransform => _camera.transform;
 
+		public CameraData[] cameras;
+		public CinemachineVirtualCameraBase.TransitionParams m_Transitions;
+
 		private void Awake()
 		{
+			//Download camera settings
+			cameras = Resources.LoadAll<CameraData>("Camera/");
+
+			if (cameras != null)
+			{
+				GameObject targetCamera = new GameObject("CameraTarget");
+				targetCamera.transform.SetParent(this.transform);
+				targetCamera.transform.localPosition = Vector3.zero;
+				foreach (CameraData camera in cameras)
+					CameraSetup(targetCamera.transform, camera);
+			}
+			if (GameObject.FindAnyObjectByType<CinemachineVirtualCamera>() == null)
+			{
+				GameObject followCamera = new GameObject("PlayerFollowCamera");
+				followCamera.AddComponent<CinemachineVirtualCamera>();
+				_virtualCamera = followCamera.GetComponent<CinemachineVirtualCamera>();
+				_virtualCamera.Follow = locomotionCamera;
+
+				bodyFolow = new Cinemachine3rdPersonFollow();
+				//_virtualCamera.m_Transitions = bodyFolow;
+			}
+			else
+			{
+				_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
+				_virtualCamera.Follow = locomotionCamera;
+				bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+			}
 			_camera = Camera.main;
 			_input = GetComponent<IInput>();
 
-			if(locomotionCamera == null)
-			    locomotionCamera = GameObject.FindGameObjectWithTag("Camera/Locomotion").transform;
-
-			if(crouchCamera == null)
-			    crouchCamera = GameObject.FindGameObjectWithTag("Camera/Crouch").transform;
-
-			if (currentCamera == null)
-				currentCamera = locomotionCamera;
-
-			bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 		}
-		[SerializeField] float bodyCanAim;
-		[SerializeField] float bodyAim;
+
 		private void LateUpdate()
 		{
 			CameraRotation();
-
 
 			if(_input.Crouch || _input.Crawl)
 			{
@@ -87,8 +108,26 @@ namespace LastKill
 			}
 		}
 
+		private void CameraSetup(Transform parent, CameraData camera)
+		{
+			GameObject temp = new GameObject(camera.name);
+			temp.transform.SetParent(parent);
+			temp.transform.localPosition = camera.position;
 
-	
+			switch (camera.cameraName)
+			{
+				case "Locomotion":
+					locomotionCamera = temp.transform;
+					currentCamera = locomotionCamera;
+					break;
+				case "Crouch":
+					crouchCamera = temp.transform;
+					break;
+				case "Aim":
+					aimCamera = temp.transform;
+					break;
+			}
+		}
 		private float BodyDistance(float a, float b, bool invert)
 		{
 			return Mathf.Lerp(a, b, invert ? -Time.deltaTime: Time.deltaTime);

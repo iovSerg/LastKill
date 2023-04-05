@@ -55,9 +55,14 @@ namespace LastKill
 			hashHardLand = Animator.StringToHash(s_animHardLandState);
 			hashSoftLand = Animator.StringToHash(s_animSoftLandState);
 		}
+		private void DD()
+		{
+		}
+
 		public override void OnStartState()
 		{
 
+			
 
 			startInput = _input.Move;
 			targetRotation = _camera.GetTransform.eulerAngles.y;
@@ -80,8 +85,6 @@ namespace LastKill
 
 			highestPosition = transform.position.y;
 			landing = false;
-
-
 		}
 
 		private void PerformJump()
@@ -123,7 +126,7 @@ namespace LastKill
 				if (highestPosition - transform.position.y >= heightForKillOnLand)
 				{
 					Landing(true, s_animDeathState, deathClip);
-					//_input.OnDied?.Invoke();
+					_input.OnDied?.Invoke();
 					return;
 				}
 				else if (highestPosition - transform.position.y >= heightForHardLand)
@@ -151,7 +154,7 @@ namespace LastKill
 	    public override void OnStopState()
 		{
 			base.OnStopState();
-
+			_input.OnDied -= DD;
 			highestPosition = 0;
 			_move.StopRootMotion();
 		}

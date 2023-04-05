@@ -71,7 +71,7 @@ namespace LastKill
 		}
 		private void GravityControl()
 		{
-			if (_controller.isGrounded)
+			if (Grounded)
 			{
 				// stop our velocity dropping infinitely when grounded
 				if (velocity.y < 2f)
@@ -86,20 +86,13 @@ namespace LastKill
 				velocity.y += Gravity * Time.deltaTime;
 			}
 		}
+		[SerializeField] Vector3 rayOrigin;
+		[SerializeField] Vector3 targetPosition;
 		private void GroundedCheck()
 		{
 			// set sphere position, with offset
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-
-			//Grounded = Physics.CheckSphere(transform.position, GroundedRadius, GroundLayers);
-
-			//RaycastHit hit;
-			//Grounded = Physics.Raycast(transform.position, Vector3.down, out hit,0.2f);
-
-
-
-			if (!Grounded && !_controller.isGrounded) return;
 		}
 		private void OnDrawGizmos()
 		{
@@ -122,7 +115,6 @@ namespace LastKill
 
 			_controller.Move(velocity * Time.deltaTime);
 		}
-		Vector3 deltaPosition = Vector3.zero;
 		private void OnAnimatorMove()
 		{
 			if (!useRootMotion) return;
@@ -132,7 +124,6 @@ namespace LastKill
 			else
 				_animator.Animator.ApplyBuiltinRootMotion();
 
-			deltaPosition = _animator.Animator.deltaPosition;
 			transform.rotation *= _animator.Animator.deltaRotation;
 		}
 		public void Move(Vector2 moveInput, float targetSpeed, bool rotateCharacter = true)
@@ -155,7 +146,7 @@ namespace LastKill
 
 		public void Move(Vector2 moveInput, float targetSpeed, Quaternion cameraRotation, bool rotateCharacter = true)
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		public void Move(Vector3 velocity)

@@ -14,24 +14,32 @@ namespace LastKill
 	}
 	public class DetectionController : MonoBehaviour, IDetection
 	{
-
 		private IKController _IK;
 
 		[Header("Param Raycast beetwen")]
 		[SerializeField] private LayerMask climbLayre;
-		//[SerializeField] private float offsetLHand = 0;
-		//[SerializeField] private float offsetRHand = 0;
-		//[SerializeField] private float beetwenBeams = 0.2f;
+		[SerializeField] private LayerMask groundLayer;
 		[SerializeField] private float lenghBeams = 0.4f;
 		[SerializeField] private int countRaycastHeight = 13;
 		[SerializeField] private int minRaycastHeight = 4;
-
-		
-
 		[SerializeField] private bool showDebug = true;
+
 		private void Awake()
 		{
 			_IK = GetComponent<IKController>();
+		}
+		public float ColliderHeight()
+		{
+			return 0;
+		}
+		public bool IsGrounded()
+		{
+			if(Physics.SphereCast(transform.position,0.2f,-Vector3.up,out RaycastHit hit,groundLayer))
+			{
+				return true;
+			}
+
+			return false;
 		}
 		public bool CanGetUp(float offset)
 		{

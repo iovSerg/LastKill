@@ -30,6 +30,7 @@ namespace LastKill
 
         private void OnDied()
         {
+            Debug.Log("asd");
             _died = true;
             StartCoroutine(OnAlive());
         }
@@ -49,8 +50,11 @@ namespace LastKill
 
             OnUpdateState?.Invoke();
         }
-
-        private void CheckAbilitiesStates()
+		private void FixedUpdate()
+		{
+			
+		}
+		private void CheckAbilitiesStates()
         {
             AbstractAbilityState nextState = CurrentState;
 

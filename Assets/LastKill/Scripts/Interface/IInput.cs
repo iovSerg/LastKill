@@ -5,8 +5,13 @@ public interface IInput
 {
 	public Vector2 Move { get; }
 
-	public static Action OnDied { get; set; }
-	public static Action OnCrouch { get; set; }
+	public Action OnDied { get; set; }
+	public Action OnReload { get; set; }
+
+	public event Action OnSelectWeapon;
+
+
+
 	public Vector2 Look { get; }
 	public bool Sprint { get; }
 	public bool Jump { get; }
