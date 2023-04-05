@@ -8,7 +8,7 @@ namespace LastKill
     [DisallowMultipleComponent]
     public class Crouch : AbstractAbilityState
     {
-        [SerializeField] private string crouchBlendState = "Crouch";
+        [SerializeField] private string animBlendState = "Crouch";
         [SerializeField] private LayerMask obstaclesMask;
         [SerializeField] private float capsuleHeightOnCrouch = 1f;
         [SerializeField] private float crouchSpeed = 2f;
@@ -22,7 +22,7 @@ namespace LastKill
 
         private void Awake()
         {
-            hashBlendState = Animator.StringToHash(crouchBlendState);
+            hashBlendState = Animator.StringToHash(animBlendState);
         }
         public override void OnStartState()
         {

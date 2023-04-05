@@ -13,13 +13,17 @@ namespace LastKill
 
 		[Header("Animator Parameters")]
 		[SerializeField] private string magnituda = "Magnituda";
+		[SerializeField] private string horizontal = "Horizontal";
+		[SerializeField] private string vertical = "Vertical";
 		[SerializeField] private string crouch = "Crouch";
 		
 
 		//hash animation
 		private int hashMagnituda;
+		private int hashHorizontal;
+		private int hashVertical;
 		private int hashCrouch;
-
+		
 		private float speedAnimation;
 
 		[SerializeField] private float speedChangeRate = 10f;
@@ -41,17 +45,7 @@ namespace LastKill
 			_abilityState.OnStateStop += OnStateStop;
 		}
 
-		private void OnStateStop(AbstractAbilityState obj)
-		{
-			if (obj as Crouch)
-				_animator.SetBool(hashCrouch, false);
-		}
 
-		private void OnStateStart(AbstractAbilityState obj)
-		{
-			if (obj as Crouch)
-				_animator.SetBool(hashCrouch,true);
-		}
 
 		private void Start()
 		{
@@ -61,9 +55,21 @@ namespace LastKill
 		private void AssignAnimationIDs()
 		{
 			hashMagnituda = Animator.StringToHash(magnituda);
+			hashHorizontal = Animator.StringToHash(horizontal);
+			hashVertical = Animator.StringToHash(vertical);
 			hashCrouch = Animator.StringToHash(crouch);
 		}
+		private void OnStateStop(AbstractAbilityState obj)
+		{
+			if (obj as Crouch)
+				_animator.SetBool(hashCrouch, false);
+		}
 
+		private void OnStateStart(AbstractAbilityState obj)
+		{
+			if (obj as Crouch)
+				_animator.SetBool(hashCrouch, true);
+		}
 		private void Update()
 		{
 			
@@ -114,7 +120,7 @@ namespace LastKill
 
 		public void StrafeUpdate()
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		public void LocomotionUpdate()

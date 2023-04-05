@@ -9490,7 +9490,7 @@ PrefabInstance:
     - target: {fileID: 9078993845375825671, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_UpdateMethod
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9078993845375825671, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
@@ -41347,6 +41347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statePriority: 0
   cameraState: 0
+  animatorBlendState: Strafe
+  strafeSpeed: 3
 --- !u!114 &1777266935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41426,7 +41428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statePriority: 0
   cameraState: 0
-  crouchBlendState: Crouch
+  animBlendState: Crouch
   obstaclesMask:
     serializedVersion: 2
     m_Bits: 0
@@ -41583,24 +41585,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c3c1de1b685d54fb76ac76a588ea10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCamera: {fileID: 0}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  currentCameraData: {fileID: 0}
   speedChangeRate: 2
-  _bodyFolow: {fileID: 0}
-  _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 5
-  cameraData: []
-  currentCameraData: {fileID: 0}
-  follow: {x: 0, y: 0, z: 0}
-  body: {x: 0, y: 0, z: 0}
-  distance: 0
-  side: 0
-  timer: 0
 --- !u!114 &1777266946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41614,6 +41607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnituda: Magnituda
+  horizontal: Horizontal
+  vertical: Vertical
   crouch: Crouch
   speedChangeRate: 10
 --- !u!114 &1777266947
@@ -50151,7 +50146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 1
-  cameraState: 0
+  cameraState: 2
+  animatorBlendState: Strafe
+  strafeSpeed: 3
 --- !u!114 &1702430953112933938
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -50289,6 +50286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690311731660374980, guid: c03bd0ac81416544c9f81f28ede4cb1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c03bd0ac81416544c9f81f28ede4cb1f, type: 3}
@@ -53802,24 +53804,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c3c1de1b685d54fb76ac76a588ea10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCamera: {fileID: 0}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  currentCameraData: {fileID: 0}
   speedChangeRate: 10
-  _bodyFolow: {fileID: 0}
-  _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 3
-  cameraData: []
-  currentCameraData: {fileID: 0}
-  follow: {x: 0, y: 0, z: 0}
-  body: {x: 0, y: 0, z: 0}
-  distance: 0
-  side: 0
-  timer: 0
 --- !u!114 &8346253359335037497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53833,6 +53826,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnituda: Magnituda
+  horizontal: Horizontal
+  vertical: Vertical
   crouch: Crouch
   speedChangeRate: 10
 --- !u!114 &8346253359335037499
@@ -53878,7 +53873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statePriority: 2
   cameraState: 1
-  crouchBlendState: Crouch
+  animBlendState: Crouch
   obstaclesMask:
     serializedVersion: 2
     m_Bits: 0
