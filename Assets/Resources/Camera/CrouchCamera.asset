@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CrouchCamera
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0.7, z: 0}
-  ShoulderOffset: {x: 1.14, y: 0.5, z: 0.52}
+  ShoulderOffset: {x: 0, y: 0, z: 0}
   stateCamera: 1
-  CameraSide: 1
-  CameraDistance: 2.18
+  CameraSide: 0.58
+  CameraDistance: 2
   cameraName: Crouch
   tagName: Camera/Crouch
   priority: 10

@@ -8,9 +8,16 @@ namespace LastKill
 {
 	public class CameraController : MonoBehaviour ,ICamera
 	{
+		private Camera _camera;
+		private IInput _input;
+		private AbilityState _abilityState;
+		private CameraData[] cameraData;
+
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-		public Transform currentCamera;
+	    private Cinemachine3rdPersonFollow _bodyFolow;
+		private CinemachineVirtualCamera _virtualCamera;
+		private Transform _followCamera;
 		[Tooltip("How far in degrees can you move the camera up")]
 		public float TopClamp = 70.0f;
 		[Tooltip("How far in degrees can you move the camera down")]
@@ -21,24 +28,19 @@ namespace LastKill
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
 
-		[SerializeField] public float speedChangeRate = 2f;
+		[Header("State Camera")]
+		[SerializeField] private CameraData currentCameraData;
 
-		[SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
-		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
+		[SerializeField] private float speedChangeRate = 2f;
 		[SerializeField] private float cameraInputX;
 		[SerializeField] private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
-
-		private Camera _camera;
-		private IInput _input;
-		private AbilityState _abilityState;
+		private float timer = 0;
 
 		public float Sensivity { get => sensivity; set => sensivity = value; }
 		public Transform GetTransform => _camera.transform;
 
-		[SerializeField] private CameraData[] cameraData;
-		[SerializeField] private CameraData currentCameraData;
 		private void Awake()
 		{
 			//Download camera settings
@@ -58,11 +60,13 @@ namespace LastKill
 		}
 		private void OnStateStart(AbstractAbilityState obj)
 		{
+			timer = 0f;
 			SetCurrentCameraData(obj.cameraState);
 		}
 
 		private void OnStateStop(AbstractAbilityState obj)
 		{
+			timer = 0f;
 			SetCurrentCameraData(obj.cameraState);
 		}
 		private void SetCurrentCameraData(CameraState state)
@@ -73,23 +77,22 @@ namespace LastKill
 					currentCameraData = data;
 				}
 		}
-		[SerializeField] private Vector3 follow;
-		[SerializeField] private Vector3 body;
-		[SerializeField] private float distance;
+
+
+
 		private void LateUpdate()
 		{
 			CameraRotation();
-			if(follow.y != currentCameraData.position.y)
+			if(timer < 0.25f)
 			{
-				follow = Vector3.Lerp(currentCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
-				body = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
-				distance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
-				//??? Not working
-				//_bodyFolow.CameraSide = currentCameraData.CameraSide;
+				timer += Time.deltaTime;
+				_followCamera.localPosition = Vector3.Lerp(_followCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
+				_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
+				_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
 
-				_bodyFolow.CameraDistance = distance;
-				_bodyFolow.ShoulderOffset = body;
-				currentCamera.localPosition = follow;
+				//??? Not working
+				_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
+				//_bodyFolow.CameraSide = currentCameraData.CameraSide;
 			}
 		}
 		private void SceneCameraSetup()
@@ -100,7 +103,7 @@ namespace LastKill
 			
 				cameraFollow.transform.SetParent(transform,true);
 				cameraFollow.transform.localPosition = Vector3.zero;
-				currentCamera = cameraFollow.transform;
+				_followCamera = cameraFollow.transform;
 			}
 			//Learn how to change body(Do nothing) change 3rd follow
 			//Узнать как изменить Body(Do nothing) на 3rd Follow
@@ -109,7 +112,7 @@ namespace LastKill
 				GameObject followCamera = new GameObject("PlayerFollowCamera");
 				followCamera.AddComponent<CinemachineVirtualCamera>();
 				_virtualCamera = followCamera.GetComponent<CinemachineVirtualCamera>();
-				_virtualCamera.Follow = currentCamera;
+				_virtualCamera.Follow = _followCamera;
 
 				//bodyFolow = new Cinemachine3rdPersonFollow();
 				//_virtualCamera.m_Transitions = bodyFolow;
@@ -118,7 +121,7 @@ namespace LastKill
 			{
 				_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
 				_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-				_virtualCamera.Follow = currentCamera;
+				_virtualCamera.Follow = _followCamera;
 			}
 		}
 
@@ -134,7 +137,7 @@ namespace LastKill
 			cameraInputX = ClampAngle(cameraInputX, float.MinValue, float.MaxValue);
 			cameraInputY = ClampAngle(cameraInputY, BottomClamp, TopClamp);
 
-			currentCamera.transform.rotation = Quaternion.Euler(cameraInputY,cameraInputX , 0f);
+			_followCamera.transform.rotation = Quaternion.Euler(cameraInputY,cameraInputX , 0f);
 		}
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{

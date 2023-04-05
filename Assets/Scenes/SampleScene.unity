@@ -41589,21 +41589,18 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   speedChangeRate: 2
-  _crouchCamera: {fileID: 0}
-  _locomotionCamera: {fileID: 0}
-  _aimCamera: {fileID: 0}
   _bodyFolow: {fileID: 0}
   _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 5
-  bodyCanAim: 0
-  bodyAim: 0
-  newPositionCamera: {fileID: 0}
+  cameraData: []
   currentCameraData: {fileID: 0}
   follow: {x: 0, y: 0, z: 0}
   body: {x: 0, y: 0, z: 0}
   distance: 0
+  side: 0
+  timer: 0
 --- !u!114 &1777266946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53740,7 +53737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 0
+  cameraState: 4
   climbMask:
     serializedVersion: 2
     m_Bits: 1
@@ -53811,21 +53808,18 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   speedChangeRate: 10
-  _crouchCamera: {fileID: 0}
-  _locomotionCamera: {fileID: 0}
-  _aimCamera: {fileID: 0}
   _bodyFolow: {fileID: 0}
   _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 3
-  bodyCanAim: 4
-  bodyAim: 1
-  newPositionCamera: {fileID: 0}
+  cameraData: []
   currentCameraData: {fileID: 0}
   follow: {x: 0, y: 0, z: 0}
   body: {x: 0, y: 0, z: 0}
   distance: 0
+  side: 0
+  timer: 0
 --- !u!114 &8346253359335037497
 MonoBehaviour:
   m_ObjectHideFlags: 0

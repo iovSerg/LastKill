@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e47e65272d6949f4b8e211157ad32367, type: 3}
-  m_Name: LocomotionCamera
+  m_Name: ClimbCamera
   m_EditorClassIdentifier: 
   position: {x: 0, y: 1.5, z: 0}
   ShoulderOffset: {x: 0, y: 0, z: 0}
-  stateCamera: 0
-  CameraSide: 0.58
-  CameraDistance: 3.9
-  cameraName: Locomotion
-  tagName: Camera/Locomotion
-  priority: 10
+  stateCamera: 4
+  CameraSide: 0.5
+  CameraDistance: 7
+  cameraName: Climb
+  tagName: Camera/Climb
+  priority: 0
