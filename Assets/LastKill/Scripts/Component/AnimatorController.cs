@@ -9,12 +9,16 @@ namespace LastKill
 	{
 		private	Animator _animator;
 		private IInput _input;
+		private AbilityState _abilityState;
 
-		[SerializeField] private string s_magnitudaID = "Magnituda";
+		[Header("Animator Parameters")]
+		[SerializeField] private string magnituda = "Magnituda";
+		[SerializeField] private string crouch = "Crouch";
 		
 
 		//hash animation
 		private int hashMagnituda;
+		private int hashCrouch;
 
 		private float speedAnimation;
 
@@ -26,11 +30,29 @@ namespace LastKill
 
 		public bool isDrawWeapon => throw new NotImplementedException();
 
+
 		private void Awake()
 		{
 			_animator = GetComponent<Animator>();
 			_input = GetComponent<IInput>();
+			_abilityState = GetComponent<AbilityState>();
+
+			_abilityState.OnStateStart += OnStateStart;
+			_abilityState.OnStateStop += OnStateStop;
 		}
+
+		private void OnStateStop(AbstractAbilityState obj)
+		{
+			if (obj as Crouch)
+				_animator.SetBool(hashCrouch, false);
+		}
+
+		private void OnStateStart(AbstractAbilityState obj)
+		{
+			if (obj as Crouch)
+				_animator.SetBool(hashCrouch,true);
+		}
+
 		private void Start()
 		{
 			AssignAnimationIDs();
@@ -38,7 +60,8 @@ namespace LastKill
 
 		private void AssignAnimationIDs()
 		{
-			hashMagnituda = Animator.StringToHash(s_magnitudaID);
+			hashMagnituda = Animator.StringToHash(magnituda);
+			hashCrouch = Animator.StringToHash(crouch);
 		}
 
 		private void Update()

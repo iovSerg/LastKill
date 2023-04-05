@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,13 +21,13 @@ namespace LastKill
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
 
-		[SerializeField] public float cameraPositionChangeRate = 2f;
+		[SerializeField] public float speedChangeRate = 2f;
 
-		[SerializeField]private  Transform crouchCamera;
-		[SerializeField]private  Transform locomotionCamera;
-		[SerializeField]private  Transform aimCamera;
+		[SerializeField] private  Transform _crouchCamera;
+		[SerializeField] private  Transform _locomotionCamera;
+		[SerializeField] private  Transform _aimCamera;
 
-		[SerializeField] private Cinemachine3rdPersonFollow bodyFolow;
+		[SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 
 		[SerializeField] private float cameraInputX;
@@ -38,93 +39,111 @@ namespace LastKill
 
 		private Camera _camera;
 		private IInput _input;
+		private AbilityState _abilityState;
 
 		public float Sensivity { get => sensivity; set => sensivity = value; }
 		public Transform GetTransform => _camera.transform;
 
-		public CameraData[] cameras;
-		public CinemachineVirtualCameraBase.TransitionParams m_Transitions;
-
+		[SerializeField] private Transform newPositionCamera;
+		 private CameraData[] cameraData;
+		 private CameraData currentCameraData;
 		private void Awake()
 		{
 			//Download camera settings
-			cameras = Resources.LoadAll<CameraData>("Camera/");
+			cameraData = Resources.LoadAll<CameraData>("Camera/");
+			
+			_camera = Camera.main;
+			_input = GetComponent<IInput>();
 
-			if (cameras != null)
+			_abilityState = GetComponent<AbilityState>();
+			_abilityState.OnStateStart += OnStateStart;
+			_abilityState.OnStateStop += OnStateStop;
+		}
+		private void Start()
+		{
+			SetCurrentCameraData(CameraState.Locomotion);
+			SceneCameraSetup();
+		}
+		private void OnStateStart(AbstractAbilityState obj)
+		{
+			SetCurrentCameraData(obj.cameraState);
+		}
+
+		private void OnStateStop(AbstractAbilityState obj)
+		{
+			SetCurrentCameraData(obj.cameraState);
+		}
+		private void SetCurrentCameraData(CameraState state)
+		{
+			foreach (CameraData data in cameraData)
+				if (data.stateCamera == state)
+				{
+					currentCameraData = data;
+				}
+		}
+		[SerializeField] private Vector3 follow;
+		private void LateUpdate()
+		{
+			CameraRotation();
+			if(follow.y != currentCameraData.position.y)
 			{
-				GameObject targetCamera = new GameObject("CameraTarget");
-				targetCamera.transform.SetParent(this.transform);
-				targetCamera.transform.localPosition = Vector3.zero;
-				foreach (CameraData camera in cameras)
-					CameraSetup(targetCamera.transform, camera);
+				follow = Vector3.Lerp(currentCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
+				currentCamera.localPosition = follow;
 			}
+		}
+		private void SceneCameraSetup()
+		{
+			if (cameraData != null)
+			{
+				GameObject cameraFollow = new GameObject("CameraTarget");
+			
+				cameraFollow.transform.SetParent(transform,true);
+				cameraFollow.transform.localPosition = Vector3.zero;
+
+				foreach (CameraData camera in cameraData)
+					CameraSetup(cameraFollow.transform, camera);
+
+				GameObject cameraFree = new GameObject("FreeCamera");
+				cameraFree.transform.SetParent(cameraFollow.transform,true);
+				cameraFree.transform.localPosition = Vector3.zero;
+				cameraFree.transform.position = _locomotionCamera.position;
+				currentCamera = cameraFree.transform;
+			}
+			//Read documentation body(Do nothing) change 3rd follow
 			if (GameObject.FindAnyObjectByType<CinemachineVirtualCamera>() == null)
 			{
 				GameObject followCamera = new GameObject("PlayerFollowCamera");
 				followCamera.AddComponent<CinemachineVirtualCamera>();
 				_virtualCamera = followCamera.GetComponent<CinemachineVirtualCamera>();
-				_virtualCamera.Follow = locomotionCamera;
+				_virtualCamera.Follow = currentCamera;
 
-				bodyFolow = new Cinemachine3rdPersonFollow();
+				//bodyFolow = new Cinemachine3rdPersonFollow();
 				//_virtualCamera.m_Transitions = bodyFolow;
 			}
 			else
 			{
 				_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
-				_virtualCamera.Follow = locomotionCamera;
-				bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-			}
-			_camera = Camera.main;
-			_input = GetComponent<IInput>();
-
-		}
-
-		private void LateUpdate()
-		{
-			CameraRotation();
-
-			if(_input.Crouch || _input.Crawl)
-			{
-				currentCamera = crouchCamera;
-				_virtualCamera.Follow = crouchCamera; 
-				bodyFolow.CameraDistance = 4;
-			}
-			else if(_input.Aim)
-			{
-				if(bodyFolow.CameraDistance > 1f)
-					bodyFolow.CameraDistance = bodyFolow.CameraDistance - Time.deltaTime * cameraPositionChangeRate;
-
-				bodyFolow.ShoulderOffset.y = 0.2f;
-			}
-			else
-			{
-
-				if (bodyFolow.CameraDistance < 4f)
-					bodyFolow.CameraDistance = bodyFolow.CameraDistance + Time.deltaTime * cameraPositionChangeRate;
-
-				bodyFolow.ShoulderOffset.y = 0f;
-				currentCamera = locomotionCamera;
-				_virtualCamera.Follow = locomotionCamera;
+				_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+				_virtualCamera.Follow = currentCamera;
+				newPositionCamera = currentCamera;
 			}
 		}
-
 		private void CameraSetup(Transform parent, CameraData camera)
 		{
 			GameObject temp = new GameObject(camera.name);
-			temp.transform.SetParent(parent);
+			temp.transform.SetParent(parent,true);
 			temp.transform.localPosition = camera.position;
 
-			switch (camera.cameraName)
+			switch (camera.stateCamera)
 			{
-				case "Locomotion":
-					locomotionCamera = temp.transform;
-					currentCamera = locomotionCamera;
+				case CameraState.Locomotion:
+					_locomotionCamera = temp.transform;
 					break;
-				case "Crouch":
-					crouchCamera = temp.transform;
+				case CameraState.Crouch:
+					_crouchCamera = temp.transform;
 					break;
-				case "Aim":
-					aimCamera = temp.transform;
+				case CameraState.Aim:
+					_aimCamera = temp.transform;
 					break;
 			}
 		}

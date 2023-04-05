@@ -14,6 +14,7 @@ namespace LastKill
 
         public event Action<AbstractAbilityState> abilityStarted = null;
         public int StatePriority { get { return statePriority; } }
+        public CameraState cameraState;
 
         // start time and stop time
         public float StartTime { get; private set; } = 0;

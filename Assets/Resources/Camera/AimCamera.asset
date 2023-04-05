@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: AimCamera
   m_EditorClassIdentifier: 
   position: {x: 0.3, y: 1.7, z: 2.5}
+  ShoulderOffset: {x: 0, y: 0, z: 0}
+  stateCamera: 2
+  CameraSide: 0
+  CameraDistance: 0
   cameraName: Aim
   tagName: Camera/Aim
   priority: 10

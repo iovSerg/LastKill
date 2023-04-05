@@ -26,7 +26,6 @@ namespace LastKill
         }
         public override void OnStartState()
         {
-
             defaultCapsuleRadius = _capsule.GetCapsuleRadius();
             defaultCapsuleHeight = _capsule.GetCapsuleHeight();
 
@@ -37,7 +36,6 @@ namespace LastKill
 
         public override void OnStopState()
         {
-           
             _capsule.ResetCapsuleSize();
         }
 

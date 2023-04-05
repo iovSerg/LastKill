@@ -41346,6 +41346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
 --- !u!114 &1777266935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41359,6 +41360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   freeRollAnimation: Roll
   rollSpeed: 7
   capsuleHeightOnRoll: 1
@@ -41377,6 +41379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   walkSpeed: 2
   sprintSpeed: 5
   animatorBlendState: Locomotion
@@ -41393,6 +41396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   s_animJumpState: JumpLanding.Jump
   s_animFallState: JumpLanding.Falling
   s_animHardLandState: JumpLanding.HardLand
@@ -41421,6 +41425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   crouchBlendState: Crouch
   obstaclesMask:
     serializedVersion: 2
@@ -41441,6 +41446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   crawlSpeed: 2
   capsuleHeightOnCrawl: 0.5
   obstaclesMask:
@@ -41461,6 +41467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   climbMask:
     serializedVersion: 2
     m_Bits: 0
@@ -41519,8 +41526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAim: 0
   weapons: []
-  HandHolder: {fileID: 0}
-  SpineHolder: {fileID: 0}
+  handWeapon: {fileID: 0}
+  spineWeapon: {fileID: 0}
 --- !u!114 &1777266943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41581,24 +41588,18 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  cameraPositionChangeRate: 2
-  crouchCamera: {fileID: 0}
-  locomotionCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
-  bodyFolow: {fileID: 0}
+  speedChangeRate: 2
+  _crouchCamera: {fileID: 0}
+  _locomotionCamera: {fileID: 0}
+  _aimCamera: {fileID: 0}
+  _bodyFolow: {fileID: 0}
   _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 5
   bodyCanAim: 0
   bodyAim: 0
-  cameras: []
-  m_Transitions:
-    m_BlendHint: 0
-    m_InheritPosition: 0
-    m_OnCameraLive:
-      m_PersistentCalls:
-        m_Calls: []
+  newPositionCamera: {fileID: 0}
 --- !u!114 &1777266946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41611,7 +41612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea82dec9975f4e41a9172306765dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s_magnitudaID: Magnituda
+  magnituda: Magnituda
+  crouch: Crouch
   speedChangeRate: 10
 --- !u!114 &1777266947
 MonoBehaviour:
@@ -50148,6 +50150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 1
+  cameraState: 0
 --- !u!114 &1702430953112933938
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -50161,6 +50164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
+  cameraState: 0
   crawlSpeed: 2
   capsuleHeightOnCrawl: 0.5
   obstaclesMask:
@@ -53703,6 +53707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 1
+  cameraState: 0
   s_animJumpState: JumpLanding.Jump
   s_animFallState: JumpLanding.Falling
   s_animHardLandState: JumpLanding.HardLand
@@ -53731,6 +53736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
+  cameraState: 0
   climbMask:
     serializedVersion: 2
     m_Bits: 1
@@ -53761,6 +53767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
+  cameraState: 0
   freeRollAnimation: Roll
   rollSpeed: 7
   capsuleHeightOnRoll: 1
@@ -53780,8 +53787,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAim: 0
   weapons: []
-  HandHolder: {fileID: 0}
-  SpineHolder: {fileID: 0}
+  handWeapon: {fileID: 0}
+  spineWeapon: {fileID: 0}
 --- !u!114 &8346253359335037496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53799,24 +53806,18 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  cameraPositionChangeRate: 2
-  crouchCamera: {fileID: 0}
-  locomotionCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
-  bodyFolow: {fileID: 0}
+  speedChangeRate: 2
+  _crouchCamera: {fileID: 0}
+  _locomotionCamera: {fileID: 0}
+  _aimCamera: {fileID: 0}
+  _bodyFolow: {fileID: 0}
   _virtualCamera: {fileID: 0}
   cameraInputX: 0
   cameraInputY: 0
   sensivity: 3
   bodyCanAim: 4
   bodyAim: 1
-  cameras: []
-  m_Transitions:
-    m_BlendHint: 0
-    m_InheritPosition: 0
-    m_OnCameraLive:
-      m_PersistentCalls:
-        m_Calls: []
+  newPositionCamera: {fileID: 0}
 --- !u!114 &8346253359335037497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53829,7 +53830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea82dec9975f4e41a9172306765dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s_magnitudaID: Magnituda
+  magnituda: Magnituda
+  crouch: Crouch
   speedChangeRate: 10
 --- !u!114 &8346253359335037499
 MonoBehaviour:
@@ -53844,6 +53846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 0
+  cameraState: 0
   walkSpeed: 2
   sprintSpeed: 5
   animatorBlendState: Locomotion
@@ -53872,6 +53875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 2
+  cameraState: 1
   crouchBlendState: Crouch
   obstaclesMask:
     serializedVersion: 2

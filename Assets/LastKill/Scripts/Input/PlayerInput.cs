@@ -105,8 +105,7 @@ namespace LastKill
 
 		private void AbilityState_OnStateStop(AbstractAbilityState obj)
 		{
-			if (obj as Crouch)
-				Debug.Log("Crouch");
+
 		}
 
 

@@ -16,4 +16,5 @@ MonoBehaviour:
   position: {x: 7.649905, y: -4.063217, z: 4.820998}
   rotation: {x: -3, y: 77, z: 41}
   scale: {x: 99, y: 99, z: 99}
+  particleSystem: []
   weaponId: 1
