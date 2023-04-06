@@ -105,15 +105,18 @@ namespace LastKill
 			
 
 		}
-		private void FixedUpdate()
+		private void Update()
 		{
 			GroundedCheck();
 			GravityControl();
 
 			if (useRootMotion) return;
 			if (!_controller.enabled) return;
-
 			_controller.Move(velocity * Time.deltaTime);
+			
+		}
+		private void FixedUpdate()
+		{
 		}
 		private void OnAnimatorMove()
 		{

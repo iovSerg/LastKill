@@ -45,15 +45,13 @@ namespace LastKill
         {
             if (_died) return;
             CheckAbilitiesStates();
-            if (CurrentState != null)
-                CurrentState.UpdateState();
-
             OnUpdateState?.Invoke();
         }
 		private void FixedUpdate()
 		{
-			
-		}
+            if (CurrentState != null)
+                CurrentState.UpdateState();
+        }
 		private void CheckAbilitiesStates()
         {
             AbstractAbilityState nextState = CurrentState;
