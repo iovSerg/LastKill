@@ -52,6 +52,8 @@ namespace LastKill
 			_abilityState = GetComponent<AbilityState>();
 			_abilityState.OnStateStart += OnStateStart;
 			_abilityState.OnStateStop += OnStateStop;
+
+			screenPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 		}
 		private void Start()
 		{
@@ -78,7 +80,17 @@ namespace LastKill
 				}
 		}
 
-
+		[SerializeField] private Transform TargetPosition;
+		[SerializeField] private Vector2 screenPoint;
+		[SerializeField] LayerMask mask;
+		private void Update()
+		{
+			Ray ray = _camera.ScreenPointToRay(screenPoint);
+			if(Physics.Raycast(ray, out RaycastHit hit, 100f,mask))
+			{
+				TargetPosition.position = hit.point;
+			}
+		}
 
 		private void LateUpdate()
 		{

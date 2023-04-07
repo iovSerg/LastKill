@@ -20,6 +20,7 @@ namespace LastKill
 
 		[SerializeField] private Vector2 move;
 		[SerializeField] private Vector2 look;
+		[SerializeField] private float scroll;
 		[SerializeField] private bool sprint;
 		[SerializeField] private bool jump;
 		[SerializeField] private bool crouch;
@@ -38,6 +39,7 @@ namespace LastKill
 
 		public Vector2 Move => move;
 		public Vector2 Look => look;
+		public float Scroll => scroll;
 		public bool Sprint => sprint;
 		public bool Jump => jump;
 		public bool Crouch => crouch;
@@ -100,6 +102,12 @@ namespace LastKill
 			_input.Player.Sprint.performed += ctx => { sprint = !sprint; };
 
 			_input.Player.Weapon.performed += SetWeapon;
+
+			_input.Player.Scroll.performed += ctx => {
+
+				scroll = ctx.ReadValue<float>();
+			};
+			//_input.Player.Scroll.canceled += ctx => { scroll = ctx.ReadValue<float>(); };
 
 		}
 

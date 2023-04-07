@@ -41501,6 +41501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  scroll: 0
   sprint: 0
   jump: 0
   crouch: 0
@@ -50135,7 +50136,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: d885e290456a887418a2fd556c1b1517, type: 3}
 --- !u!114 &1702430953112933937
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -50151,7 +50152,7 @@ MonoBehaviour:
   strafeSpeed: 3
 --- !u!114 &1702430953112933938
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53644,6 +53645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  scroll: 0
   sprint: 0
   jump: 0
   crouch: 0
@@ -53699,7 +53701,7 @@ MonoBehaviour:
   showDebug: 1
 --- !u!114 &8346253359335037488
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53728,7 +53730,7 @@ MonoBehaviour:
   deathClip: {fileID: 0}
 --- !u!114 &8346253359335037489
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53759,7 +53761,7 @@ MonoBehaviour:
   height: 0
 --- !u!114 &8346253359335037490
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53832,7 +53834,7 @@ MonoBehaviour:
   speedChangeRate: 10
 --- !u!114 &8346253359335037499
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53861,7 +53863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &8346253359335037502
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
