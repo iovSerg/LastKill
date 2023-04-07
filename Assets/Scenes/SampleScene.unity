@@ -4098,7 +4098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124217643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 26.433159, y: -9.137613, z: 8.800539}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9490,7 +9490,7 @@ PrefabInstance:
     - target: {fileID: 9078993845375825671, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_UpdateMethod
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9078993845375825671, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
@@ -50146,7 +50146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfd5575598c29a4e935c6fa750f893c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statePriority: 4
+  statePriority: 1
   cameraState: 2
   animatorBlendState: Strafe
   strafeSpeed: 3
@@ -50163,7 +50163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 4
+  cameraState: 3
   crawlSpeed: 2
   capsuleHeightOnCrawl: 0.5
   obstaclesMask:
@@ -51256,11 +51256,11 @@ GameObject:
   - component: {fileID: 7238382855246289773}
   - component: {fileID: 8346253359335037447}
   - component: {fileID: 8346253359335037445}
-  - component: {fileID: 8346253359335037497}
   - component: {fileID: 8346253359335037446}
-  - component: {fileID: 8346253359335037500}
   - component: {fileID: 8346253359335037496}
+  - component: {fileID: 8346253359335037497}
   - component: {fileID: 8346253359335037499}
+  - component: {fileID: 8346253359335037500}
   - component: {fileID: 8346253359335037492}
   - component: {fileID: 8346253359335037481}
   - component: {fileID: 8346253359335037502}
@@ -52367,8 +52367,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7238382855253569907}
-  m_LocalRotation: {x: 0, y: 0.7383489, z: 0, w: 0.6744189}
-  m_LocalPosition: {x: 24.019804, y: 11.249613, z: -2.3694365}
+  m_LocalRotation: {x: 0, y: 0.123192236, z: 0, w: -0.9923828}
+  m_LocalPosition: {x: 16.76639, y: -0.07181966, z: -3.0130904}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53741,7 +53741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 5
+  cameraState: 4
   climbMask:
     serializedVersion: 2
     m_Bits: 1
@@ -53772,7 +53772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statePriority: 3
-  cameraState: 5
+  cameraState: 2
   freeRollAnimation: Roll
   rollSpeed: 7
   capsuleHeightOnRoll: 1
