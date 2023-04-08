@@ -7,11 +7,12 @@ TagManager:
   - Weapon
   - Camera/Locomotion
   - Camera/Crouch
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

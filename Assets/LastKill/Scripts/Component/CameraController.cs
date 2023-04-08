@@ -83,17 +83,35 @@ namespace LastKill
 		[SerializeField] private Transform TargetPosition;
 		[SerializeField] private Vector2 screenPoint;
 		[SerializeField] LayerMask mask;
+		RaycastHit hit;
 		private void Update()
 		{
+			
+		}
+		private void FixedUpdate()
+		{
 			Ray ray = _camera.ScreenPointToRay(screenPoint);
-			if(Physics.Raycast(ray, out RaycastHit hit, 100f,mask))
+			if (Physics.Raycast(ray, out hit, 999f, mask,QueryTriggerInteraction.Ignore))
 			{
-				TargetPosition.position = hit.point;
+				TargetPosition.transform.position = hit.point;
 			}
 		}
-
+		[SerializeField] AudioClip explosionAudio;
+		[SerializeField] GameObject explosion;
+		[SerializeField] AudioSource audioSoiurce;
+		[SerializeField] Sprite texture;
 		private void LateUpdate()
 		{
+			if(_input.Fire)
+			{
+				//Instantiate(explosion, hit.point, Quaternion.identity);
+				Instantiate(texture, hit.point, Quaternion.identity);
+				if(!audioSoiurce.isPlaying)
+				{
+				
+					//audioSoiurce.PlayOneShot(explosionAudio);
+				}
+			}
 			CameraRotation();
 			if(timer < 0.25f)
 			{
@@ -103,8 +121,8 @@ namespace LastKill
 				_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
 
 				//??? Not working
-				_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
-				//_bodyFolow.CameraSide = currentCameraData.CameraSide;
+				//_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
+				_bodyFolow.CameraSide = currentCameraData.CameraSide;
 			}
 		}
 		private void SceneCameraSetup()

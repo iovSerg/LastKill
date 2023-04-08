@@ -70,6 +70,7 @@ namespace LastKill
 				gameObject.transform.localPosition = data.position;
 				gameObject.transform.rotation = Quaternion.Euler(data.rotation);
 				gameObject.transform.localScale = data.scale;
+				gameObject.SetActive(false);
 				//gameObject.transform.SetParent(HandHolder.transform);
 				//gameObject.transform.position = data.position;
 				//gameObject.transform.rotation = data.rotation;
