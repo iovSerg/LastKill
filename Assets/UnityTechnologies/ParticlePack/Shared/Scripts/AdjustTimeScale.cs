@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using TMPro;
-using LastKill;
+
 
 public class AdjustTimeScale : MonoBehaviour
 {
     TextMeshProUGUI textMesh;
-    IInput input;
 
     private void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
-        input = GameObject.FindGameObjectWithTag("Player").GetComponent<IInput>();
     }
 
     void Update()
     {
-        if (input.Scroll > 0f)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
             if (Time.timeScale < 1.0F)
             {
@@ -31,7 +29,7 @@ public class AdjustTimeScale : MonoBehaviour
             }
           
         }
-        else if (input.Scroll < 0f)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             if (Time.timeScale >= 0.2F)
             {

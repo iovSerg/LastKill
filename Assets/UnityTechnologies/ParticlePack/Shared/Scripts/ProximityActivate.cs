@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LastKill;
 
 
 public class ProximityActivate : MonoBehaviour
 {
-    public IInput input;
+
     public Transform distanceActivator, lookAtActivator;
     public float distance;
     public Transform activator;
@@ -19,17 +18,13 @@ public class ProximityActivate : MonoBehaviour
     float alpha;
     public CanvasGroup infoPanel;
     Quaternion originRotation, targetRotation;
-	private void Awake()
-	{
-        input = GameObject.FindGameObjectWithTag("Player").GetComponent<IInput>();
-    }
-	void Start()
+
+    void Start()
     {
         originRotation = transform.rotation;
         alpha = activeState ? 1 : -1;
         if (activator == null) activator = Camera.main.transform;
         infoIcon.SetActive(infoPanel != null);
-       
     }
 
     bool IsTargetNear()
@@ -72,7 +67,7 @@ public class ProximityActivate : MonoBehaviour
         target.alpha = Mathf.Clamp01(target.alpha + alpha * Time.deltaTime);
         if (infoPanel != null)
         {
-            if (input.Jump)
+            if (Input.GetKeyDown(KeyCode.Space))
                 enableInfoPanel = !enableInfoPanel;
             infoPanel.alpha = Mathf.Lerp(infoPanel.alpha, Mathf.Clamp01(enableInfoPanel ? alpha : 0), Time.deltaTime * 10);
         }
