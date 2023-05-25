@@ -102,16 +102,6 @@ namespace LastKill
 		[SerializeField] Sprite texture;
 		private void LateUpdate()
 		{
-			if(_input.Fire)
-			{
-				//Instantiate(explosion, hit.point, Quaternion.identity);
-				Instantiate(texture, hit.point, Quaternion.identity);
-				if(!audioSoiurce.isPlaying)
-				{
-				
-					//audioSoiurce.PlayOneShot(explosionAudio);
-				}
-			}
 			CameraRotation();
 			if(timer < 0.25f)
 			{

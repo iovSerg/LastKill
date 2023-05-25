@@ -67,6 +67,7 @@ namespace LastKill
 			foreach (WeaponData data in weapons)
 			{
 				GameObject gameObject = GameObject.Instantiate(data.weapon, handWeapon);
+				data.Instantiate(gameObject);
 				gameObject.transform.localPosition = data.position;
 				gameObject.transform.rotation = Quaternion.Euler(data.rotation);
 				gameObject.transform.localScale = data.scale;
@@ -84,7 +85,10 @@ namespace LastKill
 
 		private void Update()
 		{
-			
+			if(_input.Fire)
+			{
+				weapons[0].particleSystem.Play();
+			}
 		}
 	}
 }

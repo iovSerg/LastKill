@@ -13,8 +13,20 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   weapon: {fileID: 3154877080051893777, guid: ba89ff89c8ac7ae4b9f21ecd102c2254, type: 3}
-  transform: {fileID: 0}
+  holder: 0
+  leftIK: {x: 0, y: 0, z: 0}
   position: {x: -0.7000495, y: 3.6000316, z: 3.4999995}
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 99, y: 99, z: 99}
+  muzzlePosition: {x: 0, y: 0, z: 0}
+  hitBox: {x: 0, y: 0, z: 0}
+  particleSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc,
+    type: 3}
+  audioSource: {fileID: 0}
+  shootClip: {fileID: 0}
+  emptyClip: {fileID: 0}
+  reloadClip: {fileID: 0}
+  bulletCount: 0
+  bulletClip: 0
+  currentCount: 0
   weaponId: 3
