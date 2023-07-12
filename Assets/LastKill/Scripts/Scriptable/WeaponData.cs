@@ -8,16 +8,14 @@ namespace LastKill
     [CreateAssetMenu(fileName = "Weapon data", menuName = "LastKill/Weapon data", order = 1)]
     public class WeaponData : ScriptableObject
     {
+        private float lastShot;
+
         public GameObject weapon;
         public WeaponHolder holder;
 
-        public Vector3 leftIK;
         public Vector3 position;
         public Vector3 rotation;
         public Vector3 scale;
-
-        public Vector3 muzzlePosition;
-        public Vector3 hitBox;
 
         public Transform LeftHandIK;
 
@@ -27,14 +25,16 @@ namespace LastKill
         public AudioClip emptyClip;
         public AudioClip reloadClip;
 
+        public float fireRate;
+        public int bulletMaxCount;
+        public int bulletMaxClip;
         public int bulletCount;
-        public int bulletClip;
-        public int currentCount;
 
         public int weaponId;
 
         public void Instantiate(GameObject obj)
 		{
+            lastShot = 0;
             try
 			{
                 particleSystem = obj.gameObject.GetComponentsInChildren<ParticleSystem>();
@@ -45,12 +45,6 @@ namespace LastKill
 			{
                 Debug.Log(ex.Data);
 			}
-        }
-        public void Shoot()
-		{
-           
-            
-		}
-
+        }  
     }
 }

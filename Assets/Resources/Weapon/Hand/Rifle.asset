@@ -14,19 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 3424644524720319744, guid: c9f5475d54e1d9641a0176e2963667ba, type: 3}
   holder: 0
-  leftIK: {x: -0.002, y: 0.071, z: 0.275}
   position: {x: -1.51, y: 5.1, z: 2.72}
   rotation: {x: -90, y: 0, z: 90}
   scale: {x: 90, y: 90, z: 90}
-  audioPosition: {x: 0, y: 0, z: 0}
-  muzzlePosition: {x: -0.007, y: 0.083, z: 0.604}
-  hitBox: {x: 0, y: 0, z: 0}
-  particleSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc,
-    type: 3}
+  LeftHandIK: {fileID: 0}
+  audioSource: {fileID: 0}
+  particleSystem:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   shootClip: {fileID: 8300000, guid: 097e8235e0162d64ba53da9ef4ab8d61, type: 3}
-  emptyClip: {fileID: 0}
-  reloadClip: {fileID: 0}
-  bulletCount: 0
-  bulletClip: 0
-  currentCount: 0
+  emptyClip: {fileID: 8300000, guid: 9b2ce00d16b72c34a9b46200421a6def, type: 3}
+  reloadClip: {fileID: 8300000, guid: f4b0865c53d458d49a58b67d16d4b711, type: 3}
+  fireRate: 0.15
+  bulletMaxCount: 0
+  bulletMaxClip: 0
+  bulletCount: 120
   weaponId: 1

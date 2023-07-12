@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 857f7662956142b4e8037d38ac9c5560, type: 3}
-  m_Name: Sniper
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  weapon: {fileID: 3154877080051893777, guid: ba89ff89c8ac7ae4b9f21ecd102c2254, type: 3}
-  holder: 0
-  position: {x: -1.36, y: 7.55, z: 2.93}
-  rotation: {x: -90, y: 90, z: 0}
-  scale: {x: 99, y: 99, z: 99}
+  weapon: {fileID: 1763845285127730884, guid: c6a06fa61cc09f045bf97940d808b467, type: 3}
+  holder: 3
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  scale: {x: 0, y: 0, z: 0}
   LeftHandIK: {fileID: 0}
   audioSource: {fileID: 0}
   particleSystem:
@@ -24,15 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  shootClip: {fileID: 0}
-  emptyClip: {fileID: 0}
-  reloadClip: {fileID: 0}
-  fireRate: 0
+  shootClip: {fileID: 8300000, guid: 4912d5c56ce571e4fbad7af6de655772, type: 3}
+  emptyClip: {fileID: 8300000, guid: 9c5ac02550d31504ebb57020dde8e988, type: 3}
+  reloadClip: {fileID: 8300000, guid: cc03a3bc3d3003c428240bcd6e12c487, type: 3}
+  fireRate: 1
   bulletMaxCount: 0
   bulletMaxClip: 0
-  bulletCount: 0
-  weaponId: 3
+  bulletCount: 34
+  weaponId: 2

@@ -12,10 +12,12 @@ namespace LastKill
 
 		private IAnimator _animator;
 		private IInput _input;
+		private float lastShot;
 
 		public bool isAim = false;
 
 		public WeaponData[] weapons;
+		int id_weapon = 0;
 
 		IKController iKController;
 
@@ -31,6 +33,7 @@ namespace LastKill
 			_input.OnSelectWeapon += SelectWeapon;
 			AddWeaponHolder();
 			LoadResourcesWeapon();
+			lastShot = 0;
 		}
 
 		private void AddWeaponHolder()
@@ -83,13 +86,45 @@ namespace LastKill
 		}
 		private void SelectWeapon()
 		{
-			
+			Debug.Log(_input.CurrentWeapon);
 			
 		}
 
 		private void Update()
 		{
-			
+			if(_input.Fire)
+			{
+				Shoot();
+			}
+			if(_input.Reload)
+			{
+				Reload();
+			}
+		}
+		public void Shoot()
+		{
+			if (weapons[id_weapon].bulletCount == 0)
+			{
+				if (!weapons[id_weapon].audioSource.isPlaying)
+					weapons[id_weapon].audioSource.PlayOneShot(weapons[id_weapon].emptyClip);
+				return;
+			}
+			if (Time.time > lastShot + weapons[id_weapon].fireRate)
+			{
+
+				foreach (ParticleSystem ps in weapons[id_weapon].particleSystem)
+				{
+					ps.Emit(1);
+				}
+				weapons[id_weapon].bulletCount--;
+				weapons[id_weapon].audioSource.PlayOneShot(weapons[id_weapon].shootClip);
+				lastShot = Time.time;
+			}
+
+		}
+		public void Reload()
+		{
+
 		}
 	}
 }
