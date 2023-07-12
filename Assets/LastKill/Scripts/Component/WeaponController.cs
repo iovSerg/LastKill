@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace LastKill
 {
+
     public class WeaponController : MonoBehaviour
     {
 		//[SerializeField] private string animBlandState = "Draw Weapon HighLeft";
@@ -16,23 +17,25 @@ namespace LastKill
 
 		public WeaponData[] weapons;
 
+		IKController iKController;
+
 		public Transform handWeapon;
 		public Transform spineWeapon;
 
 		private void Awake()
 		{
+			iKController = GetComponent<IKController>();
 			_input = GetComponent<IInput>();
 			_animator = GetComponent<IAnimator>();
 
 			_input.OnSelectWeapon += SelectWeapon;
 			AddWeaponHolder();
-			LoadWeapon();
-
+			LoadResourcesWeapon();
 		}
 
 		private void AddWeaponHolder()
 		{
-			weapons = Resources.LoadAll<WeaponData>("Weapon/");
+			weapons = Resources.LoadAll<WeaponData>("Weapon/Hand");
 			Transform[] childs = GetComponentsInChildren<Transform>();
 			foreach (Transform child in childs)
 			{
@@ -43,6 +46,7 @@ namespace LastKill
 						GameObject weaponHand = new GameObject("HandHolder");
 						weaponHand.transform.SetParent(child.gameObject.transform);
 						handWeapon = weaponHand.transform;
+						handWeapon.localRotation = Quaternion.identity;
 						handWeapon.transform.localPosition = Vector3.zero;
 						handWeapon.transform.localScale = Vector3.one;
 					}
@@ -54,6 +58,7 @@ namespace LastKill
 						GameObject weaponSpine = new GameObject("SpineHolder");
 						weaponSpine.transform.SetParent(child.gameObject.transform);
 						spineWeapon = weaponSpine.transform;
+						spineWeapon.localRotation = Quaternion.identity;
 						spineWeapon.transform.localPosition = Vector3.zero;
 						spineWeapon.transform.localScale = Vector3.one;
 					}
@@ -61,7 +66,7 @@ namespace LastKill
 			}
 		}
 
-		private void LoadWeapon()
+		private void LoadResourcesWeapon()
 		{
 			//Load Hand Holder
 			foreach (WeaponData data in weapons)
@@ -69,13 +74,12 @@ namespace LastKill
 				GameObject gameObject = GameObject.Instantiate(data.weapon, handWeapon);
 				data.Instantiate(gameObject);
 				gameObject.transform.localPosition = data.position;
-				gameObject.transform.rotation = Quaternion.Euler(data.rotation);
+				gameObject.transform.localRotation = Quaternion.Euler(new Vector3(data.rotation.x,data.rotation.y,data.rotation.z));
 				gameObject.transform.localScale = data.scale;
 				gameObject.SetActive(false);
-				//gameObject.transform.SetParent(HandHolder.transform);
-				//gameObject.transform.position = data.position;
-				//gameObject.transform.rotation = data.rotation;
 			}
+			
+			
 		}
 		private void SelectWeapon()
 		{
@@ -85,10 +89,7 @@ namespace LastKill
 
 		private void Update()
 		{
-			if(_input.Fire)
-			{
-				weapons[0].particleSystem.Play();
-			}
+			
 		}
 	}
 }

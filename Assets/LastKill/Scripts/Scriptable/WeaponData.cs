@@ -18,8 +18,11 @@ namespace LastKill
 
         public Vector3 muzzlePosition;
         public Vector3 hitBox;
-        public ParticleSystem particleSystem;
+
+        public Transform LeftHandIK;
+
         public AudioSource audioSource;
+        public ParticleSystem[] particleSystem;
         public AudioClip shootClip;
         public AudioClip emptyClip;
         public AudioClip reloadClip;
@@ -34,23 +37,20 @@ namespace LastKill
 		{
             try
 			{
-                GameObject leftIK = new GameObject("LeftIK");
-                leftIK.transform.parent = obj.transform;
-                leftIK.transform.localPosition = Vector3.zero;
-                leftIK.transform.localPosition = this.leftIK;
-
-                GameObject muzzlePosition = new GameObject("muzzel");
-                muzzlePosition.transform.parent = obj.transform;
-                muzzlePosition.transform.localPosition = Vector3.zero;
-                muzzlePosition.transform.localPosition = this.muzzlePosition;
-
-                Instantiate(particleSystem,Vector3.zero,Quaternion.identity, muzzlePosition.transform);
+                particleSystem = obj.gameObject.GetComponentsInChildren<ParticleSystem>();
+                audioSource = obj.GetComponentInChildren<AudioSource>();
+                LeftHandIK = GameObject.Find("leftHandIK").transform;
             }
             catch(Exception ex)
 			{
                 Debug.Log(ex.Data);
 			}
         }
+        public void Shoot()
+		{
+           
+            
+		}
 
     }
 }

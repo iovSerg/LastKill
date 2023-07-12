@@ -39,11 +39,11 @@ namespace LastKill
 		{
 			GameObject target = new GameObject("TargetIK");
 
-			targetLeftHand = new GameObject("LeftHandIK").transform;
-			targetRightHand = new GameObject("RightHandIK").transform;
+			target.transform.SetParent(transform);
+			target.transform.localPosition = Vector3.zero;
 
-			targetRightHand.parent = target.transform;
-			targetLeftHand.parent = target.transform; 
+			targetLeftHand = new GameObject("LeftHandIK").transform.parent = target.transform;
+			targetRightHand = new GameObject("RightHandIK").transform.parent = target.transform;
 
 			targetLeftFoot = new GameObject("LeftFootIK").transform.parent = target.transform;
 			targetRightFoot = new GameObject("RightFootIK").transform.parent = target.transform;

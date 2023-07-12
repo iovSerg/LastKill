@@ -15,7 +15,7 @@ MonoBehaviour:
   position: {x: 0, y: 0.5, z: 0}
   ShoulderOffset: {x: 0, y: 0, z: 0}
   stateCamera: 3
-  CameraSide: 0.6
+  CameraSide: 1
   CameraDistance: 2
   cameraName: Crawl
   tagName: Camera/Crawl
