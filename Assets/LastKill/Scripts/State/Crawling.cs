@@ -71,5 +71,10 @@ namespace LastKill
 			_capsule.ResetCapsuleSize();
 			
 		}
+
+		public override void FixedUpdateState()
+		{
+			
+		}
 	}
 }

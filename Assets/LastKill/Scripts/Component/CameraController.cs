@@ -32,7 +32,7 @@ namespace LastKill
 		[SerializeField] private CameraData currentCameraData;
 
 
-		[SerializeField] private float speedChangeRate = 2f;
+		[SerializeField] private float speedChangeRate = 5f;
 		[SerializeField] private float cameraInputX;
 		[SerializeField] private float cameraInputY;
 		[SerializeField] private float sensivity = 5f;
@@ -52,8 +52,6 @@ namespace LastKill
 			_abilityState = GetComponent<AbilityState>();
 			_abilityState.OnStateStart += OnStateStart;
 			_abilityState.OnStateStop += OnStateStop;
-
-			screenPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 		}
 		private void Start()
 		{
@@ -80,40 +78,20 @@ namespace LastKill
 				}
 		}
 
-		[SerializeField] private Transform TargetPosition;
-		[SerializeField] private Vector2 screenPoint;
-		[SerializeField] LayerMask mask;
-		RaycastHit hit;
-		private void Update()
-		{
-			
-		}
-		private void FixedUpdate()
-		{
-			Ray ray = _camera.ScreenPointToRay(screenPoint);
-			if (Physics.Raycast(ray, out hit, 999f, mask,QueryTriggerInteraction.Ignore))
-			{
-				TargetPosition.transform.position = hit.point;
-			}
-		}
-		[SerializeField] AudioClip explosionAudio;
-		[SerializeField] GameObject explosion;
-		[SerializeField] AudioSource audioSoiurce;
-		[SerializeField] Sprite texture;
 		private void LateUpdate()
 		{
 			CameraRotation();
-			if(timer < 0.25f)
-			{
-				timer += Time.deltaTime;
-				_followCamera.localPosition = Vector3.Lerp(_followCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
-				_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
-				_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
+			//if(timer < 2f)
+			//{
+			//	timer += Time.deltaTime;
+			//	//_followCamera.localPosition = Vector3.Lerp(_followCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
+			//	_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
+			//	_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
 
-				//??? Not working
-				//_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
-				_bodyFolow.CameraSide = currentCameraData.CameraSide;
-			}
+			//	//??? Not working
+			//	//_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
+			//	//_bodyFolow.CameraSide = currentCameraData.CameraSide;
+			//}
 		}
 		private void SceneCameraSetup()
 		{
@@ -122,7 +100,7 @@ namespace LastKill
 				GameObject cameraFollow = new GameObject("CameraTarget");
 			
 				cameraFollow.transform.SetParent(transform,true);
-				cameraFollow.transform.localPosition = Vector3.zero;
+				cameraFollow.transform.localPosition = new Vector3(0,1.5f,0);
 				_followCamera = cameraFollow.transform;
 			}
 			//Learn how to change body(Do nothing) change 3rd follow
@@ -142,6 +120,10 @@ namespace LastKill
 				_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
 				_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 				_virtualCamera.Follow = _followCamera;
+
+				///Temp
+				_bodyFolow.CameraDistance = 3;
+				_bodyFolow.CameraSide = 0.8f;
 			}
 		}
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace LastKill
 {
-    public class Locomotion : AbstractAbilityState 
-    {
+	public class Locomotion : AbstractAbilityState
+	{
         [SerializeField] private float walkSpeed = 2f;
         [SerializeField] private float sprintSpeed = 5f;
         [SerializeField] private string animatorBlendState = "Locomotion";
@@ -45,6 +45,9 @@ namespace LastKill
             return _move.IsGrounded();
         }
 
-      
-    }
+		public override void FixedUpdateState()
+		{
+			
+		}
+	}
 }

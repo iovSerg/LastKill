@@ -73,13 +73,13 @@ namespace LastKill
 		private void Update()
 		{
 			
+			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.deltaTime * speedChangeRate);
+			if (speedAnimation < 0.1f) speedAnimation = 0f;
+			_animator.SetFloat(hashMagnituda, speedAnimation);
 		}
 		
 		private void FixedUpdate()
 		{
-			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.deltaTime * speedChangeRate);
-			if (speedAnimation < 0.1f) speedAnimation = 0f;
-			_animator.SetFloat(hashMagnituda, speedAnimation);
 		}
 
 		public void ResetMovementParametrs()

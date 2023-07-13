@@ -224,5 +224,10 @@ namespace LastKill
 
 			return false;
 		}
+
+		public override void FixedUpdateState()
+		{
+			
+		}
 	}
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47e65272d6949f4b8e211157ad32367, type: 3}
   m_Name: AimCamera
   m_EditorClassIdentifier: 
-  position: {x: 0.3, y: 1.7, z: 2.5}
+  position: {x: 0.291, y: 1.454, z: 2.206}
   ShoulderOffset: {x: 0, y: 0, z: 0}
   stateCamera: 2
   CameraSide: 0

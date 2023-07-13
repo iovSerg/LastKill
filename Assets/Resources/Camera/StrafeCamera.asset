@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47e65272d6949f4b8e211157ad32367, type: 3}
   m_Name: StrafeCamera
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 1.5, z: 0}
+  position: {x: 0.18210605, y: 1.58, z: 2.74}
   ShoulderOffset: {x: 0, y: 0, z: 0}
   stateCamera: 2
   CameraSide: 1
-  CameraDistance: 2
+  CameraDistance: 3
   cameraName: Strafe
   tagName: 
   priority: 0

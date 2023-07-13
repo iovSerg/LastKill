@@ -55,6 +55,10 @@ namespace LastKill
                     StopState();
 
         }
+		public override void FixedUpdateState()
+		{
+			
+		}
 
-    }
+	}
 }

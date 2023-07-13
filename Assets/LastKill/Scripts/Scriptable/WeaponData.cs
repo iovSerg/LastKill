@@ -8,15 +8,15 @@ namespace LastKill
     [CreateAssetMenu(fileName = "Weapon data", menuName = "LastKill/Weapon data", order = 1)]
     public class WeaponData : ScriptableObject
     {
-        private float lastShot;
-
-        public GameObject weapon;
+        [SerializeField] private Vector3 position;
+        [SerializeField] private Vector3 rotation;
+        [SerializeField] private Vector3 scale;
+        
+        public GameObject prefab;
+        public GameObject Weapon;
         public WeaponHolder holder;
 
-        public Vector3 position;
-        public Vector3 rotation;
-        public Vector3 scale;
-
+        public Transform muzzle;
         public Transform LeftHandIK;
 
         public AudioSource audioSource;
@@ -25,21 +25,24 @@ namespace LastKill
         public AudioClip emptyClip;
         public AudioClip reloadClip;
 
-        public float fireRate;
-        public int bulletMaxCount;
-        public int bulletMaxClip;
-        public int bulletCount;
+        public float FireRate;
+        public int BulletMaxCount;
+        public int BulletMaxClip;
+        public int BulletCount;
 
-        public int weaponId;
-
-        public void Instantiate(GameObject obj)
+        public int Weapon_ID;
+        public void InstantiateTransform(WeaponData data)
 		{
-            lastShot = 0;
             try
 			{
-                particleSystem = obj.gameObject.GetComponentsInChildren<ParticleSystem>();
-                audioSource = obj.GetComponentInChildren<AudioSource>();
+                
+                Weapon.transform.localPosition = data.position;
+                Weapon.transform.localRotation = Quaternion.Euler(new Vector3(data.rotation.x, data.rotation.y, data.rotation.z));
+                Weapon.transform.localScale = data.scale;
+                particleSystem = data.Weapon.GetComponentsInChildren<ParticleSystem>();
+                audioSource = data.Weapon.GetComponentInChildren<AudioSource>();
                 LeftHandIK = GameObject.Find("leftHandIK").transform;
+                muzzle = GameObject.Find("muzzle").transform;
             }
             catch(Exception ex)
 			{

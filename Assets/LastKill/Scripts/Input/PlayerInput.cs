@@ -147,8 +147,16 @@ namespace LastKill
 
         private void SetWeapon(InputAction.CallbackContext obj)
         {
-			int.TryParse(obj.control.displayName,out currentWeapon);
-			OnSelectWeapon?.Invoke();
+			try
+			{
+				int.TryParse(obj.control.displayName, out currentWeapon);
+				OnSelectWeapon?.Invoke();
+			}
+			catch (Exception ex)
+			{
+
+				Debug.Log(ex.Data);
+			}
         }
 
         private void OnMove(InputAction.CallbackContext obj)

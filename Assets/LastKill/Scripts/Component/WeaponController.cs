@@ -2,43 +2,52 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LastKill
 {
-
-    public class WeaponController : MonoBehaviour
+    public class WeaponController : MonoBehaviour,IWeapon
     {
-		//[SerializeField] private string animBlandState = "Draw Weapon HighLeft";
-
 		private IAnimator _animator;
 		private IInput _input;
-		private float lastShot;
+		private IKController _iKController;
+		private WeaponData[] weapons;
 
+		private int hashReload;
+		private int weapon_id = 0;
+		private int last_weapon_id = 0;
+		private float lastShot;
+		private bool isWeapon = false;
 		public bool isAim = false;
 
-		public WeaponData[] weapons;
-		int id_weapon = 0;
+		[SerializeField] private string reload = "Reload";
+		[SerializeField] private Text weaponCount;
+		//[SerializeField] private List<WeaponData> weapons;
 
-		IKController iKController;
+
+		public Vector3 leftIK;
 
 		public Transform handWeapon;
 		public Transform spineWeapon;
 
+		public bool IsReload { get => _animator.Animator.GetBool("Reload"); }
+		public bool IsWeapon { get => isWeapon; }
+
 		private void Awake()
 		{
-			iKController = GetComponent<IKController>();
+			_iKController = GetComponent<IKController>();
 			_input = GetComponent<IInput>();
 			_animator = GetComponent<IAnimator>();
+			_input.OnSelectWeapon += OnSelectWeapon;
 
-			_input.OnSelectWeapon += SelectWeapon;
+			hashReload = Animator.StringToHash(reload);
+
 			AddWeaponHolder();
 			LoadResourcesWeapon();
 			lastShot = 0;
 		}
-
 		private void AddWeaponHolder()
 		{
-			weapons = Resources.LoadAll<WeaponData>("Weapon/Hand");
 			Transform[] childs = GetComponentsInChildren<Transform>();
 			foreach (Transform child in childs)
 			{
@@ -68,63 +77,137 @@ namespace LastKill
 				}
 			}
 		}
-
 		private void LoadResourcesWeapon()
 		{
+			weapons = Resources.LoadAll<WeaponData>("Weapon");
 			//Load Hand Holder
 			foreach (WeaponData data in weapons)
 			{
-				GameObject gameObject = GameObject.Instantiate(data.weapon, handWeapon);
-				data.Instantiate(gameObject);
-				gameObject.transform.localPosition = data.position;
-				gameObject.transform.localRotation = Quaternion.Euler(new Vector3(data.rotation.x,data.rotation.y,data.rotation.z));
-				gameObject.transform.localScale = data.scale;
-				gameObject.SetActive(false);
+			    data.Weapon =  Instantiate(data.prefab, handWeapon);
+				data.InstantiateTransform(data);
+				data.Weapon.SetActive(false);
 			}
-			
+			_iKController.TLeftHand = weapons[1].LeftHandIK;
 			
 		}
-		private void SelectWeapon()
+		private void OnSelectWeapon()
 		{
-			Debug.Log(_input.CurrentWeapon);
-			
+			weapon_id = _input.CurrentWeapon;
+
+			foreach (WeaponData data in weapons)
+			{
+				if (!isWeapon)
+				{
+					if (data.Weapon_ID == weapon_id)
+					{
+						data.Weapon.SetActive(true);
+						last_weapon_id = weapon_id;
+						isWeapon = true;
+						return;
+					}
+				}
+
+				if (weapon_id == last_weapon_id && isWeapon)
+				{
+					if (data.Weapon_ID == weapon_id)
+					{
+						data.Weapon.SetActive(false);
+						isWeapon = false;
+						weapon_id = last_weapon_id = 0;
+						return;
+					}
+				}
+
+				if (weapon_id != last_weapon_id && isWeapon)
+				{
+					if (data.Weapon_ID == last_weapon_id)
+						data.Weapon.SetActive(false);
+					if (data.Weapon_ID == weapon_id)
+						data.Weapon.SetActive(true);
+				}
+
+			}
 		}
 
 		private void Update()
 		{
-			if(_input.Fire)
+			if (weapon_id == 0)
 			{
-				Shoot();
+				weaponCount.text = string.Empty;
+				return;
 			}
-			if(_input.Reload)
+			if(isWeapon)
 			{
-				Reload();
+				if (_input.Fire)
+				{
+					Shoot();
+				}
+				if (_input.Reload)
+				{
+					Reload();
+				}
+				
 			}
+			weaponCount.text = weapons[weapon_id - 1].BulletCount.ToString();
 		}
 		public void Shoot()
 		{
-			if (weapons[id_weapon].bulletCount == 0)
+			foreach(WeaponData data in weapons)
 			{
-				if (!weapons[id_weapon].audioSource.isPlaying)
-					weapons[id_weapon].audioSource.PlayOneShot(weapons[id_weapon].emptyClip);
-				return;
-			}
-			if (Time.time > lastShot + weapons[id_weapon].fireRate)
-			{
-
-				foreach (ParticleSystem ps in weapons[id_weapon].particleSystem)
+				if(data.Weapon_ID == weapon_id)
 				{
-					ps.Emit(1);
+					if(data.BulletCount == 0)
+					{
+						if (!data.audioSource.isPlaying)
+							data.audioSource.PlayOneShot(data.emptyClip);
+						return;
+					}
+					if(Time.time > lastShot + data.FireRate)
+					{
+						foreach(ParticleSystem particle in data.particleSystem)
+						{
+							particle.Emit(1);
+						}
+						data.BulletCount--;
+						data.audioSource.PlayOneShot(data.shootClip);
+						lastShot = Time.time;
+					}
 				}
-				weapons[id_weapon].bulletCount--;
-				weapons[id_weapon].audioSource.PlayOneShot(weapons[id_weapon].shootClip);
-				lastShot = Time.time;
 			}
+			
+
+			//if (weapons[weapon_id - 1].BulletCount == 0)
+			//{
+			//	if (!weapons[weapon_id - 1].audioSource.isPlaying)
+			//		weapons[weapon_id - 1].audioSource.PlayOneShot(weapons[weapon_id - 1].emptyClip);
+			//	return;
+			//}
+			//if (Time.time > lastShot + weapons[weapon_id - 1].FireRate)
+			//{
+
+			//	foreach (ParticleSystem ps in weapons[weapon_id - 1].particleSystem)
+			//	{
+			//		ps.Emit(1);
+			//	}
+			//	weapons[weapon_id - 1].BulletCount--;
+			//	weapons[weapon_id - 1].audioSource.PlayOneShot(weapons[weapon_id - 1].shootClip);
+			//	lastShot = Time.time;
+			//}
 
 		}
 		public void Reload()
 		{
-
+			foreach(WeaponData data in weapons)
+			{
+				if(data.Weapon_ID == weapon_id)
+				{
+					if (!data.audioSource.isPlaying)
+					{
+						data.audioSource.PlayOneShot(data.reloadClip);
+						data.BulletCount = data.BulletMaxClip;
+					}
+				}
+			}
 		}
 	}
 }

@@ -61,9 +61,6 @@ namespace LastKill
 
 		public override void OnStartState()
 		{
-
-			
-
 			startInput = _input.Move;
 			targetRotation = _camera.GetTransform.eulerAngles.y;
 
@@ -151,7 +148,12 @@ namespace LastKill
 
 
 		}
-	    public override void OnStopState()
+		public override void FixedUpdateState()
+		{
+			
+		}
+		
+		public override void OnStopState()
 		{
 			base.OnStopState();
 			_input.OnDied -= DD;

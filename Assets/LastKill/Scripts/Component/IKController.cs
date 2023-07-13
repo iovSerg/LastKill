@@ -42,18 +42,18 @@ namespace LastKill
 			target.transform.SetParent(transform);
 			target.transform.localPosition = Vector3.zero;
 
-			targetLeftHand = new GameObject("LeftHandIK").transform.parent = target.transform;
-			targetRightHand = new GameObject("RightHandIK").transform.parent = target.transform;
+			//targetLeftHand = new GameObject("LeftHandIK").transform.parent = target.transform;
+			//targetRightHand = new GameObject("RightHandIK").transform.parent = target.transform;
 
-			targetLeftFoot = new GameObject("LeftFootIK").transform.parent = target.transform;
-			targetRightFoot = new GameObject("RightFootIK").transform.parent = target.transform;
+			//targetLeftFoot = new GameObject("LeftFootIK").transform.parent = target.transform;
+			//targetRightFoot = new GameObject("RightFootIK").transform.parent = target.transform;
 
 			_animator = GetComponent<Animator>();
 		}
 		private void Update()
 		{
-			weightLeftHand = _animator.GetFloat("LeftHand");
-			weightRightHand = _animator.GetFloat("RightHand");
+			//weightLeftHand = _animator.GetFloat("LeftHand");
+			//weightRightHand = _animator.GetFloat("RightHand");
 		}
 
 		private void OnAnimatorIK(int layerIndex)

@@ -47,12 +47,12 @@ namespace LastKill
             CheckAbilitiesStates();
             if (CurrentState != null)
                 CurrentState.UpdateState();
-
             OnUpdateState?.Invoke();
         }
 		private void FixedUpdate()
 		{
-			
+            if (CurrentState != null)
+                CurrentState.FixedUpdateState();
 		}
 		private void CheckAbilitiesStates()
         {

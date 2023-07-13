@@ -66,6 +66,7 @@ namespace LastKill
         public abstract void OnStartState();
 
         public abstract void UpdateState();
+        public abstract void FixedUpdateState();
 
         public virtual void OnStopState() { }
 
