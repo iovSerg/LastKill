@@ -5316,11 +5316,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 1
+  selectedToolbar: 3
   weaponCategory: Pistol
-  shootFrequency: 0.25
-  isInfinityAmmo: 0
-  ammo: 8
+  _shootFrequency: 0.25
+  isInfinityAmmo: 1
+  _ammo: 8
   ignoreTags: []
   hitLayer:
     serializedVersion: 2
@@ -5329,12 +5329,13 @@ MonoBehaviour:
   muzzle: {fileID: 445870}
   projectilesPerShot: 1
   dispersion: 0
+  quadDispersion: 0
   velocity: 310
   damageByDistance: 1
-  minDamageDistance: 8
-  maxDamageDistance: 50
-  minDamage: 15
-  maxDamage: 36
+  _minDamageDistance: 8
+  _maxDamageDistance: 50
+  _minDamage: 15
+  _maxDamage: 36
   source: {fileID: 8270846}
   fireClip: {fileID: 0}
   emptyClip: {fileID: 8300000, guid: 9c5ac02550d31504ebb57020dde8e988, type: 3}
@@ -5362,6 +5363,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Recoil
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onEmptyClip:
     m_PersistentCalls:
       m_Calls: []
@@ -5379,12 +5391,12 @@ MonoBehaviour:
   reloadTime: 1
   reloadOneByOne: 0
   clipSize: 8
-  dontUseReload: 0
+  dontUseReload: 1
   autoReload: 0
   ammoID: 14
   moveSetID: 1
   upperBodyID: 1
-  shotID: 1
+  shotID: -1
   reloadID: 1
   equipID: 5
   alignRightHandToAim: 1
@@ -5393,9 +5405,9 @@ MonoBehaviour:
   freeIKOptions:
     use: 1
     useOnIdle: 1
-    useOnWalk: 0
-    useOnRun: 0
-    useOnSprint: 0
+    useOnWalk: 1
+    useOnRun: 1
+    useOnSprint: 1
   strafeIKOptions:
     use: 1
     useOnIdle: 1
@@ -5498,7 +5510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37cb9a443aef1842ae80a6a984cbe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openCloseEvents: 1
+  openCloseEvents: 0
   openCloseWindow: 0
   selectedToolbar: 0
   onEquip:
@@ -5519,7 +5531,8 @@ MonoBehaviour:
   onUnequip:
     m_PersistentCalls:
       m_Calls: []
-  referenceItem: {fileID: 0}
+  item: {fileID: 0}
+  isEquipped: 0
 --- !u!114 &114554122684540132
 MonoBehaviour:
   m_ObjectHideFlags: 0

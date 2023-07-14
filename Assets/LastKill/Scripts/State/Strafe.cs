@@ -35,8 +35,8 @@ namespace LastKill
 			else
 			{
 
-				_animator.Animator.SetFloat("Horizontal",0f);
-				_animator.Animator.SetFloat("Vertical", 0f);
+				_animator.Animator.SetFloat("Horizontal",0f,0.1f,Time.deltaTime);
+				_animator.Animator.SetFloat("Vertical", 0f,0.1f,Time.deltaTime);
 			}
 			_move.Move(_input.Move, strafeSpeed, false);
 

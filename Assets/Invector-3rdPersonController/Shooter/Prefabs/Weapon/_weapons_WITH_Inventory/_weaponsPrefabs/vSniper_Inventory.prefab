@@ -37,7 +37,7 @@ Transform:
   - {fileID: 498958}
   - {fileID: 462528}
   m_Father: {fileID: 441924}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &104256
 GameObject:
@@ -9712,11 +9712,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 3
   weaponCategory: Rifle
-  shootFrequency: 0.8
+  _shootFrequency: 0.8
   isInfinityAmmo: 0
-  ammo: 8
+  _ammo: 8
   ignoreTags: []
   hitLayer:
     serializedVersion: 2
@@ -9725,6 +9725,7 @@ MonoBehaviour:
   muzzle: {fileID: 410514}
   projectilesPerShot: 1
   dispersion: 0
+  quadDispersion: 0
   velocity: 380
   damageByDistance: 1
   minDamageDistance: 8
@@ -9797,9 +9798,9 @@ MonoBehaviour:
   handIKTarget: {fileID: 441742}
   aimReference: {fileID: 433364}
   cameraStability: 0.15
-  recoilRight: 4
-  recoilLeft: -4
-  recoilUp: 4
+  recoilRight: 1
+  recoilLeft: -1
+  recoilUp: 1
   reloadSource: {fileID: 0}
   reloadClip: {fileID: 8300000, guid: 3708806e828002547b07099a479a0e59, type: 3}
   finishReloadClip: {fileID: 0}
@@ -9890,6 +9891,7 @@ MonoBehaviour:
   openCloseEvents: 0
   openCloseWindow: 0
   selectedToolbar: 0
+  attackObjectName: 
   damage:
     damageValue: 0
     staminaBlockCost: 0
@@ -9974,7 +9976,8 @@ MonoBehaviour:
   onUnequip:
     m_PersistentCalls:
       m_Calls: []
-  referenceItem: {fileID: 0}
+  item: {fileID: 0}
+  isEquipped: 0
 --- !u!82 &6103818946813685408
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10126,12 +10129,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113076}
-  m_LocalRotation: {x: 0.0000039637084, y: 0.0000023096798, z: -0.0000032187086, w: 1}
-  m_LocalPosition: {x: -0.009734802, y: 0.12725843, z: 0.23221083}
-  m_LocalScale: {x: 1.0616167, y: 1.0298841, z: 1.0337033}
+  m_LocalRotation: {x: 0.0000038882026, y: 0.000004634262, z: -0.0000028153945, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.8402108}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 441924}
-  m_RootOrder: 6
+  m_Father: {fileID: 433364}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2052192
 Camera:
@@ -10212,7 +10215,7 @@ Transform:
   m_LocalScale: {x: 1.0615379, y: 1.0298163, z: 1.033566}
   m_Children: []
   m_Father: {fileID: 441924}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &120304
 GameObject:
@@ -32533,7 +32536,6 @@ Transform:
   - {fileID: 433364}
   - {fileID: 481702}
   - {fileID: 429066}
-  - {fileID: 472982}
   - {fileID: 463432}
   - {fileID: 491838}
   m_Father: {fileID: 485268}
@@ -37424,9 +37426,10 @@ Transform:
   m_GameObject: {fileID: 193314}
   m_LocalRotation: {x: 0.000000075496956, y: -0.0000023245811, z: -0.00000040332358,
     w: 1}
-  m_LocalPosition: {x: -0.01, y: -0.006, z: -0.608}
+  m_LocalPosition: {x: -0.008, y: 0.0712, z: -0.5271}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 472982}
   m_Father: {fileID: 441924}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

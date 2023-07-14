@@ -12781,11 +12781,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 3
   weaponCategory: Shotgun
-  shootFrequency: 0.8
+  _shootFrequency: 0.8
   isInfinityAmmo: 0
-  ammo: 8
+  _ammo: 8
   ignoreTags: []
   hitLayer:
     serializedVersion: 2
@@ -12794,6 +12794,7 @@ MonoBehaviour:
   muzzle: {fileID: 423228}
   projectilesPerShot: 6
   dispersion: 4
+  quadDispersion: 0
   velocity: 300
   damageByDistance: 1
   minDamageDistance: 8
@@ -12999,7 +13000,8 @@ MonoBehaviour:
   onUnequip:
     m_PersistentCalls:
       m_Calls: []
-  referenceItem: {fileID: 0}
+  item: {fileID: 0}
+  isEquipped: 0
 --- !u!82 &3419087839185441221
 AudioSource:
   m_ObjectHideFlags: 0

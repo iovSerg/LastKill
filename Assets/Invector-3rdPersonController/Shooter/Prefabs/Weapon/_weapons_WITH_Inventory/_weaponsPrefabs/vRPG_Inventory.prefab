@@ -5165,7 +5165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 9
   weaponCategory: RPG
   shootFrequency: 1
   isInfinityAmmo: 0
@@ -5197,7 +5197,18 @@ MonoBehaviour:
       m_Calls: []
   onShot:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 158832}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onEmptyClip:
     m_PersistentCalls:
       m_Calls: []
@@ -5263,6 +5274,7 @@ MonoBehaviour:
   keepScopeCameraRotationZ: 1
   isAiming: 0
   usingScope: 0
+  recoil: {fileID: 11400000, guid: 60853b6080d38cc40b919a825f40be35, type: 2}
   onReload:
     m_PersistentCalls:
       m_Calls: []
@@ -5271,7 +5283,18 @@ MonoBehaviour:
       m_Calls: []
   onFinishReload:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 158832}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onFinishAmmo:
     m_PersistentCalls:
       m_Calls: []
