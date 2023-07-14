@@ -17,17 +17,16 @@ namespace LastKill
 		public override void OnStartState()
 		{
 			_animator.SetAnimationState(hashBlendState);
+			_animator.Aiming = true;
 		}
 
 		public override bool ReadyToStart()
 		{
-			return _input.Aim;
+			return _input.Aim || _input.Fire && _animator.noAiming;
 		}
 
 		public override void UpdateState()
 		{
-			_move.Move(_input.Move, strafeSpeed,false);
-
 			if(_input.Move != Vector2.zero)
 			{
 				_animator.Animator.SetFloat("Horizontal", _input.Move.x, 0.1f, Time.deltaTime);
@@ -35,20 +34,22 @@ namespace LastKill
 			}
 			else
 			{
-				_animator.Animator.SetFloat("Horizontal",0f, 0.2f,Time.deltaTime);
+
+				_animator.Animator.SetFloat("Horizontal",0f);
 				_animator.Animator.SetFloat("Vertical", 0f);
 			}
+			_move.Move(_input.Move, strafeSpeed, false);
 
 			Quaternion rot = Quaternion.LookRotation(_camera.GetTransform.transform.forward);
 			transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * speedRotate);
-			//transform.rotation = Quaternion.Euler(0, _camera.GetTransform.eulerAngles.y, 0);
+			transform.rotation = Quaternion.Euler(0, _camera.GetTransform.eulerAngles.y, 0);
 
-
-			if (!_input.Aim) StopState();
+			if (!_input.Aim && !_input.Fire) StopState();
 		}
 		public override void OnStopState()
 		{
 			base.OnStopState();
+			_animator.Aiming = false;
 		}
 
 		public override void FixedUpdateState()

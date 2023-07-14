@@ -5,11 +5,12 @@ namespace LastKill
 {	
 	public interface IInput
 	{
-
 		public Action OnDied { get; set; }
-		public Action OnReload { get; set; }
+		public Action<int> OnFire { get; set; }
+		public Action<int> OnAiming { get; set; }
 
-		public event Action OnSelectWeapon;
+		public Action<int> OnReload { get;set; }
+		public Action<int> OnSelectWeapon { get; set; }
 
 
 

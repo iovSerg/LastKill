@@ -51,16 +51,19 @@ namespace LastKill
 		public float Magnituda => magnituda;
 		public int CurrentWeapon => currentWeapon;
 
-		private event Action died;
+		public Action OnDied { get; set ; }
+		public Action<int> OnFire { get ; set; }
+		public Action<int> OnAiming { get; set; }
 
-		public event Action OnSelectWeapon;
+		public Action<int> OnSelectWeapon { get; set; }
+		public Action <int> OnReload { get; set; }
 
-		public Action OnDied { get => died; set => died = value; }
-		public Action OnReload { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 
 		AbilityState _abilityState;
 
 		private double timeIsPressed;
+
 
 		private void Awake()
 		{
@@ -92,12 +95,13 @@ namespace LastKill
 
 			_input.Player.Exit.canceled += ctx => { Debug.Log("Quit"); Application.Quit(); };
 
-			_input.Player.Reload.performed += ctx => { OnReload?.Invoke(); };
+			_input.Player.Reload.performed += ctx => reload = ctx.ReadValueAsButton();
+			_input.Player.Reload.canceled += ctx => reload = ctx.ReadValueAsButton();
 
-            _input.Player.Aim.performed += ctx =>{  aim = !aim; };
+			_input.Player.Aim.performed += ctx =>{  aim = !aim; };
 
-			_input.Player.Crouch.performed += OnCrouch;
-			_input.Player.Crouch.canceled += OnCrouch;
+			_input.Player.Crouch.performed += ClickCrouch;
+			_input.Player.Crouch.canceled += ClickCrouch;
 
 			_input.Player.Sprint.performed += ctx => { sprint = !sprint; };
 
@@ -128,7 +132,7 @@ namespace LastKill
 		}
 
 
-		private void OnCrouch(InputAction.CallbackContext obj)
+		private void ClickCrouch(InputAction.CallbackContext obj)
         {
 			//When pressing a key
 			if (crawl && !obj.canceled)
@@ -150,7 +154,7 @@ namespace LastKill
 			try
 			{
 				int.TryParse(obj.control.displayName, out currentWeapon);
-				OnSelectWeapon?.Invoke();
+				OnSelectWeapon?.Invoke(currentWeapon);
 			}
 			catch (Exception ex)
 			{

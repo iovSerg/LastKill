@@ -57,6 +57,7 @@ namespace LastKill
 		}
 		private void DD()
 		{
+
 		}
 
 		public override void OnStartState()

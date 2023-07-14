@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace LastKill
 {
@@ -6,6 +8,7 @@ namespace LastKill
 	{
 		public bool IsReload { get; }
 		public bool IsWeapon { get; }
+
 	}
 
 }

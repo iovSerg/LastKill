@@ -129,7 +129,7 @@ namespace LastKill
 		public void Move(Vector2 moveInput, float targetSpeed, bool rotateCharacter = true)
 		{
 			speed = Mathf.Lerp(speed, targetSpeed * _input.Magnituda, Time.deltaTime * SpeedChangeRate);
-			if (speed < 0.3f) speed = 0f;
+			if (speed < 0.1f) speed = 0f;
 
 			if (moveInput != Vector2.zero)
 			{

@@ -6,7 +6,8 @@ namespace LastKill
     public interface IAnimator 
     {
         public Animator Animator { get; }
-        public bool isAiming { get; }
+        public bool noAiming { get; set; }
+        public bool Aiming { get; set; }
         public bool isDrawWeapon { get; }
 
         public void ResetMovementParametrs();

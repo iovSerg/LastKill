@@ -6,11 +6,14 @@ namespace LastKill
 {
 	public class Locomotion : AbstractAbilityState
 	{
-        [SerializeField] private float walkSpeed = 2f;
-        [SerializeField] private float sprintSpeed = 5f;
+        [SerializeField] private  float walkSpeed = 2f;
+        [SerializeField] private  float sprintSpeed = 5f;
         [SerializeField] private string animatorBlendState = "Locomotion";
 
         private int hashAnimState;
+
+
+        private float targetSpeed = 0f;
 
         private void Awake()
         {
@@ -31,12 +34,8 @@ namespace LastKill
         }
         public override void UpdateState()
         {
-            float targetSpeed = 0f;
-
             targetSpeed = _input.Sprint ? walkSpeed : sprintSpeed;
-
             targetSpeed = _input.Move == Vector2.zero ? 0f : targetSpeed;
-
             _move.Move(_input.Move, targetSpeed);
         }
 
@@ -47,7 +46,6 @@ namespace LastKill
 
 		public override void FixedUpdateState()
 		{
-			
-		}
+        }
 	}
 }

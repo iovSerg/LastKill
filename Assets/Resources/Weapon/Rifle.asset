@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857f7662956142b4e8037d38ac9c5560, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  position: {x: -1.51, y: 5.1, z: 2.72}
-  rotation: {x: -90, y: 0, z: 90}
+  position: {x: -2.75, y: 6.41, z: 4.81}
+  rotation: {x: 282.66208, y: 87.42234, z: 2.1227057}
   scale: {x: 90, y: 90, z: 90}
   prefab: {fileID: 3424644524720319744, guid: c9f5475d54e1d9641a0176e2963667ba, type: 3}
   Weapon: {fileID: 0}
@@ -35,5 +35,5 @@ MonoBehaviour:
   FireRate: 0.2
   BulletMaxCount: 120
   BulletMaxClip: 30
-  BulletCount: 35
+  BulletCount: 0
   Weapon_ID: 2

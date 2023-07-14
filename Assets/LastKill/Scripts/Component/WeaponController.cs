@@ -2,27 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace LastKill
 {
     public class WeaponController : MonoBehaviour,IWeapon
     {
-		private IAnimator _animator;
+		private Animator _animator;
 		private IInput _input;
 		private IKController _iKController;
+		private AnimatorController _animatorController;
 		private WeaponData[] weapons;
+		
 
-		private int hashReload;
+
+
 		private int weapon_id = 0;
 		private int last_weapon_id = 0;
 		private float lastShot;
 		private bool isWeapon = false;
 		public bool isAim = false;
 
-		[SerializeField] private string reload = "Reload";
 		[SerializeField] private Text weaponCount;
-		//[SerializeField] private List<WeaponData> weapons;
 
 
 		public Vector3 leftIK;
@@ -30,21 +32,24 @@ namespace LastKill
 		public Transform handWeapon;
 		public Transform spineWeapon;
 
-		public bool IsReload { get => _animator.Animator.GetBool("Reload"); }
-		public bool IsWeapon { get => isWeapon; }
+		public bool IsReload { get => _animator.GetBool("Reload"); }
+		public bool IsWeapon { get => isWeapon; private set {
+				 isWeapon = value;
+		} }
+
 
 		private void Awake()
 		{
 			_iKController = GetComponent<IKController>();
 			_input = GetComponent<IInput>();
-			_animator = GetComponent<IAnimator>();
+			_animator = GetComponent<Animator>();
+			_animatorController = GetComponent<AnimatorController>();
 			_input.OnSelectWeapon += OnSelectWeapon;
-
-			hashReload = Animator.StringToHash(reload);
 
 			AddWeaponHolder();
 			LoadResourcesWeapon();
 			lastShot = 0;
+			
 		}
 		private void AddWeaponHolder()
 		{
@@ -90,65 +95,64 @@ namespace LastKill
 			_iKController.TLeftHand = weapons[1].LeftHandIK;
 			
 		}
-		private void OnSelectWeapon()
+		private void OnSelectWeapon(int id)
 		{
 			weapon_id = _input.CurrentWeapon;
-
-			foreach (WeaponData data in weapons)
+			_animatorController.WeaponID = weapon_id;
+			
+			if (!isWeapon)
 			{
-				if (!isWeapon)
+				foreach (WeaponData data in weapons)
+				if (data.Weapon_ID == weapon_id)
 				{
-					if (data.Weapon_ID == weapon_id)
-					{
-						data.Weapon.SetActive(true);
-						last_weapon_id = weapon_id;
-						isWeapon = true;
-						return;
-					}
+					data.Weapon.SetActive(true);
+					last_weapon_id = weapon_id;
+					isWeapon = true;
+					_animatorController.noAiming = true;
+					return;
 				}
+			}
 
-				if (weapon_id == last_weapon_id && isWeapon)
+			if (weapon_id == last_weapon_id && isWeapon)
+			{
+				foreach (WeaponData data in weapons)
+				if (data.Weapon_ID == weapon_id)
 				{
-					if (data.Weapon_ID == weapon_id)
-					{
-						data.Weapon.SetActive(false);
-						isWeapon = false;
-						weapon_id = last_weapon_id = 0;
-						return;
-					}
+					data.Weapon.SetActive(false);
+					isWeapon = false;
+					_animatorController.noAiming = false;
+					weapon_id = last_weapon_id = 0;
+					_animatorController.WeaponID = 0;
+					return;
 				}
+			}
 
-				if (weapon_id != last_weapon_id && isWeapon)
+			if (weapon_id != last_weapon_id && isWeapon)
+			{
+				foreach (WeaponData data in weapons)
 				{
 					if (data.Weapon_ID == last_weapon_id)
 						data.Weapon.SetActive(false);
 					if (data.Weapon_ID == weapon_id)
 						data.Weapon.SetActive(true);
 				}
-
+				last_weapon_id = weapon_id;
 			}
+
+			
 		}
 
 		private void Update()
 		{
-			if (weapon_id == 0)
-			{
-				weaponCount.text = string.Empty;
-				return;
-			}
 			if(isWeapon)
 			{
 				if (_input.Fire)
 				{
+					_input.OnFire.Invoke(weapon_id);
 					Shoot();
 				}
-				if (_input.Reload)
-				{
-					Reload();
-				}
-				
+				if (_input.Reload) Reload();
 			}
-			weaponCount.text = weapons[weapon_id - 1].BulletCount.ToString();
 		}
 		public void Shoot()
 		{
@@ -203,6 +207,7 @@ namespace LastKill
 				{
 					if (!data.audioSource.isPlaying)
 					{
+						_input.OnReload?.Invoke(weapon_id);
 						data.audioSource.PlayOneShot(data.reloadClip);
 						data.BulletCount = data.BulletMaxClip;
 					}
