@@ -8,7 +8,7 @@ namespace LastKill
 	public class AnimatorController : MonoBehaviour,IAnimator
 	{
 		private	Animator _animator;
-		private IInput _input;
+		private PlayerInput _input;
 		private IWeapon _iWeapon;
 		private AbilityState _abilityState;
 
@@ -56,7 +56,7 @@ namespace LastKill
 		{
 			_animator = GetComponent<Animator>();
 			_iWeapon = GetComponent<IWeapon>();
-			_input = GetComponent<IInput>();
+			_input = GetComponent<PlayerInput>();
 
 			_input.OnSelectWeapon += OnSelectWeapon;
 			_input.OnReload += OnReload;
@@ -68,7 +68,7 @@ namespace LastKill
 			_abilityState.OnStateStop += OnStateStop;
 		}
 
-		private void OnFire(int id)
+		private void OnFire(bool state)
 		{
 			
 		}

@@ -27,13 +27,13 @@ namespace LastKill
         protected IAudio _audio;
         protected ICamera _camera;
         protected IDebug _debug;
-        protected IInput _input;
+        protected PlayerInput _input;
         protected IDetection _detection;
         protected virtual void Start()
         {
             _move = GetComponent<IMove>();
             _capsule = GetComponent<ICapsule>();
-            _input = GetComponent<IInput>();
+            _input = GetComponent<PlayerInput>();
             _weapon = GetComponent<IWeapon>();
             _animator = GetComponent<IAnimator>();
             _camera = GetComponent<ICamera>();

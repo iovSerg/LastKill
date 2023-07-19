@@ -14,7 +14,7 @@ namespace LastKill
 	[RequireComponent(typeof(IKController))]
 	[RequireComponent(typeof(WeaponController))]
 
-	public class PlayerInput : MonoBehaviour, IInput
+	public class PlayerInput : MonoBehaviour
 	{
 		private PlayerInputSystem _input = null;
 
@@ -52,8 +52,8 @@ namespace LastKill
 		public int CurrentWeapon => currentWeapon;
 
 		public Action OnDied { get; set ; }
-		public Action<int> OnFire { get ; set; }
-		public Action<int> OnAiming { get; set; }
+		public Action<bool> OnFire { get ; set; }
+		public Action<bool> OnAiming { get; set; }
 
 		public Action<int> OnSelectWeapon { get; set; }
 		public Action <int> OnReload { get; set; }
@@ -98,7 +98,7 @@ namespace LastKill
 			_input.Player.Reload.performed += ctx => reload = ctx.ReadValueAsButton();
 			_input.Player.Reload.canceled += ctx => reload = ctx.ReadValueAsButton();
 
-			_input.Player.Aim.performed += ctx =>{  aim = !aim; };
+			_input.Player.Aim.performed += ctx =>{ aim = !aim; OnAiming?.Invoke(aim);   };
 
 			_input.Player.Crouch.performed += ClickCrouch;
 			_input.Player.Crouch.canceled += ClickCrouch;

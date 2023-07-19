@@ -10,7 +10,7 @@ namespace LastKill
     public class WeaponController : MonoBehaviour,IWeapon
     {
 		private Animator _animator;
-		private IInput _input;
+		private PlayerInput _input;
 		private IKController _iKController;
 		private AnimatorController _animatorController;
 		private WeaponData[] weapons;
@@ -41,7 +41,7 @@ namespace LastKill
 		private void Awake()
 		{
 			_iKController = GetComponent<IKController>();
-			_input = GetComponent<IInput>();
+			_input = GetComponent<PlayerInput>();
 			_animator = GetComponent<Animator>();
 			_animatorController = GetComponent<AnimatorController>();
 			_input.OnSelectWeapon += OnSelectWeapon;
@@ -148,7 +148,7 @@ namespace LastKill
 			{
 				if (_input.Fire)
 				{
-					_input.OnFire.Invoke(weapon_id);
+					//_input.OnFire.Invoke(true);
 					Shoot();
 				}
 				if (_input.Reload) Reload();

@@ -9,7 +9,7 @@ namespace LastKill
 	public class CameraController : MonoBehaviour ,ICamera
 	{
 		private Camera _camera;
-		private IInput _input;
+		private PlayerInput _input;
 		private AbilityState _abilityState;
 		private CameraData[] cameraData;
 
@@ -47,7 +47,7 @@ namespace LastKill
 			cameraData = Resources.LoadAll<CameraData>("Camera/");
 			
 			_camera = Camera.main;
-			_input = GetComponent<IInput>();
+			_input = GetComponent<PlayerInput>();
 
 			_abilityState = GetComponent<AbilityState>();
 			_abilityState.OnStateStart += OnStateStart;
