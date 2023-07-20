@@ -91,7 +91,6 @@ namespace LastKill
 		{
 
 		}
-
 		private void OnSelectWeapon(int id)
 		{
 			if (id == 0)

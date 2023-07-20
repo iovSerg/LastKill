@@ -32,9 +32,7 @@ namespace LastKill
 		public Text bulletTotal;
 
 		public bool IsReload { get => _animator.GetBool("Reload"); }
-		public bool IsWeapon { get => isWeapon; private set {
-				 isWeapon = value;
-		} }
+		public bool IsWeapon { get => isWeapon; private set { isWeapon = value;} }
 
 
 		private void Awake()
@@ -117,7 +115,6 @@ namespace LastKill
 					{
 						currentWeapon = data;
 						currentWeapon.Weapon.SetActive(true);
-						
 					}
 
 				}

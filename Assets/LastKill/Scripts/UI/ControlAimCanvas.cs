@@ -33,12 +33,11 @@ namespace LastKill
 		private void Start()
 		{
 			screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-			
 		}
 		private void Update()
 		{
 			rayCenter = Camera.main.ScreenPointToRay(screenCenterPoint);
-			if (Physics.Raycast(rayCenter,out RaycastHit raycast,999f,aimColliderMask))
+			if (Physics.Raycast(rayCenter, out RaycastHit raycast, 999f, aimColliderMask))
 			{
 				targetTransform.position = raycast.point;
 			}

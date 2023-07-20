@@ -1,18 +1,24 @@
+using Cinemachine.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
 {
-	public class IKController : MonoBehaviour
+
+    public class IKController : MonoBehaviour
 	{
 		private Animator _animator;
+		private ICamera _camera;
 		[SerializeField] private Transform targetLeftHand;
 		[SerializeField] private Transform targetRightHand;
 
 		[SerializeField] private Transform targetRightFoot;
 		[SerializeField] private Transform targetLeftFoot;
 		[SerializeField] private Transform lookAtPosition;
+
+		[SerializeField] private Transform bodySpine;
 
 		 public GameObject currentWeapon;
 
@@ -30,9 +36,6 @@ namespace LastKill
 		public float WLeftHand { get => leftHandWeight; set => leftHandWeight = value; }
 		public float WRightHand { get => rightHandWeight; set => rightHandWeight = value; }
 
-		public Vector3 right;
-		public Vector3 left;
-
 
 		private void OnDrawGizmos()
 		{
@@ -43,33 +46,20 @@ namespace LastKill
 				Gizmos.DrawSphere(targetRightHand.position, 0.05f);
 			}
 		}
-		[SerializeField] private GameObject leftFoot;
+
 		private void Awake()
 		{
-			//GameObject target = new GameObject("TargetIK");
-
-			//target.transform.SetParent(transform);
-			//target.transform.localPosition = Vector3.zero;
-
-			//targetLeftHand = new GameObject("LeftHandIK").transform.parent = target.transform;
-			//targetRightHand = new GameObject("RightHandIK").transform.parent = target.transform;
-
-			//targetLeftFoot = new GameObject("LeftFootIK").transform.parent = target.transform;
-			//targetRightFoot = new GameObject("RightFootIK").transform.parent = target.transform;
-
 			_animator = GetComponent<Animator>();
-
+			_camera = GetComponent<ICamera>();
 		}
 		private void Update()
 		{
 			leftHandWeight = _animator.GetFloat("LeftHand");
 		}
 
-		public Vector3 offsetLookAtPosition = Vector3.zero;
 		private void OnAnimatorIK(int layerIndex)
 		{
-			
-			_animator.SetLookAtPosition(lookAtPosition.position - offsetLookAtPosition);
+			_animator.SetLookAtPosition(lookAtPosition.position);
 			_animator.SetLookAtWeight(lookWeight, bodyWeight, headWeight,eyesWeight,clampWeight);
 			//LeftHand
 			if(targetLeftHand != null)
