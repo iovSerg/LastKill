@@ -6,6 +6,7 @@ namespace LastKill
 {
 	public class IKController : MonoBehaviour
 	{
+		private Animator _animator;
 		[SerializeField] private Transform targetLeftHand;
 		[SerializeField] private Transform targetRightHand;
 
@@ -15,9 +16,6 @@ namespace LastKill
 
 		 public GameObject currentWeapon;
 
-		[SerializeField] private Transform TempLeftHand;
-
-		private Animator _animator;
 		[SerializeField] private float leftHandWeight = 0f;
 		[SerializeField] private float rightHandWeight = 0f;
 
@@ -27,9 +25,7 @@ namespace LastKill
 		[SerializeField] private float eyesWeight;
 		[SerializeField] private float clampWeight;
 
-		public Transform TLeftHand { get => targetLeftHand; set {
-				targetLeftHand = value;
-			} }
+		public Transform TLeftHand { get => targetLeftHand; set { targetLeftHand = value;} }
 		public Transform TRightHand { get => targetRightHand; set => targetRightHand = value; }
 		public float WLeftHand { get => leftHandWeight; set => leftHandWeight = value; }
 		public float WRightHand { get => rightHandWeight; set => rightHandWeight = value; }
@@ -50,10 +46,10 @@ namespace LastKill
 		[SerializeField] private GameObject leftFoot;
 		private void Awake()
 		{
-			GameObject target = new GameObject("TargetIK");
+			//GameObject target = new GameObject("TargetIK");
 
-			target.transform.SetParent(transform);
-			target.transform.localPosition = Vector3.zero;
+			//target.transform.SetParent(transform);
+			//target.transform.localPosition = Vector3.zero;
 
 			//targetLeftHand = new GameObject("LeftHandIK").transform.parent = target.transform;
 			//targetRightHand = new GameObject("RightHandIK").transform.parent = target.transform;
@@ -64,23 +60,11 @@ namespace LastKill
 			_animator = GetComponent<Animator>();
 
 		}
-		public bool debug = false;
 		private void Update()
 		{
-			if(debug)
-			{
-
-				if(TempLeftHand != null)
-				{
-					TempLeftHand = currentWeapon.GetComponent<Transform>().Find("leftHandIK");
-					TempLeftHand = GameObject.Find("leftHandIK").transform;
-				}
-				targetLeftHand = TempLeftHand;
-			}	
-			//leftHandWeight = _animator.GetFloat("LeftHand");
-			//rightHandWeight = _animator.GetFloat("RightHand");
-
+			leftHandWeight = _animator.GetFloat("LeftHand");
 		}
+
 		public Vector3 offsetLookAtPosition = Vector3.zero;
 		private void OnAnimatorIK(int layerIndex)
 		{

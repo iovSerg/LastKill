@@ -38,3 +38,4 @@ MonoBehaviour:
   AmmoMaxCount: 120
   AmmoMaxClip: 35
   Weapon_ID: 2
+  AnimatorID: 2

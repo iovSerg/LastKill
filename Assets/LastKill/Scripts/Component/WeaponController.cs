@@ -117,12 +117,14 @@ namespace LastKill
 					{
 						currentWeapon = data;
 						currentWeapon.Weapon.SetActive(true);
+						
 					}
 
 				}
 				weapon_id = id;
 				_animatorController.NoAim = true;
-				_animatorController.WeaponID = weapon_id;
+				_animatorController.WeaponID = currentWeapon.AnimatorID;
+				_iKController.TLeftHand = currentWeapon.LeftHandIK;
 			}
 
 

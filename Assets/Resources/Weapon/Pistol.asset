@@ -29,7 +29,7 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: 4912d5c56ce571e4fbad7af6de655772, type: 3}
   emptyClip: {fileID: 8300000, guid: 9c5ac02550d31504ebb57020dde8e988, type: 3}
   reloadClip: {fileID: 8300000, guid: cc03a3bc3d3003c428240bcd6e12c487, type: 3}
-  FireRate: 0.5
+  FireRate: 0.2
   AmmoClipCount: 0
   AmmoTotalCount: 45
   AmmoMaxCount: 45

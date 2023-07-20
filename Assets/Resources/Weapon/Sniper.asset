@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857f7662956142b4e8037d38ac9c5560, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
-  position: {x: -1.36, y: 7.55, z: 2.93}
+  position: {x: -0.039797362, y: -0.0999431, z: -0.019153148}
   rotation: {x: -90, y: 90, z: 0}
   scale: {x: 90, y: 90, z: 90}
   prefab: {fileID: 3154877080051893777, guid: ba89ff89c8ac7ae4b9f21ecd102c2254, type: 3}
@@ -34,8 +34,9 @@ MonoBehaviour:
   emptyClip: {fileID: 8300000, guid: 228e7054f6ea44f488b3c36c2cfd6826, type: 3}
   reloadClip: {fileID: 8300000, guid: 3708806e828002547b07099a479a0e59, type: 3}
   FireRate: 1
-  AmmoClipCount: 10
+  AmmoClipCount: 0
   AmmoTotalCount: 20
   AmmoMaxCount: 30
   AmmoMaxClip: 10
   Weapon_ID: 3
+  AnimatorID: 2

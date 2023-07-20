@@ -33,6 +33,7 @@ namespace LastKill
         public  int AmmoMaxClip;
 
         public int Weapon_ID;
+        public int AnimatorID;
         public void InstantiateTransform(WeaponData data)
 		{
             try
