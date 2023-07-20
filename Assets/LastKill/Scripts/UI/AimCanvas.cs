@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AimCanvas : MonoBehaviour
+
+namespace LastKill
 {
-    [SerializeField] private GameObject simple, scope;
-    public void SimpleCanvas(bool state)
-    {
-        simple.SetActive(state);
-    }
-    public void ScopeCanvas(bool state)
-    {
-        scope.SetActive(state);
-    }
+
+	public class AimCanvas : MonoBehaviour
+	{
+		[SerializeField] private GameObject simple, scope;
+		[SerializeField] public float CameraLens;
+		public int WeaponID;
+		public void SimpleCanvas(bool state)
+		{
+			simple.SetActive(state);
+		}
+		public void ScopeCanvas(bool state)
+		{
+			scope.SetActive(state);
+		}
+	}
 }

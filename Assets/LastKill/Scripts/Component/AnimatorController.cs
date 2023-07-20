@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LastKill
@@ -25,6 +26,8 @@ namespace LastKill
 		[SerializeField] private string drawWeapon = "DrawWeapon";
 		[SerializeField] private string weaponID = "WeaponID";
 
+		[Header("Animator Layers")]
+		[SerializeField] private string ArmsLayerID;
 
 		//hash animation
 		private int hashMagnituda;
@@ -37,6 +40,8 @@ namespace LastKill
 		private int hashAim;
 		private int hashDrawWeapon;
 		private int hashWeaponID;
+
+		private int armsLayerID;
 		
 		private float speedAnimation;
 
@@ -46,7 +51,7 @@ namespace LastKill
 		public bool isDrawWeapon => throw new NotImplementedException();
 
 
-		public bool noAiming { get => _animator.GetBool(hashNoAim); set => _animator.SetBool(hashNoAim,value); }
+		public bool NoAim { get => _animator.GetBool(hashNoAim); set => _animator.SetBool(hashNoAim,value); }
 		public bool Aiming { get => _animator.GetBool(hashAim); set => _animator.SetBool(hashAim,value); }
 		public float WeaponID { get => _animator.GetFloat(hashWeaponID); set => _animator.SetFloat(hashWeaponID,value); }
 
@@ -61,18 +66,27 @@ namespace LastKill
 			_input.OnSelectWeapon += OnSelectWeapon;
 			_input.OnReload += OnReload;
 			_input.OnFire += OnFire;
+			_input.OnAiming += OnAiming;
+
 
 			_abilityState = GetComponent<AbilityState>();
 
 			_abilityState.OnStateStart += OnStateStart;
 			_abilityState.OnStateStop += OnStateStop;
 		}
-
+		private void Start()
+		{
+			AssignAnimationIDs();
+			armsLayerID = _animator.GetLayerIndex(ArmsLayerID);
+		}
 		private void OnFire(bool state)
 		{
-			
+			Aiming = state;
 		}
-
+		private void OnAiming(bool state)
+		{
+			Aiming = state;
+		}
 		private void OnReload(int id)
 		{
 
@@ -80,13 +94,15 @@ namespace LastKill
 
 		private void OnSelectWeapon(int id)
 		{
-
+			if (id == 0)
+			{
+				_animator.SetLayerWeight(armsLayerID, 0);
+			}
+			else
+				_animator.SetLayerWeight(armsLayerID, 1);
 		}
 
-		private void Start()
-		{
-			AssignAnimationIDs();
-		}
+
 
 		private void AssignAnimationIDs()
 		{
@@ -114,14 +130,13 @@ namespace LastKill
 		}
 		private void Update()
 		{
+			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.fixedDeltaTime * speedChangeRate);
+			if (speedAnimation < 0.1f) speedAnimation = 0f;
 			_animator.SetFloat(hashMagnituda, speedAnimation);
-
 		}
 		
 		private void FixedUpdate()
 		{
-			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.fixedDeltaTime * speedChangeRate);
-			if (speedAnimation < 0.1f) speedAnimation = 0f;
 		}
 
 		public void ResetMovementParametrs()

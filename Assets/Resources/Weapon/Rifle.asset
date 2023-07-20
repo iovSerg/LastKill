@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857f7662956142b4e8037d38ac9c5560, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  position: {x: -2.75, y: 6.41, z: 4.81}
-  rotation: {x: 282.66208, y: 87.42234, z: 2.1227057}
+  position: {x: -2.4, y: 5.3, z: 2.5}
+  rotation: {x: 279.35278, y: 34.715252, z: 60.553474}
   scale: {x: 90, y: 90, z: 90}
   prefab: {fileID: 3424644524720319744, guid: c9f5475d54e1d9641a0176e2963667ba, type: 3}
   Weapon: {fileID: 0}
@@ -32,8 +32,9 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: 097e8235e0162d64ba53da9ef4ab8d61, type: 3}
   emptyClip: {fileID: 8300000, guid: 9b2ce00d16b72c34a9b46200421a6def, type: 3}
   reloadClip: {fileID: 8300000, guid: f4b0865c53d458d49a58b67d16d4b711, type: 3}
-  FireRate: 0.2
-  BulletMaxCount: 120
-  BulletMaxClip: 30
-  BulletCount: 0
+  FireRate: 0.1
+  AmmoClipCount: 0
+  AmmoTotalCount: 50
+  AmmoMaxCount: 120
+  AmmoMaxClip: 35
   Weapon_ID: 2

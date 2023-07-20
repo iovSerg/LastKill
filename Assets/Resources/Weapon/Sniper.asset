@@ -34,7 +34,8 @@ MonoBehaviour:
   emptyClip: {fileID: 8300000, guid: 228e7054f6ea44f488b3c36c2cfd6826, type: 3}
   reloadClip: {fileID: 8300000, guid: 3708806e828002547b07099a479a0e59, type: 3}
   FireRate: 1
-  BulletMaxCount: 30
-  BulletMaxClip: 10
-  BulletCount: 100
+  AmmoClipCount: 10
+  AmmoTotalCount: 20
+  AmmoMaxCount: 30
+  AmmoMaxClip: 10
   Weapon_ID: 3

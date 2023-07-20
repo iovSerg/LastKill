@@ -32,7 +32,7 @@ namespace LastKill
 		[SerializeField] private bool reload;
 		[SerializeField] private float magnituda;
 		[SerializeField] private int currentWeapon;
-		[SerializeField] private int lastWeapon;
+		[SerializeField] private int lastWeapon = 0;
 
 		//hold button or single click
 		[SerializeField] public bool HoldButton;
@@ -153,8 +153,27 @@ namespace LastKill
         {
 			try
 			{
-				int.TryParse(obj.control.displayName, out currentWeapon);
-				OnSelectWeapon?.Invoke(currentWeapon);
+                int.TryParse(obj.control.displayName, out currentWeapon);
+
+				if(aim && currentWeapon != lastWeapon)
+				{
+					currentWeapon = lastWeapon;
+					return;
+				}
+
+				if (currentWeapon != lastWeapon)
+				{
+					lastWeapon = currentWeapon;
+					OnSelectWeapon?.Invoke(currentWeapon);
+				}
+				else
+				{
+					lastWeapon = currentWeapon = 0;
+					OnSelectWeapon?.Invoke(currentWeapon);
+					aim = false;
+					OnAiming?.Invoke(false);
+				}
+				
 			}
 			catch (Exception ex)
 			{

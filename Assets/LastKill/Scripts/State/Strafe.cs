@@ -17,12 +17,11 @@ namespace LastKill
 		public override void OnStartState()
 		{
 			_animator.SetAnimationState(hashBlendState);
-			_animator.Aiming = true;
 		}
 
 		public override bool ReadyToStart()
 		{
-			return _input.Aim || _input.Fire && _animator.noAiming;
+			return _input.Aim || _input.Fire && _animator.NoAim;
 		}
 
 		public override void UpdateState()

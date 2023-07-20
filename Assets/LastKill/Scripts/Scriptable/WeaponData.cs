@@ -26,9 +26,11 @@ namespace LastKill
         public AudioClip reloadClip;
 
         public float FireRate;
-        public int BulletMaxCount;
-        public int BulletMaxClip;
-        public int BulletCount;
+        public int AmmoClipCount;
+        public int AmmoTotalCount;
+
+         public  int AmmoMaxCount;
+        public  int AmmoMaxClip;
 
         public int Weapon_ID;
         public void InstantiateTransform(WeaponData data)

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace LastKill
 {
@@ -17,7 +18,8 @@ namespace LastKill
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
 	    private Cinemachine3rdPersonFollow _bodyFolow;
 		private CinemachineVirtualCamera _virtualCamera;
-		private Transform _followCamera;
+	    [SerializeField] private Transform _followCamera;
+		[SerializeField] private float normalLensCamera;
 		[Tooltip("How far in degrees can you move the camera up")]
 		public float TopClamp = 70.0f;
 		[Tooltip("How far in degrees can you move the camera down")]
@@ -52,12 +54,29 @@ namespace LastKill
 			_abilityState = GetComponent<AbilityState>();
 			_abilityState.OnStateStart += OnStateStart;
 			_abilityState.OnStateStop += OnStateStop;
+
+			_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
+			_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+			
 		}
+		ControlAimCanvas aimCanvas;
 		private void Start()
 		{
-			SetCurrentCameraData(CameraState.Locomotion);
-			SceneCameraSetup();
+			//SetCurrentCameraData(CameraState.Locomotion);
+			//SceneCameraSetup();
+			aimCanvas = GetComponentInChildren<ControlAimCanvas>();
+			aimCanvas.OnLensAimCamera += OnLensAimCamera;
 		}
+
+		private void OnLensAimCamera(float lens, bool state)
+		{
+			if(state && lens != 0)
+			{
+				_virtualCamera.m_Lens.FieldOfView = lens;
+			}
+			else _virtualCamera.m_Lens.FieldOfView = normalLensCamera;
+		}
+
 		private void OnStateStart(AbstractAbilityState obj)
 		{
 			timer = 0f;
@@ -75,23 +94,25 @@ namespace LastKill
 				if (data.stateCamera == state)
 				{
 					currentCameraData = data;
+					
 				}
 		}
-
-		private void LateUpdate()
+		public float cameraSide = 0.5f;
+		public float cameraDistance = 1f;
+		private void Update()
 		{
 			CameraRotation();
-			//if(timer < 2f)
-			//{
-			//	timer += Time.deltaTime;
-			//	//_followCamera.localPosition = Vector3.Lerp(_followCamera.localPosition, currentCameraData.position, Time.deltaTime * speedChangeRate);
-			//	_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
-			//	_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
-
-			//	//??? Not working
-			//	//_bodyFolow.CameraSide = Mathf.Lerp(_bodyFolow.CameraSide, currentCameraData.CameraSide, Time.deltaTime * speedChangeRate);
-			//	//_bodyFolow.CameraSide = currentCameraData.CameraSide;
-			//}
+			if (timer < 2f)
+			{
+				timer += Time.deltaTime;
+				_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
+				_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
+				_bodyFolow.CameraSide = currentCameraData.CameraSide;
+			}
+		}
+		private void LateUpdate()
+		{
+			
 		}
 		private void SceneCameraSetup()
 		{

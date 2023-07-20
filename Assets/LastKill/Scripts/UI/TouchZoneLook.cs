@@ -26,6 +26,7 @@ public class TouchZoneLook : MonoBehaviour, IPointerDownHandler, IDragHandler, I
 
 	public void OnDrag(PointerEventData eventData)
 	{
+		Debug.Log("Drag");
 		//RectTransformUtility.ScreenPointToWorldPointInRectangle(TouchLook, eventData.position, eventData.pressEventCamera, out pointerDownPosition);
 		//StickLook.position = eventData.position;
 
@@ -39,6 +40,7 @@ public class TouchZoneLook : MonoBehaviour, IPointerDownHandler, IDragHandler, I
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		Debug.Log("Down");
 		//RectTransformUtility.ScreenPointToWorldPointInRectangle(TouchLook, eventData.position, eventData.pressEventCamera, out pointerDownPosition);
 		//UpdateHandleRectPosition(pointerDownPosition);
 		StickLook.position = eventData.position;
