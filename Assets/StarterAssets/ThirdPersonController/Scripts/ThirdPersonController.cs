@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -105,6 +106,8 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+     [SerializeField]   private CinemachineVirtualCamera virtualCamera;
+      [SerializeField]  private Cinemachine3rdPersonFollow cinemachine3RdPerson;
 
         private const float _threshold = 0.01f;
 
@@ -130,6 +133,12 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            virtualCamera = GameObject.FindFirstObjectByType<CinemachineVirtualCamera>();
+            cinemachine3RdPerson = virtualCamera.GetComponent<Cinemachine3rdPersonFollow>();
+            cinemachine3RdPerson = GameObject.FindAnyObjectByType<Cinemachine3rdPersonFollow>();
+            cinemachine3RdPerson.enabled = true;
+            cinemachine3RdPerson.ShoulderOffset = Vector3.zero;
+            cinemachine3RdPerson.CameraDistance = 5f;
         }
 
         private void Start()

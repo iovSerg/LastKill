@@ -18,5 +18,5 @@ MonoBehaviour:
   CameraSide: 0.7
   CameraDistance: 1
   cameraName: Strafe
-  tagName: 
+  tagName: Camera/Strafe
   priority: 0

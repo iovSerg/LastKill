@@ -16,8 +16,8 @@ namespace LastKill
 
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-	    private Cinemachine3rdPersonFollow _bodyFolow;
-		private CinemachineVirtualCamera _virtualCamera;
+	    [SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
+		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
 	    [SerializeField] private Transform _followCamera;
 		[SerializeField] private float normalLensCamera;
 		[Tooltip("How far in degrees can you move the camera up")]
@@ -56,8 +56,9 @@ namespace LastKill
 			_abilityState.OnStateStop += OnStateStop;
 
 			_virtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
-			_bodyFolow = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-			
+			_bodyFolow = GameObject.FindAnyObjectByType<Cinemachine3rdPersonFollow>();
+			_bodyFolow.enabled = true;
+
 		}
 		ControlAimCanvas aimCanvas;
 		private void Start()
@@ -66,6 +67,7 @@ namespace LastKill
 			//SceneCameraSetup();
 			aimCanvas = GetComponentInChildren<ControlAimCanvas>();
 			aimCanvas.OnLensAimCamera += OnLensAimCamera;
+			
 		}
 
 		private void OnLensAimCamera(float lens, bool state)
@@ -99,16 +101,28 @@ namespace LastKill
 		}
 		public float cameraSide = 0.5f;
 		public float cameraDistance = 1f;
-		private void Update()
+		private void FixedUpdate()
 		{
 			CameraRotation();
-			if (timer < 2f)
-			{
-				timer += Time.deltaTime;
-				_bodyFolow.ShoulderOffset = Vector3.Lerp(_bodyFolow.ShoulderOffset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
-				_bodyFolow.CameraDistance = Mathf.Lerp(_bodyFolow.CameraDistance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
-				_bodyFolow.CameraSide = currentCameraData.CameraSide;
-			}
+		}
+		private void Update()
+		{
+			//if (timer < 2f)
+			//{
+			//	timer += Time.deltaTime;
+
+			//	if(_bodyFolow != null )
+			//	{
+			//		Vector3 offset = _bodyFolow.ShoulderOffset;
+			//		float distance = _bodyFolow.CameraDistance;
+			//		float side = _bodyFolow.CameraSide;
+
+			//		_bodyFolow.ShoulderOffset = Vector3.Lerp(offset, currentCameraData.ShoulderOffset, Time.deltaTime * speedChangeRate);
+			//		_bodyFolow.CameraDistance = Mathf.Lerp(distance, currentCameraData.CameraDistance, Time.deltaTime * speedChangeRate);
+			//		if(side != currentCameraData.CameraSide)
+			//		_bodyFolow.CameraSide = currentCameraData.CameraSide;
+			//	}
+			//}
 		}
 		private void LateUpdate()
 		{

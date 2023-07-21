@@ -113,7 +113,7 @@ namespace LastKill
 			if (useRootMotion) return;
 			if (!_controller.enabled) return;
 
-			_controller.Move(velocity * Time.deltaTime);
+			_controller.Move(velocity * Time.fixedDeltaTime);
 		}
 		private void OnAnimatorMove()
 		{
@@ -140,8 +140,11 @@ namespace LastKill
 				if (rotateCharacter)
 					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 			}
-			Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-			velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
+				
+
+				Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+				velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
+
 		}
 
 		public void Move(Vector2 moveInput, float targetSpeed, Quaternion cameraRotation, bool rotateCharacter = true)

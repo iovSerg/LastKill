@@ -15,8 +15,8 @@ MonoBehaviour:
   position: {x: 0.291, y: 1.454, z: 2.206}
   ShoulderOffset: {x: 0, y: 0, z: 0}
   stateCamera: 2
-  CameraSide: 0
-  CameraDistance: 0
+  CameraSide: 0.6
+  CameraDistance: 1
   cameraName: Aim
   tagName: Camera/Aim
   priority: 10

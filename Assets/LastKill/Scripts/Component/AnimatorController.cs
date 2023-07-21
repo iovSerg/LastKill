@@ -129,8 +129,8 @@ namespace LastKill
 		}
 		private void Update()
 		{
-			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.fixedDeltaTime * speedChangeRate);
-			if (speedAnimation < 0.1f) speedAnimation = 0f;
+			speedAnimation = Mathf.Lerp(speedAnimation, _input.Magnituda, Time.deltaTime * speedChangeRate);
+			if (speedAnimation < 0.05f) speedAnimation = 0f;
 			_animator.SetFloat(hashMagnituda, speedAnimation);
 		}
 		

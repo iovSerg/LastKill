@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 namespace LastKill
@@ -24,7 +25,7 @@ namespace LastKill
 		{
 			return _input.Aim || _input.Fire && _animator.NoAim;
 		}
-
+		public float smooth = 2f;
 		public override void UpdateState()
 		{
 			if(_input.Move != Vector2.zero)
@@ -36,7 +37,7 @@ namespace LastKill
 			{
 
 				_animator.Animator.SetFloat("Horizontal",0f,0.1f,Time.deltaTime);
-				_animator.Animator.SetFloat("Vertical", 0f,0.1f,Time.deltaTime);
+				_animator.Animator.SetFloat("Vertical", 0f,0.1f, Time.deltaTime);
 			}
 			_move.Move(_input.Move, strafeSpeed, false);
 
