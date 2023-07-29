@@ -2,17 +2,14 @@ using System;
 using UnityEngine;
 
 namespace LastKill
-{	
+{
 	public interface IInput
 	{
-		public Action OnDied { get; set; }
-		public Action<int> OnFire { get; set; }
-		public Action<int> OnAiming { get; set; }
-
-		public Action<int> OnReload { get;set; }
-		public Action<int> OnSelectWeapon { get; set; }
-
-
+		public Action EventDied { get; set; }
+		public Action<bool> EventFire { get; set; }
+		public Action<bool> EventAim { get; set; }
+		public Action<int> EventReload { get; set; }
+		public Action<int> EventSelectWeapon { get; set; }
 
 		public Vector2 Move { get; }
 		public Vector2 Look { get; }

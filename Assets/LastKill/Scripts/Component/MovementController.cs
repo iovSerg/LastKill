@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
 {
-	public class MovementController : MonoBehaviour , IMove, ICapsule
+	public class MovementController : MonoBehaviour, IMove, ICapsule
 	{
 		[Header("Player")]
 		[Tooltip("How fast the character turns to face movement direction")]
@@ -53,7 +51,7 @@ namespace LastKill
 		private CharacterController _controller;
 		private PlayerInput _input;
 
-	
+
 
 
 		private ICamera _camera;
@@ -102,10 +100,10 @@ namespace LastKill
 		}
 		private void Move(float targetSpeed, bool rotateCharacter = true)
 		{
-			
+
 
 		}
-		private void FixedUpdate()
+		private void Update()
 		{
 			GroundedCheck();
 			GravityControl();
@@ -113,7 +111,11 @@ namespace LastKill
 			if (useRootMotion) return;
 			if (!_controller.enabled) return;
 
+		}
+		private void FixedUpdate()
+		{
 			_controller.Move(velocity * Time.fixedDeltaTime);
+			
 		}
 		private void OnAnimatorMove()
 		{
@@ -140,16 +142,15 @@ namespace LastKill
 				if (rotateCharacter)
 					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 			}
-				
 
-				Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-				velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
+			Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+			velocity = targetDirection.normalized * speed + new Vector3(0.0f, velocity.y, 0.0f);
 
 		}
 
 		public void Move(Vector2 moveInput, float targetSpeed, Quaternion cameraRotation, bool rotateCharacter = true)
 		{
-			
+
 		}
 
 		public void Move(Vector3 velocity)
@@ -267,6 +268,6 @@ namespace LastKill
 			_controller.enabled = false;
 		}
 
-		
+
 	}
 }

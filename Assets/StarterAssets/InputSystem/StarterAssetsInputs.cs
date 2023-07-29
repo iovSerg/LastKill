@@ -7,7 +7,7 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
-		[Header("Character Input Values")]
+		[Header("Character _input Values")]
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
@@ -28,7 +28,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -49,7 +49,7 @@ namespace StarterAssets
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-		} 
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -76,5 +76,5 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
+
 }

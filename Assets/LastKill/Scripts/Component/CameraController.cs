@@ -1,13 +1,9 @@
 using Cinemachine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace LastKill
 {
-	public class CameraController : MonoBehaviour ,ICamera
+	public class CameraController : MonoBehaviour, ICamera
 	{
 		private Camera _camera;
 		private PlayerInput _input;
@@ -16,9 +12,9 @@ namespace LastKill
 
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-	    [SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
+		[SerializeField] private Cinemachine3rdPersonFollow _bodyFolow;
 		[SerializeField] private CinemachineVirtualCamera _virtualCamera;
-	    [SerializeField] private Transform _followCamera;
+		[SerializeField] private Transform _followCamera;
 		[SerializeField] private float normalLensCamera;
 		[Tooltip("How far in degrees can you move the camera up")]
 		public float TopClamp = 70.0f;
@@ -47,7 +43,7 @@ namespace LastKill
 		{
 			//Download camera settings
 			cameraData = Resources.LoadAll<CameraData>("Camera/");
-			
+
 			_camera = Camera.main;
 			_input = GetComponent<PlayerInput>();
 
@@ -65,14 +61,14 @@ namespace LastKill
 		{
 			//SetCurrentCameraData(CameraState.Locomotion);
 			//SceneCameraSetup();
-			aimCanvas = GetComponentInChildren<ControlAimCanvas>();
+			aimCanvas = GameObject.FindAnyObjectByType<ControlAimCanvas>();
 			aimCanvas.OnLensAimCamera += OnLensAimCamera;
-			
+
 		}
 
 		private void OnLensAimCamera(float lens, bool state)
 		{
-			if(state && lens != 0)
+			if (state && lens != 0)
 			{
 				_virtualCamera.m_Lens.FieldOfView = lens;
 			}
@@ -96,14 +92,16 @@ namespace LastKill
 				if (data.stateCamera == state)
 				{
 					currentCameraData = data;
-					
+
 				}
 		}
 		public float cameraSide = 0.5f;
 		public float cameraDistance = 1f;
 		private void FixedUpdate()
 		{
+			
 			CameraRotation();
+			
 		}
 		private void Update()
 		{
@@ -126,16 +124,16 @@ namespace LastKill
 		}
 		private void LateUpdate()
 		{
-			
+
 		}
 		private void SceneCameraSetup()
 		{
 			if (cameraData != null)
 			{
 				GameObject cameraFollow = new GameObject("CameraTarget");
-			
-				cameraFollow.transform.SetParent(transform,true);
-				cameraFollow.transform.localPosition = new Vector3(0,1.5f,0);
+
+				cameraFollow.transform.SetParent(transform, true);
+				cameraFollow.transform.localPosition = new Vector3(0, 1.5f, 0);
 				_followCamera = cameraFollow.transform;
 			}
 			//Learn how to change body(Do nothing) change 3rd follow
@@ -164,17 +162,17 @@ namespace LastKill
 
 		private float BodyDistance(float a, float b, bool invert)
 		{
-			return Mathf.Lerp(a, b, invert ? -Time.deltaTime: Time.deltaTime);
+			return Mathf.Lerp(a, b, invert ? -Time.deltaTime : Time.deltaTime);
 		}
 		private void CameraRotation()
 		{
-			cameraInputY += _input.Look.y  * sensivity;
-			cameraInputX += _input.Look.x *  sensivity;
+			cameraInputY += _input.Look.y * sensivity;
+			cameraInputX += _input.Look.x * sensivity;
 
 			cameraInputX = ClampAngle(cameraInputX, float.MinValue, float.MaxValue);
 			cameraInputY = ClampAngle(cameraInputY, BottomClamp, TopClamp);
 
-			_followCamera.transform.rotation = Quaternion.Euler(cameraInputY,cameraInputX , 0f);
+			_followCamera.transform.rotation = Quaternion.Euler(cameraInputY, cameraInputX, 0f);
 		}
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
@@ -189,7 +187,7 @@ namespace LastKill
 			moveDirection += _camera.transform.right * moveInput.x;
 
 			moveDirection.Normalize();
-		    moveDirection.y = 0f;
+			moveDirection.y = 0f;
 
 			return moveDirection;
 		}

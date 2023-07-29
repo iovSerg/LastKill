@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
@@ -43,7 +40,7 @@ namespace LastKill
 			hashShortClimb = Animator.StringToHash(shortAnimState);
 			hashClimbUp = Animator.StringToHash(highAnimState);
 		}
-		
+
 		public override void OnStartState()
 		{
 			//Need refactoring
@@ -64,7 +61,7 @@ namespace LastKill
 			//highUp = true;
 			//targetHit = climb.raycastHit;
 			//targetPosition = climb.targetPosition;
-		
+
 			_capsule.DisableCollision();
 			_move.DisableGravity();
 			_move.ApplyRootMotion(Vector3.one * 0.5f);
@@ -127,7 +124,7 @@ namespace LastKill
 		public override void UpdateState()
 		{
 			//transform up //pick up the game
-			if(highUp)
+			if (highUp)
 			{
 				if (Physics.Raycast(transform.position + Vector3.up * 2.2f, transform.forward, 1f))
 				{
@@ -155,7 +152,7 @@ namespace LastKill
 
 			if (!_animator.Animator.isMatchingTarget && !hasMatchTarget)
 			{
-				_animator.Animator.MatchTarget(targetPosition, Quaternion.identity, AvatarTarget.Root, new MatchTargetWeightMask(Vector3.one,0f), startNormalizeTime, targetNormalizeTime, hasMatchTarget);
+				_animator.Animator.MatchTarget(targetPosition, Quaternion.identity, AvatarTarget.Root, new MatchTargetWeightMask(Vector3.one, 0f), startNormalizeTime, targetNormalizeTime, hasMatchTarget);
 
 				hasMatchTarget = true;
 			}
@@ -190,7 +187,7 @@ namespace LastKill
 				if (Physics.CapsuleCast(p1, p2, capsuleCastRadius, castDirection, out RaycastHit forwardHit,
 					overlapRadius, climbMask, QueryTriggerInteraction.Collide))
 				{
-					
+
 
 					Vector3 sphereStart = forwardHit.point;
 					sphereStart.y = transform.position.y + climbHeight + capsuleCastRadius;
@@ -201,12 +198,12 @@ namespace LastKill
 					{
 						targetHit = shortHit;
 						targetHit.normal = Vector3.Scale(forwardHit.normal, new Vector3(1, 0, 1)).normalized;
-						
+
 
 						return true;
 					}
 
-				    sphereStart = forwardHit.point;
+					sphereStart = forwardHit.point;
 					sphereStart.y = transform.position.y + climbUpHeight + capsuleCastRadius;
 
 					if (Physics.SphereCast(sphereStart, capsuleCastRadius, Vector3.down, out RaycastHit topHit, climbUpHeight - minClimbHeight,
@@ -214,7 +211,7 @@ namespace LastKill
 					{
 						targetHit = topHit;
 						targetHit.normal = Vector3.Scale(forwardHit.normal, new Vector3(1, 0, 1)).normalized;
-						
+
 
 						return true;
 					}
@@ -227,7 +224,7 @@ namespace LastKill
 
 		public override void FixedUpdateState()
 		{
-			
+
 		}
 	}
 }

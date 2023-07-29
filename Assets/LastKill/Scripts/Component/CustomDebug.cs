@@ -15,7 +15,7 @@ namespace LastKill
 		[SerializeField] private float minClimbHeight = 0.5f;
 		//[SerializeField] private float maxClimbHeight = 1.5f;
 
-		public bool ShowDebugLog { get => debugLog; set => debugLog = value	; }
+		public bool ShowDebugLog { get => debugLog; set => debugLog = value; }
 		public bool ShowDebugCrouch { get => debugCrouch; set => debugCrouch = value; }
 		public bool ShowDebugCrawl { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 		public bool ShowDebugRoll { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -29,7 +29,7 @@ namespace LastKill
 
 		private void Update()
 		{
-		
+
 		}
 		private void OnDrawGizmos()
 		{

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 namespace LastKill
@@ -23,22 +19,12 @@ namespace LastKill
 
 		public override bool ReadyToStart()
 		{
-			return _input.Aim || _input.Fire && _animator.NoAim;
+			return _input.Aim || _input.Fire;
 		}
 		public float smooth = 2f;
 		public override void UpdateState()
 		{
-			if(_input.Move != Vector2.zero)
-			{
-				_animator.Animator.SetFloat("Horizontal", _input.Move.x, 0.1f, Time.deltaTime);
-				_animator.Animator.SetFloat("Vertical", _input.Move.y, 0.1f, Time.deltaTime);
-			}
-			else
-			{
-
-				_animator.Animator.SetFloat("Horizontal",0f,0.1f,Time.deltaTime);
-				_animator.Animator.SetFloat("Vertical", 0f,0.1f, Time.deltaTime);
-			}
+			_animator.XYMove();
 			_move.Move(_input.Move, strafeSpeed, false);
 
 			Quaternion rot = Quaternion.LookRotation(_camera.GetTransform.transform.forward);

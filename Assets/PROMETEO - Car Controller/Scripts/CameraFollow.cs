@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour
+{
 
 	public Transform carTransform;
 	[Range(1, 10)]
@@ -13,7 +12,8 @@ public class CameraFollow : MonoBehaviour {
 	Vector3 initialCarPosition;
 	Vector3 absoluteInitCameraPosition;
 
-	void Start(){
+	void Start()
+	{
 		initialCameraPosition = gameObject.transform.position;
 		initialCarPosition = carTransform.position;
 		absoluteInitCameraPosition = initialCameraPosition - initialCarPosition;

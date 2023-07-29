@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
@@ -32,7 +30,7 @@ namespace LastKill
 		{
 			defaultCapsuleRadius = _capsule.GetCapsuleRadius();
 			startingCrawl = true;
-			_animator.SetAnimationState(hashStartCrawl,0);
+			_animator.SetAnimationState(hashStartCrawl, 0);
 			_capsule.SetCapsuleSize(capsuleHeightOnCrawl, defaultCapsuleRadius);
 		}
 
@@ -45,12 +43,12 @@ namespace LastKill
 		{
 			if (startingCrawl)
 			{
-				if (!_animator.HasFinishedAnimation(startCrawlAnimationState,0))
+				if (!_animator.HasFinishedAnimation(startCrawlAnimationState, 0))
 					startingCrawl = false;
 			}
 			if (stoppingCrawl)
 			{
-				if (_animator.HasFinishedAnimation(0,0.8f))
+				if (_animator.HasFinishedAnimation(0, 0.8f))
 					StopState();
 				return;
 			}
@@ -69,12 +67,12 @@ namespace LastKill
 			startingCrawl = false;
 			stoppingCrawl = false;
 			_capsule.ResetCapsuleSize();
-			
+
 		}
 
 		public override void FixedUpdateState()
 		{
-			
+
 		}
 	}
 }

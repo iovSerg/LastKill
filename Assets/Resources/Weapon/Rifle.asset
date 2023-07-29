@@ -15,13 +15,18 @@ MonoBehaviour:
   position: {x: -2.4, y: 5.3, z: 2.5}
   rotation: {x: 279.35278, y: 34.715252, z: 60.553474}
   scale: {x: 90, y: 90, z: 90}
-  prefab: {fileID: 3424644524720319744, guid: c9f5475d54e1d9641a0176e2963667ba, type: 3}
+  prefabHitEffect: {fileID: 0}
+  prefabWeapon: {fileID: 3424644524720319744, guid: c9f5475d54e1d9641a0176e2963667ba,
+    type: 3}
   Weapon: {fileID: 0}
+  prefabDecalDamage: {fileID: 0}
+  instanteDecalsDamage: []
   holder: 0
   muzzle: {fileID: 0}
-  LeftHandIK: {fileID: 0}
+  LeftHandIKIdle: {fileID: 0}
+  LeftHandIKAiming: {fileID: 0}
   audioSource: {fileID: 0}
-  particleSystem:
+  muzleFlash:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -29,13 +34,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  HitEffect: {fileID: 0}
   shootClip: {fileID: 8300000, guid: 097e8235e0162d64ba53da9ef4ab8d61, type: 3}
   emptyClip: {fileID: 8300000, guid: 9b2ce00d16b72c34a9b46200421a6def, type: 3}
   reloadClip: {fileID: 8300000, guid: f4b0865c53d458d49a58b67d16d4b711, type: 3}
   FireRate: 0.1
-  AmmoClipCount: 0
-  AmmoTotalCount: 50
-  AmmoMaxCount: 120
-  AmmoMaxClip: 35
+  ClipCountAmmo: 0
+  CurrentCountAmmo: 30
+  MaxAmmoClip: 30
+  MaxAmmoCount: 120
   Weapon_ID: 2
-  AnimatorID: 2
+  WeaponAnimatorID: 2
+  WeaponPoseAnimator: 2

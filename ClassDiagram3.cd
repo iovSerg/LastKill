@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LastKill.AbilityState" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAYAAAAJAgIAAQQAAIAAACAACAAAAAAAIgQAAAAAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\AbilityState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.AbstractAbilityState" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAACICKAEABAAAAoAAIIcAAAAAAQIAAghCIIAIg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\AbstractAbilityState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.AimCanvas" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAgBAAAAAAAAAAAIAAAAAQgAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\UI\AimCanvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.AnimatorController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQEEWgAACIYokAAAYKUAJIGhIBOBIBAKwCQAhRiAFA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\AnimatorController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.AudioController" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\AudioController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LastKill.ButtonShowUI" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAABAAIAAAAAAAAAAAAAACABAAAAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\UI\ButtonShowUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.CameraController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEgAARyJAAIAACYBAIEgACABlBAAAAgAAIGAkAEg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\CameraController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.CameraData" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAIAIAAQAIAAACAAAAIAAAAABAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Scriptable\CameraData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.Climb" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEVAQCIARAABRIAAAECAAQEEIAAAAABAEgBAQoAEk=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Climb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.ContainerShader" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\SetupShader\ContainerShader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.ControlAimCanvas" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAECIBAAAAAQAAAAgABAAIAARAAAAwBABAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\UI\ControlAimCanvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.Crawling" Collapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAIABAAABAAAAAEABCEAAAAAACBAIABAgAAEg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Crawling.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.Crouch" Collapsed="true">
+    <Position X="12.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACAAIAAAAABAAAAAIAAAEAgAQEAAhAAABAAAAFg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Crouch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.CustomDebug" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQEAAAAAAQAAEAAAAAAAAAQAAAgAAACIAAgCIAgABA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\CustomDebug.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.DescriptionClimb" Collapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\DetectionController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.DetectionController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEAAAAYAgAgAAAAAAgAQAAQAAAgEAAAAACAAEAkA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\DetectionController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.IKController" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQUAAAAAEaAAIABAYABABAkAggECYCAIAAEACJAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\IKController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.JumpAndFalling" Collapsed="true">
+    <Position X="1" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEIAIQIBIAEABkAAIAcEAAEAAAAIHAAAAhHAhAoEk=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\JumpAndFalling.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.Locomotion" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAIAAAAIAAAAQAAAAAEgAAEAAAAAAABAAAAEg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Locomotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.MovementController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEEACECoIYAAAAhIACMAAAAIBED0AgLgSAnGBJg0A=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\MovementController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.PlayerData" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAQAAAAAAAAAGAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Scriptable\PlayerData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.PlayerDataInput" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Input\PlayerDataInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.PlayerInput" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFQSAAAgkoMBAIGBASJAAEAiIADMACAKLYAgAAMACGA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Input\PlayerInput.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.Roll" Collapsed="true">
+    <Position X="14.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAECBAAA0AAAAQEAAAAIAAAAAABEAAAEg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Roll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.Strafe" Collapsed="true">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAIAAAAQBAAAAAAAAAEgAAAAAAAAAABAAAAVg=</HashCode>
+      <FileName>Assets\LastKill\Scripts\State\Strafe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LastKill.WeaponController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQIkACAABIgBKAAAQAAAAAAJAAEBBAgKAAQIABQAEA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\WeaponController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LastKill.WeaponData" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAERAAIAEAAAAAAGAECBIAICAAACEAiAAAAQQAAAAAo=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Scriptable\WeaponData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LastKill.IAnimator" Collapsed="true">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAEAAAACQAAACAIAAAABAKACQAAQAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IAnimator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IAudio" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IAudio.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.ICamera" Collapsed="true">
+    <Position X="20.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAACABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\ICamera.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.ICapsule" Collapsed="true">
+    <Position X="22.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAEAAAAAAAAAIAAEAAAAAAAAAAACAAABAAIAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\ICapsule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IDebug" Collapsed="true">
+    <Position X="24" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAAAAAAAAAEAAAAAAAAAAAAAgAAAAAAAAAIAAABA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IDebug.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IDetection" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAYAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IDetection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IInput" Collapsed="true">
+    <Position X="18.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQAAAAgoEAAAEAASAAAEACIACEAAAACIAgAAEAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IInput.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IMove" Collapsed="true">
+    <Position X="20.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAACEAIAAAAAABAACAAAAAIAAB0AAAAQACABAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IMove.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LastKill.IWeapon" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Interface\IWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="LastKill.CameraState" Collapsed="true">
+    <Position X="17" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAQAAAAACQAAEAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Enum\CameraState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LastKill.HasClimb" Collapsed="true">
+    <Position X="18.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAgAAAABAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Component\DetectionController.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LastKill.WeaponHolderState" Collapsed="true">
+    <Position X="20.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAESAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\LastKill\Scripts\Enum\WeaponHolderState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

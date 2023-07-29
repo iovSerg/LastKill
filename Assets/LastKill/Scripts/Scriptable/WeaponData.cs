@@ -1,56 +1,67 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
 {
-    [CreateAssetMenu(fileName = "Weapon data", menuName = "LastKill/Weapon data", order = 1)]
-    public class WeaponData : ScriptableObject
-    {
-        [SerializeField] private Vector3 position;
-        [SerializeField] private Vector3 rotation;
-        [SerializeField] private Vector3 scale;
-        
-        public GameObject prefab;
-        public GameObject Weapon;
-        public WeaponHolder holder;
+	[CreateAssetMenu(fileName = "Weapon data", menuName = "LastKill/Weapon data", order = 1)]
+	public class WeaponData : ScriptableObject
+	{
+		[SerializeField] private Vector3 position;
+		[SerializeField] private Vector3 rotation;
+		[SerializeField] private Vector3 scale;
+		public ParticleSystem prefabHitEffect;
+		public GameObject prefabWeapon;
 
-        public Transform muzzle;
-        public Transform LeftHandIK;
+		public GameObject Weapon;
 
-        public AudioSource audioSource;
-        public ParticleSystem[] particleSystem;
-        public AudioClip shootClip;
-        public AudioClip emptyClip;
-        public AudioClip reloadClip;
+		public GameObject prefabDecalDamage;
+		public List<GameObject> instanteDecalsDamage;
 
-        public float FireRate;
-        public int AmmoClipCount;
-        public int AmmoTotalCount;
+		public WeaponHolderState holder;
 
-         public  int AmmoMaxCount;
-        public  int AmmoMaxClip;
+		public Transform muzzle;
+		public Transform LeftHandIKIdle;
+		public Transform LeftHandIKAiming;
 
-        public int Weapon_ID;
-        public int AnimatorID;
-        public void InstantiateTransform(WeaponData data)
+		public AudioSource audioSource;
+		public ParticleSystem[] muzleFlash;
+		public ParticleSystem HitEffect;
+
+
+		public AudioClip shootClip;
+		public AudioClip emptyClip;
+		public AudioClip reloadClip;
+
+		public float FireRate;
+
+		public int ClipCountAmmo;
+		public int CurrentCountAmmo;
+
+		public int MaxAmmoClip;
+		public int MaxAmmoCount;
+
+		public int Weapon_ID;
+		public int WeaponAnimatorID;
+		public float WeaponPoseAnimator;
+		public void InstantiateTransform(WeaponData data)
 		{
-            try
+			try
 			{
-                
-                Weapon.transform.localPosition = data.position;
-                Weapon.transform.localRotation = Quaternion.Euler(new Vector3(data.rotation.x, data.rotation.y, data.rotation.z));
-                Weapon.transform.localScale = data.scale;
-                particleSystem = data.Weapon.GetComponentsInChildren<ParticleSystem>();
-                audioSource = data.Weapon.GetComponentInChildren<AudioSource>();
-                LeftHandIK = GameObject.Find("leftHandIK").transform;
-                muzzle = GameObject.Find("muzzle").transform;
-            }
-            catch(Exception ex)
-			{
-                Debug.Log(ex.Data);
+				Weapon.transform.localPosition = data.position;
+				Weapon.transform.localRotation = Quaternion.Euler(new Vector3(data.rotation.x, data.rotation.y, data.rotation.z));
+				Weapon.transform.localScale = data.scale;
+				muzleFlash = data.Weapon.GetComponentsInChildren<ParticleSystem>();
+				audioSource = data.Weapon.GetComponentInChildren<AudioSource>();
+				LeftHandIKIdle = GameObject.Find("leftHandIKIdle").transform;
+				LeftHandIKAiming = GameObject.Find("leftHandIKAiming").transform;
+				muzzle = GameObject.Find("muzzle").transform;
+				HitEffect = GameObject.Instantiate(prefabHitEffect);
 			}
-        }  
-    }
+			catch (Exception ex)
+			{
+				Debug.Log(ex.Data);
+			}
+		}
+	}
 }

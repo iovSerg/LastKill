@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace LastKill
 {
-    public class WeaponController : MonoBehaviour,IWeapon
-    {
+	public class WeaponController : MonoBehaviour, IWeapon
+	{
 		private Animator _animator;
 		private PlayerInput _input;
 		private IKController _iKController;
@@ -16,12 +13,16 @@ namespace LastKill
 
 		private WeaponData[] collectionWeapon;
 		private WeaponData currentWeapon;
-		
+
 		private int weapon_id = 0;
 		private float lastShot;
 		private bool isWeapon = false;
 		public bool isAim = false;
 
+
+		public Transform raycastDestination;
+		private Ray ray;
+		private RaycastHit hitInfo;
 
 		public Vector3 leftIK;
 
@@ -32,7 +33,7 @@ namespace LastKill
 		public Text bulletTotal;
 
 		public bool IsReload { get => _animator.GetBool("Reload"); }
-		public bool IsWeapon { get => isWeapon; private set { isWeapon = value;} }
+		public bool IsWeapon { get => isWeapon; private set { isWeapon = value; } }
 
 
 		private void Awake()
@@ -41,13 +42,28 @@ namespace LastKill
 			_input = GetComponent<PlayerInput>();
 			_animator = GetComponent<Animator>();
 			_animatorController = GetComponent<AnimatorController>();
-			_input.OnSelectWeapon += OnSelectWeapon;
+
+			_input.EventSelectWeapon += OnSelectWeapon;
+			_input.EventAim += OnAiming;
+			_input.EventFire += OnFire;
+
 
 			AddWeaponHolder();
 			LoadResourcesWeapon();
 			lastShot = 0;
+
+		}
+
+		private void OnAiming(bool state)
+		{
+
+		}
+		private void OnFire(bool state)
+		{
+
 			
 		}
+
 		private void AddWeaponHolder()
 		{
 			Transform[] childs = GetComponentsInChildren<Transform>();
@@ -85,15 +101,10 @@ namespace LastKill
 			//Load Hand Holder
 			foreach (WeaponData data in collectionWeapon)
 			{
-			    data.Weapon =  Instantiate(data.prefab, handWeapon);
+				data.Weapon = Instantiate(data.prefabWeapon, handWeapon);
 				data.InstantiateTransform(data);
 				data.Weapon.SetActive(false);
 			}
-
-			_iKController.currentWeapon = collectionWeapon[1].Weapon;
-			_iKController.TLeftHand = collectionWeapon[1].LeftHandIK;
-		
-
 		}
 		private void OnSelectWeapon(int id)
 		{
@@ -103,15 +114,15 @@ namespace LastKill
 				DisableAll();
 				return;
 			}
-			if(id != weapon_id)
+			if (id != weapon_id)
 			{
-				if(currentWeapon != null)
+				if (currentWeapon != null)
 				{
-				    currentWeapon.Weapon.SetActive(false);
+					currentWeapon.Weapon.SetActive(false);
 				}
-				foreach(WeaponData data in collectionWeapon)
+				foreach (WeaponData data in collectionWeapon)
 				{
-					if(data.Weapon_ID == id)
+					if (data.Weapon_ID == id)
 					{
 						currentWeapon = data;
 						currentWeapon.Weapon.SetActive(true);
@@ -120,53 +131,12 @@ namespace LastKill
 				}
 				weapon_id = id;
 				_animatorController.NoAim = true;
-				_animatorController.WeaponID = currentWeapon.AnimatorID;
-				_iKController.TLeftHand = currentWeapon.LeftHandIK;
+				_animatorController.WeaponID = currentWeapon.WeaponAnimatorID;
+				_animatorController.WeaponPose = currentWeapon.WeaponPoseAnimator;
+				_iKController.LeftHandIdle = currentWeapon.LeftHandIKIdle;
+				_iKController.LeftHandAim = currentWeapon.LeftHandIKAiming;
+				
 			}
-
-
-
-			
-			//if (!isWeapon)
-			//{
-			//	foreach (WeaponData data in collectionWeapon)
-			//	if (data.Weapon_ID == weapon_id)
-			//	{
-			//		data.Weapon.SetActive(true);
-			//		last_weapon_id = weapon_id;
-			//		isWeapon = true;
-			//		_animatorController.NoAim = true;
-			//		return;
-			//	}
-			//}
-
-			//if (weapon_id == last_weapon_id && isWeapon)
-			//{
-			//	foreach (WeaponData data in collectionWeapon)
-			//	if (data.Weapon_ID == weapon_id)
-			//	{
-			//		data.Weapon.SetActive(false);
-			//		isWeapon = false;
-			//		_animatorController.NoAim = false;
-			//		weapon_id = last_weapon_id = 0;
-			//		_animatorController.WeaponID = 0;
-			//		return;
-			//	}
-			//}
-
-			//if (weapon_id != last_weapon_id && isWeapon)
-			//{
-			//	foreach (WeaponData data in collectionWeapon)
-			//	{
-			//		if (data.Weapon_ID == last_weapon_id)
-			//			data.Weapon.SetActive(false);
-			//		if (data.Weapon_ID == weapon_id)
-			//			data.Weapon.SetActive(true);
-			//	}
-			//	last_weapon_id = weapon_id;
-			//}
-
-			
 		}
 
 		private void DisableAll()
@@ -180,28 +150,29 @@ namespace LastKill
 
 		private void Update()
 		{
-			if(weapon_id != 0)
+			if (weapon_id != 0)
 			{
 				if (_input.Fire)
 				{
-					_input.OnFire.Invoke(true);
 					Shoot();
 				}
 				if (_input.Reload) Reload();
-				bulletClip.text = currentWeapon.AmmoClipCount.ToString();
-				bulletTotal.text = currentWeapon.AmmoTotalCount.ToString();
-				
+				bulletClip.text = currentWeapon.ClipCountAmmo.ToString();
+				bulletTotal.text = currentWeapon.CurrentCountAmmo.ToString();
+
+				ray.origin = currentWeapon.muzzle.transform.position;
+				ray.direction = raycastDestination.position - currentWeapon.muzzle.position;
+
 			}
 			else
 			{
 				bulletClip.text = string.Empty.ToString();
 				bulletTotal.text = string.Empty.ToString();
 			}
-			
 		}
 		public void Shoot()
 		{
-			if (currentWeapon.AmmoClipCount == 0)
+			if (currentWeapon.ClipCountAmmo == 0)
 			{
 				if (!currentWeapon.audioSource.isPlaying)
 					currentWeapon.audioSource.PlayOneShot(currentWeapon.emptyClip);
@@ -209,27 +180,48 @@ namespace LastKill
 			}
 			if (Time.time > lastShot + currentWeapon.FireRate)
 			{
-				foreach (ParticleSystem particle in currentWeapon.particleSystem)
+				foreach (ParticleSystem particle in currentWeapon.muzleFlash)
 				{
 					particle.Emit(1);
 				}
-				currentWeapon.AmmoClipCount--;
+
+				if(Physics.Raycast(ray , out hitInfo))
+				{
+					currentWeapon.HitEffect.transform.position = hitInfo.point;
+					currentWeapon.HitEffect.transform.forward = hitInfo.normal;
+					currentWeapon.HitEffect.Emit(1);
+				}
+
 				currentWeapon.audioSource.PlayOneShot(currentWeapon.shootClip);
 				lastShot = Time.time;
 			}
 		}
 		public void Reload()
 		{
+			StartCoroutine(TimeReload(2f));
 			if (!currentWeapon.audioSource.isPlaying)
 			{
-				_input.OnReload?.Invoke(weapon_id);
+				_input.EventReload?.Invoke(weapon_id);
 				currentWeapon.audioSource.PlayOneShot(currentWeapon.reloadClip);
-				if (currentWeapon.AmmoTotalCount > currentWeapon.AmmoMaxClip)
+				if (currentWeapon.CurrentCountAmmo > currentWeapon.MaxAmmoClip)
 				{
-					currentWeapon.AmmoClipCount = currentWeapon.AmmoMaxClip;
-					currentWeapon.AmmoTotalCount -= currentWeapon.AmmoMaxClip;
+					currentWeapon.ClipCountAmmo = currentWeapon.MaxAmmoClip;
+					currentWeapon.CurrentCountAmmo -= currentWeapon.MaxAmmoClip;
 				}
 			}
+
+		}
+
+		private IEnumerator TimeReload(float time)
+		{
+
+			while (_animator.GetBool("Reload"))
+			{
+				time -= Time.deltaTime;
+				Debug.Log("Timer");
+				yield return null;
+			}
+			Debug.Log("Stoped");
 		}
 	}
 }

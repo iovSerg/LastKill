@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
@@ -14,7 +11,7 @@ namespace LastKill
 		[SerializeField] private string s_animSoftLandState = "JumpLanding.SoftLand";
 		[SerializeField] private string s_animDeathState = "JumpLanding.Death";
 		private string currentAnimState;
-		
+
 		[Header("Jump parameters")]
 		[SerializeField] private float jumpHeight = 1.2f;
 		[SerializeField] private float speedOnAir = 6f;
@@ -34,7 +31,7 @@ namespace LastKill
 		private int hashHardLand;
 		private int hashSoftLand;
 		private int hashCurrentAnim;
-		
+
 
 		private float startSpeed;
 		private Vector2 startInput;
@@ -124,7 +121,7 @@ namespace LastKill
 				if (highestPosition - transform.position.y >= heightForKillOnLand)
 				{
 					Landing(true, s_animDeathState, deathClip);
-					_input.OnDied?.Invoke();
+					_input.EventDied?.Invoke();
 					return;
 				}
 				else if (highestPosition - transform.position.y >= heightForHardLand)
@@ -151,13 +148,13 @@ namespace LastKill
 		}
 		public override void FixedUpdateState()
 		{
-			
+
 		}
-		
+
 		public override void OnStopState()
 		{
 			base.OnStopState();
-			_input.OnDied -= DD;
+			_input.EventDied -= DD;
 			highestPosition = 0;
 			_move.StopRootMotion();
 		}

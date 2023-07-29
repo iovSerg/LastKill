@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
@@ -34,7 +32,7 @@ namespace LastKill
 		}
 		public bool IsGrounded()
 		{
-			if(Physics.SphereCast(transform.position,0.2f,-Vector3.up,out RaycastHit hit,groundLayer))
+			if (Physics.SphereCast(transform.position, 0.2f, -Vector3.up, out RaycastHit hit, groundLayer))
 			{
 				return true;
 			}
@@ -119,9 +117,9 @@ namespace LastKill
 				{
 					if (Physics.Raycast(transform.position + Vector3.up * (0.2f * i) + transform.forward * 0.5f, Vector3.down * 0.2f, out hit, 0.5f, climbLayre))
 					{
-						_IK.TLeftHand.position = hit.point - transform.right * 0.4f;
+						_IK.LeftHandIdle.position = hit.point - transform.right * 0.4f;
 						_IK.TRightHand.position = hit.point + transform.right * 0.4f;
-						
+
 						fHeight = i;
 						return hit;
 					}
@@ -139,20 +137,20 @@ namespace LastKill
 			{
 				_IK.TRightHand.position = rightHit.point;
 			}
-			
+
 			if (Physics.Raycast(leftArm + transform.forward * 0.4f, Vector3.down, out RaycastHit leftHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
 			{
-				_IK.TLeftHand.position = leftHit.point;
+				_IK.LeftHandIdle.position = leftHit.point;
 			}
 			if (Physics.Raycast(root + transform.forward * 0.4f, Vector3.down, out RaycastHit rootHit, 2f, climbLayre, QueryTriggerInteraction.Ignore))
 			{
 				float distance = rootHit.distance;
 				HasClimb climb;
-				if(distance < 0.5f)
+				if (distance < 0.5f)
 				{
 					climb = HasClimb.High;
 				}
-				else if(distance < 1.6f)
+				else if (distance < 1.6f)
 				{
 					climb = HasClimb.Short;
 				}

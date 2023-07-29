@@ -1,27 +1,32 @@
-using Cinemachine.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LastKill
 {
 
-    public class IKController : MonoBehaviour
+	public class IKController : MonoBehaviour
 	{
 		private Animator _animator;
+		private PlayerInput _input;
 		private ICamera _camera;
+
+
+		[Header("---")]
 		[SerializeField] private Transform targetLeftHand;
+		[SerializeField] private Transform targetLeftHandIdle;
+		[SerializeField] private Transform targetLeftHandAim;
+
 		[SerializeField] private Transform targetRightHand;
 
 		[SerializeField] private Transform targetRightFoot;
 		[SerializeField] private Transform targetLeftFoot;
+
 		[SerializeField] private Transform lookAtPosition;
 
 		[SerializeField] private Transform bodySpine;
 
-		 public GameObject currentWeapon;
-
+		public GameObject currentWeapon;
+		[Space(2)]
+		[Header("Weight IK")]
 		[SerializeField] private float leftHandWeight = 0f;
 		[SerializeField] private float rightHandWeight = 0f;
 
@@ -31,7 +36,8 @@ namespace LastKill
 		[SerializeField] private float eyesWeight;
 		[SerializeField] private float clampWeight;
 
-		public Transform TLeftHand { get => targetLeftHand; set { targetLeftHand = value;} }
+		public Transform LeftHandIdle { get => targetLeftHandIdle; set { targetLeftHandIdle = value; } }
+		public Transform LeftHandAim { get => targetLeftHandAim; set { targetLeftHandAim = value; } }
 		public Transform TRightHand { get => targetRightHand; set => targetRightHand = value; }
 		public float WLeftHand { get => leftHandWeight; set => leftHandWeight = value; }
 		public float WRightHand { get => rightHandWeight; set => rightHandWeight = value; }
@@ -40,18 +46,38 @@ namespace LastKill
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.black;
-			if(targetLeftHand != null && targetRightHand != null)
+			if (targetLeftHand != null && targetRightHand != null)
 			{
 				Gizmos.DrawSphere(targetLeftHand.position, 0.05f);
 				Gizmos.DrawSphere(targetRightHand.position, 0.05f);
 			}
 		}
-
 		private void Awake()
 		{
+			Debug.Log("Ik Controller");
+			_input = GetComponent<PlayerInput>();
 			_animator = GetComponent<Animator>();
 			_camera = GetComponent<ICamera>();
+
+			_input.EventAim += OnAiming;
+			_input.EventFire += OnFire;
 		}
+
+		private void OnFire(bool state)
+		{
+			if(!_input.Aim)
+			{
+				lookWeight = state == false ? 0.0f : 0.4f;
+				targetLeftHand = state == false ? targetLeftHandIdle : targetLeftHandAim;
+			}
+		}
+
+		private void OnAiming(bool state)
+		{
+			lookWeight = state == false ? 0.0f : 0.4f;
+			targetLeftHand = state == false ? targetLeftHandIdle : targetLeftHandAim;
+		}
+
 		private void Update()
 		{
 			leftHandWeight = _animator.GetFloat("LeftHand");
@@ -60,9 +86,9 @@ namespace LastKill
 		private void OnAnimatorIK(int layerIndex)
 		{
 			_animator.SetLookAtPosition(lookAtPosition.position);
-			_animator.SetLookAtWeight(lookWeight, bodyWeight, headWeight,eyesWeight,clampWeight);
+			_animator.SetLookAtWeight(lookWeight, bodyWeight, headWeight, eyesWeight, clampWeight);
 			//LeftHand
-			if(targetLeftHand != null)
+			if (targetLeftHand != null)
 			{
 				_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftHandWeight);
 				_animator.SetIKPosition(AvatarIKGoal.LeftHand, targetLeftHand.position);
@@ -72,7 +98,7 @@ namespace LastKill
 			}
 
 			//RightHand
-			if(targetRightHand != null)
+			if (targetRightHand != null)
 			{
 				_animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
 				_animator.SetIKPosition(AvatarIKGoal.RightHand, targetRightHand.position);
@@ -82,19 +108,19 @@ namespace LastKill
 			}
 
 			//RightFoot
-			if(targetRightFoot != null)
+			if (targetRightFoot != null)
 			{
 
 			}
 
 			//LeftFoot
-			if(targetLeftFoot != null)
+			if (targetLeftFoot != null)
 			{
 
 			}
 		}
 
-		
+
 
 	}
 }

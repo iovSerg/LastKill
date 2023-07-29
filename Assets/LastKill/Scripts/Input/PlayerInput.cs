@@ -4,19 +4,21 @@ using UnityEngine.InputSystem;
 
 namespace LastKill
 {
+	[RequireComponent(typeof(AbilityState))]
 	[RequireComponent(typeof(CharacterController))]
 	[RequireComponent(typeof(MovementController))]
-	[RequireComponent(typeof(AbilityState))]
 	[RequireComponent(typeof(AnimatorController))]
 	[RequireComponent(typeof(CameraController))]
 	[RequireComponent(typeof(MovementController))]
 	[RequireComponent(typeof(DetectionController))]
+	[RequireComponent(typeof(AudioController))]
 	[RequireComponent(typeof(IKController))]
 	[RequireComponent(typeof(WeaponController))]
 
-	public class PlayerInput : MonoBehaviour
+	public class PlayerInput : MonoBehaviour , IInput
 	{
 		private PlayerInputSystem _input = null;
+		private Animator _animator;
 
 		[SerializeField] private Vector2 move;
 		[SerializeField] private Vector2 look;
@@ -51,14 +53,12 @@ namespace LastKill
 		public float Magnituda => magnituda;
 		public int CurrentWeapon => currentWeapon;
 
-		public Action OnDied { get; set ; }
-		public Action<bool> OnFire { get ; set; }
-		public Action<bool> OnAiming { get; set; }
-
-		public Action<int> OnSelectWeapon { get; set; }
-		public Action <int> OnReload { get; set; }
-
-
+		public Action EventDied { get; set; }
+		public Action<bool> EventFire { get; set; }
+		public Action<bool> EventAim { get; set; }
+		public Action<int> EventSelectWeapon { get; set; }
+		public Action<int> EventReload { get; set; }
+		
 
 		AbilityState _abilityState;
 
@@ -67,7 +67,7 @@ namespace LastKill
 
 		private void Awake()
 		{
-
+			_animator = GetComponent<Animator>();
 			_abilityState = GetComponent<AbilityState>();
 			_abilityState.OnStateStop += AbilityState_OnStateStop;
 
@@ -83,9 +83,8 @@ namespace LastKill
 			_input.Player.Jump.performed += ctx => jump = ctx.ReadValueAsButton();
 			_input.Player.Jump.canceled += ctx => jump = ctx.ReadValueAsButton();
 
-			_input.Player.Fire.started += ctx => fire = ctx.ReadValueAsButton();
-			_input.Player.Fire.performed += ctx => fire = ctx.ReadValueAsButton();
-			_input.Player.Fire.canceled += ctx => fire = ctx.ReadValueAsButton();
+			_input.Player.Fire.performed += OnFire;
+			_input.Player.Fire.canceled += OnFire;
 
 			_input.Player.Roll.performed += ctx => roll = ctx.ReadValueAsButton();
 			_input.Player.Roll.canceled += ctx => roll = ctx.ReadValueAsButton();
@@ -98,7 +97,8 @@ namespace LastKill
 			_input.Player.Reload.performed += ctx => reload = ctx.ReadValueAsButton();
 			_input.Player.Reload.canceled += ctx => reload = ctx.ReadValueAsButton();
 
-			_input.Player.Aim.performed += ctx =>{ aim = !aim; OnAiming?.Invoke(aim);   };
+
+			_input.Player.Aim.performed += ctx => { aim = !aim; EventAim?.Invoke(aim); };
 
 			_input.Player.Crouch.performed += ClickCrouch;
 			_input.Player.Crouch.canceled += ClickCrouch;
@@ -107,7 +107,8 @@ namespace LastKill
 
 			_input.Player.Weapon.performed += SetWeapon;
 
-			_input.Player.Scroll.performed += ctx => {
+			_input.Player.Scroll.performed += ctx =>
+			{
 
 				scroll = ctx.ReadValue<float>();
 			};
@@ -129,11 +130,18 @@ namespace LastKill
 				crawl = true;
 				crouch = false;
 			}
+			//_animator.SetFloat("Magnituda", magnituda);
 		}
 
+		private void OnFire(InputAction.CallbackContext obj)
+		{
+			fire = obj.ReadValueAsButton();
+			if (currentWeapon != 0)
+				EventFire?.Invoke(fire);
+		}
 
 		private void ClickCrouch(InputAction.CallbackContext obj)
-        {
+		{
 			//When pressing a key
 			if (crawl && !obj.canceled)
 			{
@@ -149,13 +157,13 @@ namespace LastKill
 
 		}
 
-        private void SetWeapon(InputAction.CallbackContext obj)
-        {
+		private void SetWeapon(InputAction.CallbackContext obj)
+		{
 			try
 			{
-                int.TryParse(obj.control.displayName, out currentWeapon);
+				int.TryParse(obj.control.displayName, out currentWeapon);
 
-				if(aim && currentWeapon != lastWeapon)
+				if (aim && currentWeapon != lastWeapon)
 				{
 					currentWeapon = lastWeapon;
 					return;
@@ -164,25 +172,25 @@ namespace LastKill
 				if (currentWeapon != lastWeapon)
 				{
 					lastWeapon = currentWeapon;
-					OnSelectWeapon?.Invoke(currentWeapon);
+					EventSelectWeapon?.Invoke(currentWeapon);
 				}
 				else
 				{
 					lastWeapon = currentWeapon = 0;
-					OnSelectWeapon?.Invoke(currentWeapon);
+					EventSelectWeapon?.Invoke(currentWeapon);
 					aim = false;
-					OnAiming?.Invoke(false);
+					EventAim?.Invoke(false);
 				}
-				
+
 			}
 			catch (Exception ex)
 			{
 
 				Debug.Log(ex.Data);
 			}
-        }
+		}
 
-        private void OnMove(InputAction.CallbackContext obj)
+		private void OnMove(InputAction.CallbackContext obj)
 		{
 			move = obj.ReadValue<Vector2>();
 			magnituda = Mathf.Clamp01(Mathf.Abs(move.x) + Mathf.Abs(move.y));

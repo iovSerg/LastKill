@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &743037867076536215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5389888521275710186}
+  m_Layer: 0
+  m_Name: leftHandIKIdle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5389888521275710186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743037867076536215}
+  m_LocalRotation: {x: 0.74846625, y: -0.08096401, z: 0.6348023, w: 0.17398041}
+  m_LocalPosition: {x: -0.11, y: 0.045, z: 0.145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3424644524720755404}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 21.299, y: -261.761, z: 173.858}
 --- !u!1 &3422850995465740968
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +344,7 @@ Transform:
   - {fileID: 3424644524720757064}
   - {fileID: 3425266730025153690}
   - {fileID: 3425266729980733650}
+  - {fileID: 5389888521275710186}
   - {fileID: 3424644524720690080}
   - {fileID: 3424644524720660300}
   - {fileID: 3424644524720720250}
@@ -401,7 +433,7 @@ Transform:
   - {fileID: 3424644524720663794}
   - {fileID: 3424644524720698952}
   m_Father: {fileID: 3424644524720755404}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: -2.206, y: 0.319, z: -181.52199}
 --- !u!1 &3424644524720308198
 GameObject:
@@ -33090,7 +33122,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3424644524720755404}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3424644524720516248
 GameObject:
@@ -33102,7 +33134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3424644524720690080}
   m_Layer: 2
-  m_Name: leftHandIK
+  m_Name: leftHandIKAiming
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33116,10 +33148,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3424644524720516248}
   m_LocalRotation: {x: 0.49989387, y: -0.033207573, z: 0.857391, w: 0.1178314}
-  m_LocalPosition: {x: -0.126, y: 0.076, z: 0.059}
+  m_LocalPosition: {x: -0.109, y: 0.052, z: 0.082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3424644524720755404}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 10.064, y: -300.384, z: 170.125}

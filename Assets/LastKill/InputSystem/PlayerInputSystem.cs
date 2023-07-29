@@ -291,6 +291,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""838d0d9a-2760-4dda-b28b-26a5a1dd3922"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c8bae154-49fc-46b7-a75d-3149fd96a558"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -347,7 +358,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""752e4f47-5f71-4bba-9d7f-bbd26ff2b6be"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
