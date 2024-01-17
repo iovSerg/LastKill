@@ -133,14 +133,19 @@ namespace StarterAssets
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
-			virtualCamera = GameObject.FindFirstObjectByType<CinemachineVirtualCamera>();
-			cinemachine3RdPerson = virtualCamera.GetComponent<Cinemachine3rdPersonFollow>();
-			cinemachine3RdPerson = GameObject.FindAnyObjectByType<Cinemachine3rdPersonFollow>();
-			cinemachine3RdPerson.enabled = true;
-			cinemachine3RdPerson.ShoulderOffset = Vector3.zero;
-			cinemachine3RdPerson.CameraDistance = 5f;
+			//virtualCamera = GameObject.FindFirstObjectByType<CinemachineVirtualCamera>();
+			//cinemachine3RdPerson = virtualCamera.GetComponent<Cinemachine3rdPersonFollow>();
+			//cinemachine3RdPerson = GameObject.FindAnyObjectByType<Cinemachine3rdPersonFollow>();
+			//cinemachine3RdPerson.enabled = true;
+			//cinemachine3RdPerson.ShoulderOffset = Vector3.zero;
+			//cinemachine3RdPerson.CameraDistance = 5f;
 		}
-
+		public GameObject arm;
+		[ContextMenu("Press")]
+		public void Press()
+		{
+			arm.transform.parent = null;
+		}
 		private void Start()
 		{
 			_cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;

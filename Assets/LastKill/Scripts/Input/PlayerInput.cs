@@ -4,16 +4,16 @@ using UnityEngine.InputSystem;
 
 namespace LastKill
 {
-	[RequireComponent(typeof(AbilityState))]
-	[RequireComponent(typeof(CharacterController))]
-	[RequireComponent(typeof(MovementController))]
-	[RequireComponent(typeof(AnimatorController))]
-	[RequireComponent(typeof(CameraController))]
-	[RequireComponent(typeof(MovementController))]
-	[RequireComponent(typeof(DetectionController))]
-	[RequireComponent(typeof(AudioController))]
-	[RequireComponent(typeof(IKController))]
-	[RequireComponent(typeof(WeaponController))]
+	//[RequireComponent(typeof(AbilityState))]
+	//[RequireComponent(typeof(CharacterController))]
+	//[RequireComponent(typeof(MovementController))]
+	//[RequireComponent(typeof(AnimatorController))]
+	//[RequireComponent(typeof(CameraController))]
+	//[RequireComponent(typeof(MovementController))]
+	//[RequireComponent(typeof(DetectionController))]
+	//[RequireComponent(typeof(AudioController))]
+	//[RequireComponent(typeof(IKController))]
+	//[RequireComponent(typeof(WeaponController))]
 
 	public class PlayerInput : MonoBehaviour , IInput
 	{

@@ -9,14 +9,11 @@ namespace LastKill
 		[SerializeField] private string animatorBlendState = "Locomotion";
 
 		private int hashAnimState;
-
-
 		private float targetSpeed = 0f;
 
 		private void Awake()
 		{
-			hashAnimState = Animator.StringToHash(animatorBlendState);
-			
+			hashAnimState = Animator.StringToHash(animatorBlendState);	
 		}
 
 		public override void OnStartState()
